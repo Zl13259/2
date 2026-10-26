@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Quant v10.0-rc.1 客观量价信号研究台：三通道、硬门槛、交易几何、可解释评分与探索性回放。">
+<meta name="description" content="Quant v10.0-rc.3 客观量价信号研究台：三通道、硬门槛、交易几何、可解释评分与探索性回放。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%231c3a13'/%3E%3Cpath d='M8 21V11h8a5 5 0 0 1 0 10h-3v4H8zm5-7v4h3a2 2 0 0 0 0-4h-3z' fill='%23f6f6f4'/%3E%3C/svg%3E">
-<title>Quant v10.0-rc.1 · 客观信号研究台</title>
+<title>Quant v10.0-rc.3 · 客观信号研究台</title>
 <style>
 :root{
 --p-forest:oklch(0.32 0.075 145);--p-forest-dark:oklch(0.25 0.06 145);--p-paper:oklch(0.975 0.003 95);--p-ink:oklch(0.24 0.015 60);--p-sage:oklch(0.9 0.018 145);--p-up:oklch(0.52 0.19 28);--p-down:oklch(0.46 0.12 155);--p-warn:oklch(0.55 0.13 75);
@@ -13,19 +13,20 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{min-height:100dvh;background:var(--surface);color:var(--ink);font:15px/1.6 var(--font-sans);-webkit-font-smoothing:antialiased}button,input,select{font:inherit}button,[role=button],select{cursor:pointer}button{min-height:44px;border:1px solid transparent;border-radius:6px;padding:8px 15px;font-weight:600;transition:transform .16s ease-out,background-color .16s ease-out,opacity .16s ease-out}button:hover{transform:translateY(-1px)}button:active{transform:translateY(0)}button:disabled{cursor:not-allowed;opacity:.48;transform:none}a{color:inherit}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid oklch(0.65 0.15 145);outline-offset:3px}.primary{background:var(--accent);color:oklch(0.97 0.01 110)}.primary:hover{background:var(--accent-dark)}.secondary{background:transparent;color:inherit;border-color:currentColor}.ghost{background:var(--soft);color:var(--ink);border-color:var(--line)}.danger{color:var(--up)}input,select{min-height:44px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);padding:8px 11px}input::placeholder{color:var(--muted)}.num,.score,td.price,td.metric{font-family:var(--font-mono);font-variant-numeric:tabular-nums lining-nums;white-space:nowrap}.muted{color:var(--muted)}.up{color:var(--up)}.down{color:var(--down)}.warn{color:var(--warn)}.ok{color:var(--accent)}.small{font-size:12px}.hidden{display:none!important}
 .mast{background:var(--accent);color:oklch(0.965 0.012 110);position:sticky;top:0;z-index:30;box-shadow:0 1px 0 oklch(0.2 0.03 145 / .2)}.mast-main{max-width:1600px;margin:auto;min-height:68px;padding:10px 24px;display:flex;align-items:center;gap:20px}.brand{display:flex;align-items:center;gap:12px;margin-right:auto}.brand-mark{display:grid;grid-template-columns:repeat(3,5px);gap:3px}.brand-mark i{width:5px;height:5px;background:currentColor;display:block}.brand h1{font-size:19px;line-height:1.1;letter-spacing:-.4px}.brand p{font-size:11px;opacity:.76;letter-spacing:.8px}.mast-actions{display:flex;gap:8px}.mast .secondary{border-color:oklch(0.9 0.02 120 / .55)}.tabs{max-width:1600px;margin:auto;padding:0 24px;display:flex;gap:24px;overflow-x:auto}.tab{background:transparent;color:inherit;border:0;border-radius:0;padding:10px 0;min-height:46px;opacity:.7;position:relative;white-space:nowrap}.tab[aria-selected=true]{opacity:1}.tab[aria-selected=true]::after{content:"";position:absolute;height:2px;left:0;right:0;bottom:0;background:currentColor}.wrap{max-width:1600px;margin:auto;padding:20px 24px 50px}.view{display:none}.view.active{display:block}.section-head{display:flex;align-items:flex-start;gap:12px;margin:24px 0 12px}.section-head .brand-mark{color:var(--accent);margin-top:6px}.section-head h2{font-size:18px;line-height:1.3;letter-spacing:-.2px}.section-head p{font-size:13px;color:var(--muted)}
-.market-strip{display:grid;grid-template-columns:1.3fr repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--panel)}.market-cell{padding:14px 16px;border-right:1px solid var(--line)}.market-cell:last-child{border:0}.market-cell b{display:block;font-size:12px;font-weight:600;color:var(--muted)}.market-cell strong{display:block;font-size:16px;margin-top:2px}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:16px 0}.summary-item{background:var(--panel);padding:14px 16px}.summary-item span{font-size:12px;color:var(--muted)}.summary-item strong{display:block;font:700 26px/1.2 var(--font-mono);margin-top:3px}.filter-grid{display:grid;grid-template-columns:minmax(180px,2fr) repeat(3,minmax(130px,1fr)) auto;gap:8px;margin:12px 0}.filter-grid button{align-self:end}.coverage{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:9px 0 12px;color:var(--muted);font-size:12px;border-bottom:1px solid var(--line)}.coverage details{max-width:70%}.coverage summary{cursor:pointer}.table-shell{background:var(--panel)}table{width:100%;border-collapse:collapse;table-layout:auto}th{text-align:left;padding:11px 10px;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.4px;border-bottom:1px solid var(--line);white-space:nowrap}td{padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:middle;font-size:13px}tbody tr.signal-row{cursor:pointer;transition:background-color .14s ease-out}tbody tr.signal-row:hover{background:var(--soft)}tbody tr.signal-row[aria-expanded=true]{background:oklch(0.93 0.02 145)}.stock-name{font-weight:650;font-size:14px}.stock-code{font:11px var(--font-mono);color:var(--muted)}.channel-name{font-weight:600}.badge{display:inline-flex;align-items:center;min-height:25px;padding:2px 8px;border-radius:4px;background:var(--soft);font-size:11px;font-weight:650;white-space:normal;overflow-wrap:anywhere}.badge.current{background:oklch(0.91 0.055 145);color:var(--accent-dark)}.badge.plan{background:oklch(0.93 0.045 85);color:oklch(0.43 0.12 70)}.badge.wait,.badge.research{background:oklch(0.93 0.02 80);color:var(--muted)}.badge.error,.badge.reject{background:oklch(0.94 0.035 28);color:var(--up)}.score{font-size:15px;font-weight:700}.score.na{color:var(--muted);font-weight:400}.detail-row td{padding:0;background:var(--panel)}.detail{padding:18px 20px 22px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:24px}.detail h3{font-size:13px;margin-bottom:8px}.detail h4{font-size:12px;margin:12px 0 4px}.detail p,.detail li{font-size:13px}.detail ul{padding-left:18px}.geometry-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.geometry-grid div{border-bottom:1px solid var(--line);padding:5px 0}.geometry-grid span{display:block;color:var(--muted);font-size:11px}.dim{margin:7px 0}.dim-label{display:flex;justify-content:space-between;font-size:12px}.dim-track{height:3px;background:var(--line);margin-top:3px}.dim-fill{height:100%;background:var(--accent);transform-origin:left}.reason-list li{margin:3px 0}.empty{padding:46px 18px;text-align:center;color:var(--muted);background:var(--panel);border-bottom:1px solid var(--line)}.empty strong{display:block;color:var(--ink);font-size:16px;margin-bottom:5px}.progress{height:4px;background:var(--line);margin:12px 0;overflow:hidden}.progress>i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s ease-out}.notice{border-left:2px solid var(--warn);padding:8px 12px;background:oklch(0.96 0.025 85);font-size:13px;margin:12px 0}.notice.info{border-color:var(--accent);background:oklch(0.95 0.018 145)}
+.market-strip{display:grid;grid-template-columns:1.2fr repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--panel)}.market-cell{padding:14px 16px;border-right:1px solid var(--line)}.market-cell:last-child{border:0}.market-cell b{display:block;font-size:12px;font-weight:600;color:var(--muted)}.market-cell strong{display:block;font-size:16px;margin-top:2px}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:16px 0}.summary-item{background:var(--panel);padding:14px 16px}.summary-item span{font-size:12px;color:var(--muted)}.summary-item strong{display:block;font:700 26px/1.2 var(--font-mono);margin-top:3px}.filter-grid{display:grid;grid-template-columns:minmax(180px,2fr) repeat(3,minmax(130px,1fr)) auto;gap:8px;margin:12px 0}.filter-grid button{align-self:end}.coverage{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:9px 0 12px;color:var(--muted);font-size:12px;border-bottom:1px solid var(--line)}.coverage details{max-width:70%}.coverage summary{cursor:pointer}.table-shell{background:var(--panel)}table{width:100%;border-collapse:collapse;table-layout:auto}th{text-align:left;padding:11px 10px;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.4px;border-bottom:1px solid var(--line);white-space:nowrap}td{padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:middle;font-size:13px}tbody tr.signal-row{cursor:pointer;transition:background-color .14s ease-out}tbody tr.signal-row:hover{background:var(--soft)}tbody tr.signal-row[aria-expanded=true]{background:oklch(0.93 0.02 145)}.stock-name{font-weight:650;font-size:14px}.stock-code{font:11px var(--font-mono);color:var(--muted)}.channel-name{font-weight:600}.badge{display:inline-flex;align-items:center;min-height:25px;padding:2px 8px;border-radius:4px;background:var(--soft);font-size:11px;font-weight:650;white-space:normal;overflow-wrap:anywhere}.badge.current{background:oklch(0.91 0.055 145);color:var(--accent-dark)}.badge.plan{background:oklch(0.93 0.045 85);color:oklch(0.43 0.12 70)}.badge.wait,.badge.research{background:oklch(0.93 0.02 80);color:var(--muted)}.badge.error,.badge.reject{background:oklch(0.94 0.035 28);color:var(--up)}.score{font-size:15px;font-weight:700}.score.na{color:var(--muted);font-weight:400}.detail-row td{padding:0;background:var(--panel)}.detail{padding:18px 20px 22px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:24px}.detail h3{font-size:13px;margin-bottom:8px}.detail h4{font-size:12px;margin:12px 0 4px}.detail p,.detail li{font-size:13px}.detail ul{padding-left:18px}.geometry-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.geometry-grid div{border-bottom:1px solid var(--line);padding:5px 0}.geometry-grid span{display:block;color:var(--muted);font-size:11px}.dim{margin:7px 0}.dim-label{display:flex;justify-content:space-between;font-size:12px}.dim-track{height:3px;background:var(--line);margin-top:3px}.dim-fill{height:100%;background:var(--accent);transform-origin:left}.reason-list li{margin:3px 0}.empty{padding:46px 18px;text-align:center;color:var(--muted);background:var(--panel);border-bottom:1px solid var(--line)}.empty strong{display:block;color:var(--ink);font-size:16px;margin-bottom:5px}.progress{height:4px;background:var(--line);margin:12px 0;overflow:hidden}.progress>i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s ease-out}.notice{border-left:2px solid var(--warn);padding:8px 12px;background:oklch(0.96 0.025 85);font-size:13px;margin:12px 0}.notice.info{border-color:var(--accent);background:oklch(0.95 0.018 145)}
 .research-controls{display:grid;grid-template-columns:repeat(3,1fr) auto;gap:10px;align-items:end;margin:16px 0}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}.field input,.field select{width:100%}.result-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:14px 0}.result-grid>div{background:var(--panel);padding:12px}.result-grid b{display:block;font:700 20px var(--font-mono)}.diag-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}.diag-section{border-top:2px solid var(--ink);padding-top:10px}.diag-section h3{font-size:15px;margin-bottom:8px}.log{max-height:340px;overflow:auto;font:12px/1.65 var(--font-mono);background:var(--ink);color:var(--p-paper);padding:12px;border-radius:4px}.test-line{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding:7px 0;font-size:13px}.method{max-width:900px}.method h3{font-size:16px;margin:24px 0 8px}.method p,.method li{font-size:14px;line-height:1.75}.method ul,.method ol{padding-left:22px}.formula{font:13px/1.7 var(--font-mono);background:var(--ink);color:var(--p-paper);padding:14px;overflow-wrap:anywhere;margin:10px 0}.method table td,.method table th{white-space:normal}.footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:20px}
 dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);padding:0;width:min(720px,calc(100vw - 32px));max-height:85dvh;box-shadow:0 18px 60px oklch(0.2 0.02 145 / .25)}dialog::backdrop{background:oklch(0.18 0.02 145 / .5)}.dialog-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line)}.dialog-head h2{font-size:17px}.dialog-body{padding:18px;overflow:auto;max-height:65dvh}.dialog-actions{display:flex;gap:8px;justify-content:flex-end;padding:12px 18px;border-top:1px solid var(--line)}.watch-row{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding:8px 0}.add-grid{display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:14px}.search-results{margin-top:8px}.search-result{width:100%;display:flex;justify-content:space-between;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--line);border-radius:0}.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,10px);background:var(--ink);color:var(--p-paper);padding:10px 16px;border-radius:6px;z-index:60;opacity:0;pointer-events:none;transition:opacity .18s ease-out,transform .18s ease-out;max-width:calc(100vw - 32px);font-size:13px}.toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-width:1100px){.market-strip{grid-template-columns:1fr 1fr}.market-cell:nth-child(2){border-right:0}.filter-grid{grid-template-columns:1fr 1fr}.filter-grid .search-wide{grid-column:1/-1}.detail{grid-template-columns:1fr 1fr}.detail>div:last-child{grid-column:1/-1}.col-e,.col-zone{display:none}.research-controls{grid-template-columns:1fr 1fr}.diag-grid{grid-template-columns:1fr}}
 @media(max-width:700px){body{font-size:14px}.mast{position:relative}.mast-main{padding:10px 14px;flex-wrap:wrap;gap:10px}.brand{width:100%}.mast-actions{width:100%}.mast-actions button{flex:1}.tabs{padding:0 14px;gap:20px}.wrap{padding:14px 12px 36px}.market-strip{grid-template-columns:1fr 1fr}.market-cell{padding:10px}.summary{grid-template-columns:1fr 1fr}.summary-item{padding:10px 12px}.summary-item strong{font-size:22px}.filter-grid{grid-template-columns:1fr}.filter-grid .search-wide{grid-column:auto}.coverage{align-items:flex-start;flex-direction:column}.coverage details{max-width:100%}thead{display:none}table,tbody,tr,td{display:block;width:100%}tbody tr.signal-row{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);padding:10px 12px;min-width:0}tbody tr.signal-row td{border:0;padding:4px 0;min-width:0;overflow-wrap:anywhere}tbody tr.signal-row td::before{content:attr(data-label);display:block;font-size:10px;color:var(--muted)}.col-q,.col-rr,.col-stop{display:none}.detail-row{display:none}.detail-row.open{display:block}.detail{grid-template-columns:1fr;padding:16px 14px;gap:18px}.detail>div:last-child{grid-column:auto}.research-controls{grid-template-columns:1fr}.result-grid{grid-template-columns:1fr 1fr}.settings-grid{grid-template-columns:1fr}.footer{flex-direction:column}.dialog-actions{flex-wrap:wrap}.search-wide{min-width:0}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+.pin-toggle{min-width:44px;min-height:44px;padding:0;color:var(--muted)}.pin-toggle[aria-pressed=true]{color:var(--accent);font-weight:700}.stock-heading{display:flex;align-items:center;gap:2px}.search-result{text-align:left;padding:10px 4px}.forward-actions{display:flex;gap:8px;flex-wrap:wrap}.filter-grid{grid-template-columns:minmax(180px,2fr) repeat(3,minmax(120px,1fr)) auto auto auto}.research-controls{align-items:end}@media(max-width:1100px){.filter-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.search-wide{grid-column:span 2}}@media(max-width:700px){.filter-grid{grid-template-columns:1fr}.search-wide{grid-column:auto}.mast-actions{flex-wrap:wrap}.mast-actions button{min-width:30%}}
 </style>
 </head>
 <body>
 <header class="mast">
 <div class="mast-main">
-<div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h1>Quant <span class="num">v10.0-rc.1</span></h1><p>客观信号研究台 · 日线因果模型</p></div></div>
-<div class="mast-actions"><button class="secondary" id="settingsBtn" type="button">模型设置</button><button class="secondary" id="scanBtn" type="button">全A初筛深扫</button><button class="primary" id="refreshBtn" type="button">刷新信号</button></div>
+<div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h1>Quant <span class="num">v10.0-rc.3</span></h1><p>客观信号研究台 · 日线因果模型</p></div></div>
+<div class="mast-actions"><button class="secondary" id="autoBtn" type="button" aria-pressed="false">自动：关</button><button class="secondary" id="settingsBtn" type="button">模型设置</button><button class="secondary" id="scanBtn" type="button">全A初筛深扫</button><button class="primary" id="refreshBtn" type="button">刷新信号</button></div>
 </div>
 <nav class="tabs" role="tablist" aria-label="研究视图">
 <button class="tab" role="tab" aria-selected="true" data-view="signals" type="button">信号台</button>
@@ -37,10 +38,11 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 </header>
 <main class="wrap">
 <section class="view active" id="view-signals" role="tabpanel">
-<div class="market-strip"><div class="market-cell"><b>模型时点</b><strong id="clockText">尚未加载</strong></div><div class="market-cell"><b>A股参考环境</b><strong id="envA">—</strong></div><div class="market-cell"><b>数据覆盖</b><strong id="coverageTop" class="num">0 / 0</strong></div><div class="market-cell"><b>验证状态</b><strong class="warn">Score v0 · 未验证</strong></div></div>
+<div class="market-strip"><div class="market-cell"><b>模型时点</b><strong id="clockText">尚未加载</strong></div><div class="market-cell"><b>A股参考环境</b><strong id="envA">—</strong></div><div class="market-cell"><b>美股参考环境</b><strong id="envUS">—</strong><span class="small muted" id="envUSMeta">纳指尚未加载</span></div><div class="market-cell"><b>数据覆盖</b><strong id="coverageTop" class="num">0 / 0</strong></div><div class="market-cell"><b>验证状态</b><strong class="warn">Score v0 · 未验证</strong></div></div>
 <div class="summary"><div class="summary-item"><span>当前候选</span><strong id="countCurrent">0</strong></div><div class="summary-item"><span>次日预案</span><strong id="countPlan">0</strong></div><div class="summary-item"><span>等待入场</span><strong id="countWait">0</strong></div><div class="summary-item"><span>数据异常</span><strong id="countError">0</strong></div></div>
-<div class="filter-grid"><input class="search-wide" id="filterText" type="search" placeholder="筛选代码或名称" aria-label="筛选代码或名称"><select id="filterStatus" aria-label="筛选状态"><option value="eligible">候选与预案</option><option value="all">全部状态</option><option value="CURRENT_CANDIDATE">当前候选</option><option value="NEXT_SESSION_PLAN">次日预案</option><option value="WAIT_ENTRY">等待入场</option><option value="RESEARCH_ONLY">降级研究</option><option value="DATA_ERROR">数据异常</option></select><select id="filterChannel" aria-label="筛选通道"><option value="all">全部通道</option><option value="oversold">超跌反弹</option><option value="pullback">趋势回踩</option><option value="breakout">突破确认</option></select><select id="sortMode" aria-label="排序方式"><option value="status">状态优先</option><option value="fresh">触发新鲜度</option><option value="rr">净赔率（通道内）</option></select><button class="ghost" id="manageBtn" type="button">研究池</button></div>
+<div class="filter-grid"><input class="search-wide" id="filterText" type="search" placeholder="筛选代码或名称" aria-label="筛选代码或名称"><select id="filterStatus" aria-label="筛选状态"><option value="eligible">候选与预案</option><option value="all">全部状态</option><option value="CURRENT_CANDIDATE">当前候选</option><option value="NEXT_SESSION_PLAN">次日预案</option><option value="WAIT_ENTRY">等待入场</option><option value="RESEARCH_ONLY">降级研究</option><option value="DATA_ERROR">数据异常</option></select><select id="filterChannel" aria-label="筛选通道"><option value="all">全部通道</option><option value="oversold">超跌反弹</option><option value="pullback">趋势回踩</option><option value="breakout">突破确认</option></select><select id="filterMarket" aria-label="筛选市场"><option value="all">全部市场</option><option value="A">仅A股</option><option value="US">仅美股</option></select><select id="sortMode" aria-label="排序方式"><option value="status">状态优先</option><option value="fresh">触发新鲜度</option><option value="rr">净赔率（通道内）</option></select><button class="ghost" id="pinFilterBtn" type="button" aria-pressed="false">钉住：全部</button><button class="ghost" id="manageBtn" type="button">研究池</button></div>
 <div class="coverage"><span id="statusLine">准备加载客观研究池…</span><details><summary>口径说明</summary><p>Q 为触发时形态质量，E 为当前执行质量，S=0.60Q+0.40E，仅在同通道内比较。盘后只给次日预案；分数不代表胜率。现价来自公开行情接口，可能存在延迟。</p></details></div>
+<div class="small muted" id="breadthLine">市场宽度将在有效数据加载后显示；只描述当前池，不参与评分。</div>
 <div class="progress hidden" id="loadProgress"><i></i></div>
 <div class="table-shell"><table aria-label="客观信号结果"><thead><tr><th>标的</th><th>现价 / 涨跌</th><th>状态</th><th>主通道</th><th class="col-q">Q</th><th class="col-e">E</th><th class="col-rr">净赔率</th><th class="col-zone">入场区</th><th class="col-stop">止损 / 目标</th><th>数据</th></tr></thead><tbody id="signalRows"></tbody></table><div class="empty" id="signalEmpty"><strong>正在建立研究集</strong>首次加载需要逐只取得日K；失败会显式标记，不以旧分数代替。</div></div>
 </section>
@@ -52,8 +54,8 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 <section class="view" id="view-research" role="tabpanel">
 <div class="section-head"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h2>探索性历史回放</h2><p>信号在 t 日收盘确认，t+1 开盘只有在入场区内才成交；A股入场当日不退出。当前加载池存在选择与幸存者偏差，结果不是样本外证明。</p></div></div>
 <div class="notice">回放只使用已加载日K，不补造缺失历史。目标与止损同根K线同时触及时按止损优先；跳空按开盘可成交价估计。未成交信号单列，不删除。</div>
-<div class="research-controls"><div class="field"><label for="holdingDays">最大持有交易日</label><input id="holdingDays" type="number" min="3" max="30" value="10"></div><div class="field"><label for="feeBps">往返费用假设（bps）</label><input id="feeBps" type="number" min="0" max="200" value="15"></div><div class="field"><label for="slippageBps">单边滑点假设（bps）</label><input id="slippageBps" type="number" min="0" max="200" value="10"></div><button class="primary" id="replayBtn" type="button">回放已加载标的</button></div>
-<div id="replayOutput"><div class="empty"><strong>尚未运行回放</strong>先完成信号加载，再用同一套内核回放。修改成本假设只影响本次研究结果。</div></div>
+<div class="research-controls"><div class="field"><label for="holdingDays">最大持有交易日</label><input id="holdingDays" type="number" min="3" max="30" value="10"></div><div class="field"><label for="feeBps">往返费用假设（bps）</label><input id="feeBps" type="number" min="0" max="200" value="15"></div><div class="field"><label for="slippageBps">单边滑点假设（bps）</label><input id="slippageBps" type="number" min="0" max="200" value="10"></div><button class="primary" id="replayBtn" type="button">回放已加载标的</button><button class="ghost" id="exportReplayBtn" type="button" disabled>导出完整回放</button></div>
+<div id="replayOutput"><div class="empty"><strong>尚未运行回放</strong>先完成信号加载，再用同一套内核回放。修改成本假设只影响本次研究结果。</div></div><div class="section-head"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h2>上线后前向观察</h2><p>只在本机研究池刷新时记录不可变信号快照；按原入场与退出规则结算，和历史回放分开。仅存当前浏览器，可导出备份。</p></div></div><div class="research-controls"><button class="ghost" id="exportForwardBtn" type="button">导出前向记录</button><button class="ghost danger" id="clearForwardBtn" type="button">清空前向记录</button></div><div id="forwardOutput"></div>
 </section>
 <section class="view" id="view-diagnostics" role="tabpanel">
 <div class="section-head"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h2>数据与内核诊断</h2><p>数据失败不静默；同一份标准化输入在扫描、详情、回放与自测中复用。</p></div></div>
@@ -67,19 +69,19 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 <h3>交易几何</h3><p>入场区、止损与目标由触发时的结构锚点固定，不随当前价格移动。净赔率计入费用与双边滑点假设；1.5 是研究门槛，不是正期望的数学证明。止损是计划价，不保证跳空或涨跌停时成交。</p>
 <div class="formula">净赔率 = 目标净收益 ÷ 止损净损失<br>S = 0.60 × Q + 0.40 × E（只作同通道启发式基线）</div>
 <h3>硬门槛</h3><p>数据不足或陈旧、通道未成立、结构失效、几何非法、净赔率不足、流动性不合格、明显离开入场区、疑似涨停不可成交，均不能被高分抵消。环境状态单列，不乘入 Q/E/S。</p>
-<h3>验证边界</h3><p>页面内回放是当前加载池上的探索性研究，不含完整历史股票池、退市样本、滚动样本外、净化隔离和多重试验校正。样本少于30笔显示“样本不足”；达到30笔也不自动等于稳定规律。</p>
-<h3>v10.0-rc.1 版本记录 · 2026-10-26</h3><ol><li>废除通用技术总分，建立超跌、回踩、突破独立状态机与 Q/E 评分。</li><li>修复触发后几何漂移：触发日冻结ATR、锚点、入场区和目标，当前价只更新执行状态。</li><li>修复A股午休误用未完成K线；新增交易时段迁移后自动复核信号。</li><li>超跌评分改用事件日Z值，企稳证据必须在触发日前完成。</li><li>腾讯K线恢复web.ifzq主端点、proxy仅作镜像兜底；美股指数基准适配新浪.IXIC/.INX/.DJI口径；全A列表增加新浪备用源。</li><li>回放纳入流动性、涨停不可成交、Q/E/S和统一持有期；撤除会驻留全部历史特征的缓存，避免浏览器内存崩溃。</li><li>单文件、无后端、无登录、无自动交易；仅研究池与界面设置保存在当前浏览器。</li></ol>
+<h3>高周期压力</h3><p>只使用触发日前已经完成的周线和月线摆动高点，当前未完成周/月不参与。若最近高周期压力位于原第一目标之前，则将第一目标收缩到该压力并重算净赔率；日线是否触发不由高周期压力反向改写。</p><h3>验证边界</h3><p>页面内回放是当前加载池上的探索性研究，不含完整历史股票池、退市样本、滚动样本外、净化隔离和多重试验校正。样本少于30笔显示“样本不足”；达到30笔也不自动等于稳定规律。</p>
+<h3>v10.0-rc.3 候选版本记录 · 2026-10-27</h3><ol><li>融合复权口径元数据、数据警告、交易所本地时间与Q/E/S分桶诊断；保留后台Worker回放，取消时不输出不完整汇总。</li><li>K线连续性与异常跳变校验前移到各数据源及缓存验收，质量失败继续降级；全A主备列表统一纳入北交所，修复bj研究池持久化。</li><li>新增已完成周线/月线摆动压力：只在触发时约束第一目标并重算成本后净赔率，不改变日线触发条件；回放使用同一口径。</li><li>新增名称搜索、钉住筛选、市场宽度、空闲自动刷新、完整回放导出及本机前向信号快照；均不读取账户或持仓。</li></ol><h3>v10.0-rc.2 版本记录 · 2026-10-27</h3><ol><li>修复回放反复重算历史指标导致的长阻塞：指标序列每只标的只计算一次，回放移至独立工作线程，支持进度显示与取消。</li><li>增加美股参考环境、纳指数据时点与美股市场筛选；A股和美股环境仍只展示、不扣分。</li><li>修复A股16:00后误删当日完成日K；北交所普通股票涨跌幅修正为30%，并允许bj代码加入研究池。</li><li>新增增量特征一致性、A股16点后和北交所规则回归自测；修复不改变三通道参数、Q/E权重与回放交易口径。</li></ol><h3>v10.0-rc.1 版本记录 · 2026-10-26</h3><ol><li>废除通用技术总分，建立超跌、回踩、突破独立状态机与 Q/E 评分。</li><li>修复触发后几何漂移：触发日冻结ATR、锚点、入场区和目标，当前价只更新执行状态。</li><li>修复A股午休误用未完成K线；新增交易时段迁移后自动复核信号。</li><li>超跌评分改用事件日Z值，企稳证据必须在触发日前完成。</li><li>腾讯K线恢复web.ifzq主端点、proxy仅作镜像兜底；美股指数基准适配新浪.IXIC/.INX/.DJI口径；全A列表增加新浪备用源。</li><li>回放纳入流动性、涨停不可成交、Q/E/S和统一持有期；撤除会驻留全部历史特征的缓存，避免浏览器内存崩溃。</li><li>单文件、无后端、无登录、无自动交易；仅研究池与界面设置保存在当前浏览器。</li></ol>
 </section>
-<footer class="footer"><span>Quant v10.0-rc.1 · Score v0 · 数据与结论均需在决策前复核</span><span>公开行情研究工具，不构成收益承诺</span></footer>
+<footer class="footer"><span>Quant v10.0-rc.3 · Score v0 · 数据与结论均需在决策前复核</span><span>公开行情研究工具，不构成收益承诺</span></footer>
 </main>
-<dialog id="watchDialog" aria-labelledby="watchTitle"><div class="dialog-head"><h2 id="watchTitle">客观研究池</h2><button class="ghost" data-close="watchDialog" type="button">关闭</button></div><div class="dialog-body"><div class="add-grid"><input id="addSymbol" type="search" placeholder="代码直达：600519 / sh600519 / usNVDA" aria-label="添加代码"><button class="primary" id="addBtn" type="button">校验并添加</button></div><div id="searchResults" class="search-results"></div><p class="small muted" style="margin:12px 0">研究池仅保存在此浏览器；清除浏览器数据会丢失。默认池用于跨行业参考，与任何账户持仓无关。</p><div id="watchList"></div></div><div class="dialog-actions"><button class="ghost" id="exportBtn" type="button">导出研究池</button><button class="ghost" id="importBtn" type="button">导入</button><input id="importFile" class="hidden" type="file" accept="application/json,.json"><button class="ghost danger" id="resetBtn" type="button">恢复默认</button></div></dialog>
-<dialog id="settingsDialog" aria-labelledby="settingsTitle"><div class="dialog-head"><h2 id="settingsTitle">客观模型设置</h2><button class="ghost" data-close="settingsDialog" type="button">关闭</button></div><div class="dialog-body"><div class="settings-grid"><div class="field"><label for="setMinRR">正常候选最低净赔率</label><input id="setMinRR" type="number" min="1" max="5" step="0.1" value="1.5"></div><div class="field"><label for="setDeepLimit">全A深扫数量上限</label><select id="setDeepLimit"><option>30</option><option selected>60</option><option>120</option></select></div><div class="field"><label for="setMinAmountA">A股20日均成交额门槛（万元）</label><input id="setMinAmountA" type="number" min="0" step="1000" value="5000"></div><div class="field"><label for="setMinAmountUS">美股20日均成交额门槛（万美元）</label><input id="setMinAmountUS" type="number" min="0" step="100" value="500"></div></div><p class="small muted" style="margin-top:14px">设置只改变客观研究口径，不代表任何账户纪律。修改后重新刷新信号。</p></div><div class="dialog-actions"><button class="primary" id="saveSettings" type="button">保存设置</button></div></dialog>
+<dialog id="watchDialog" aria-labelledby="watchTitle"><div class="dialog-head"><h2 id="watchTitle">客观研究池</h2><button class="ghost" data-close="watchDialog" type="button">关闭</button></div><div class="dialog-body"><div class="add-grid"><input id="addSymbol" type="search" placeholder="名称 / 代码：茅台、600519、bj920001、usNVDA" aria-label="添加代码"><button class="primary" id="addBtn" type="button">校验并添加</button></div><div id="searchResults" class="search-results"></div><p class="small muted" style="margin:12px 0">研究池仅保存在此浏览器；清除浏览器数据会丢失。默认池用于跨行业参考，与任何账户持仓无关。</p><div id="watchList"></div></div><div class="dialog-actions"><button class="ghost" id="exportBtn" type="button">导出研究池</button><button class="ghost" id="importBtn" type="button">导入</button><input id="importFile" class="hidden" type="file" accept="application/json,.json"><button class="ghost danger" id="resetBtn" type="button">恢复默认</button></div></dialog>
+<dialog id="settingsDialog" aria-labelledby="settingsTitle"><div class="dialog-head"><h2 id="settingsTitle">客观模型设置</h2><button class="ghost" data-close="settingsDialog" type="button">关闭</button></div><div class="dialog-body"><div class="settings-grid"><div class="field"><label for="setMinRR">正常候选最低净赔率</label><input id="setMinRR" type="number" min="1" max="5" step="0.1" value="1.5"></div><div class="field"><label for="setDeepLimit">全A深扫数量上限</label><select id="setDeepLimit"><option>30</option><option selected>60</option><option>120</option></select></div><div class="field"><label for="setMinAmountA">A股20日均成交额门槛（万元）</label><input id="setMinAmountA" type="number" min="0" step="1000" value="5000"></div><div class="field"><label for="setMinAmountUS">美股20日均成交额门槛（万美元）</label><input id="setMinAmountUS" type="number" min="0" step="100" value="500"></div></div><div class="field" style="margin-top:14px"><label for="setAutoMinutes">自动刷新间隔（开启后生效）</label><select id="setAutoMinutes"><option value="1">1分钟</option><option value="5" selected>5分钟</option><option value="10">10分钟</option></select></div><p class="small muted" style="margin-top:14px">设置只改变客观研究口径，不代表任何账户纪律。自动刷新只在页面可见且空闲时运行；回放期间跳过。修改后重新刷新信号。</p></div><div class="dialog-actions"><button class="primary" id="saveSettings" type="button">保存设置</button></div></dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script>
+<script id="quantCoreSource">
 /* Quant v10.0 objective signal core. No DOM, storage, network or account rules. */
 const QuantCore = (() => {
   "use strict";
-  const VERSION = "v10.0-rc.1";
+  const VERSION = "v10.0-rc.3";
   const DEFAULTS = Object.freeze({
     minBars: 80,
     minAmountA: 5e7,
@@ -229,28 +231,55 @@ const QuantCore = (() => {
     out.sort((a, b) => a.date.localeCompare(b.date));
     return out.filter((b, i) => !i || b.date !== out[i - 1].date);
   }
-  function features(input) {
-    const b = normalizeBars(input),
-      n = b.length;
-    if (n < 60) return null;
+  function klineSeriesQuality(input, minBars = 30) {
+    let bars = normalizeBars(input);
+    const errors = [];
+    if (bars.length < minBars) errors.push(`有效日K不足${minBars}根`);
+    let cut = 0;
+    for (let i = 1; i < bars.length; i++) {
+      const gap = (Date.parse(bars[i].date) - Date.parse(bars[i - 1].date)) / 864e5;
+      if (!Number.isFinite(gap) || gap <= 0) errors.push("K线日期顺序异常");
+      if (gap > 35) cut = i;
+    }
+    if (cut) bars = bars.slice(cut);
+    if (bars.length < minBars) errors.push("最近连续K线段不足，疑似拼接或长期断档");
+    for (let i = Math.max(1, bars.length - 30); i < bars.length; i++) {
+      const r = bars[i].close / bars[i - 1].close - 1;
+      if (!Number.isFinite(r) || Math.abs(r) > 1) errors.push("近30根K线存在异常跳变");
+    }
+    if (bars.length >= 20) {
+      const r20 = last(bars).close / bars[bars.length - 20].close - 1;
+      if (!Number.isFinite(r20) || Math.abs(r20) > 1.5) errors.push("20日收益异常，疑似跨段拼接");
+    }
+    return { bars, pass: !errors.length, errors: [...new Set(errors)] };
+  }
+  function featureShared(b) {
     const c = b.map((x) => x.close),
-      v = b.map((x) => x.volume),
-      ma5 = rolling(c, 5),
-      ma10 = rolling(c, 10),
-      ma20 = rolling(c, 20),
-      ma60 = rolling(c, 60),
-      rsi = rsiSeries(c),
-      atr = atrSeries(b),
-      m = macd(c),
-      i = n - 1,
+      v = b.map((x) => x.volume);
+    return {
+      c,
+      v,
+      ma5: rolling(c, 5),
+      ma10: rolling(c, 10),
+      ma20: rolling(c, 20),
+      ma60: rolling(c, 60),
+      rsi: rsiSeries(c),
+      atr: atrSeries(b),
+      macd: macd(c),
+    };
+  }
+  function featureAt(b, shared, i) {
+    const n = i + 1;
+    if (n < 60) return null;
+    const { c, v, ma5, ma10, ma20, ma60, rsi, atr, macd: m } = shared,
       a = atr[i];
     if (!a || !ma60[i]) return null;
-    const prev20 = b.slice(-21, -1),
-      prev60 = b.slice(-61, -1),
-      last20 = b.slice(-20),
-      vol20 = v.slice(-21, -1),
+    const prev20 = b.slice(i - 20, i),
+      prev60 = b.slice(Math.max(0, i - 60), i),
+      last20 = b.slice(i - 19, i + 1),
+      vol20 = v.slice(i - 20, i),
       amount20 = b
-        .slice(-21, -1)
+        .slice(i - 20, i)
         .map((x) => x.amount)
         .filter(Number.isFinite);
     const swings = [];
@@ -259,11 +288,11 @@ const QuantCore = (() => {
       if (b[j].low === min(w.map((x) => x.low)))
         swings.push({ index: j, price: b[j].low, confirmedAt: j + 2 });
     }
-    const base = b.slice(-21, -1),
+    const base = b.slice(i - 20, i),
       baseHigh = max(base.map((x) => x.high)),
       baseLow = min(base.map((x) => x.low)),
-      baseRange = baseHigh - baseLow;
-    const prior = b.slice(-41, -21),
+      baseRange = baseHigh - baseLow,
+      prior = b.slice(i - 40, i - 20),
       priorAtr = atr[Math.max(0, n - 22)];
     return {
       bars: b,
@@ -294,7 +323,7 @@ const QuantCore = (() => {
       ret5: (c[i] / c[i - 5] - 1) * 100,
       ret20: (c[i] / c[i - 20] - 1) * 100,
       ret60: (c[i] / c[i - 60] - 1) * 100,
-      volAvg5: mean(v.slice(-6, -1)),
+      volAvg5: mean(v.slice(i - 5, i)),
       volAvg20: mean(vol20),
       amountAvg20: mean(amount20),
       volRatio: mean(vol20) > 0 ? v[i] / mean(vol20) : null,
@@ -315,6 +344,10 @@ const QuantCore = (() => {
       priorVol: mean(prior.map((x) => x.volume)),
       swings,
     };
+  }
+  function features(input) {
+    const b = normalizeBars(input);
+    return b.length ? featureAt(b, featureShared(b), b.length - 1) : null;
   }
   function asNormalized(input) {
     if (input && input.__q10Normalized) return input;
@@ -668,6 +701,38 @@ const QuantCore = (() => {
     }
     return base;
   }
+  function higherTimeframePressures(input, anchorPrice) {
+    const bars = normalizeBars(input);
+    if (bars.length < 45 || !(anchorPrice > 0)) return [];
+    const weekKey = (date) => {
+      const d = new Date(date + "T00:00:00Z"), shift = (d.getUTCDay() + 6) % 7;
+      d.setUTCDate(d.getUTCDate() - shift);
+      return d.toISOString().slice(0, 10);
+    };
+    const aggregate = (keyFn, limit) => {
+      const groups = [];
+      for (const b of bars) {
+        const key = keyFn(b.date);
+        if (!groups.length || groups[groups.length - 1].key !== key)
+          groups.push({ key, date: b.date, high: b.high });
+        else {
+          groups[groups.length - 1].date = b.date;
+          groups[groups.length - 1].high = Math.max(groups[groups.length - 1].high, b.high);
+        }
+      }
+      return groups.slice(0, -1).slice(-limit);
+    };
+    const out = [];
+    for (const [period, groups] of [["周线", aggregate(weekKey, 30)], ["月线", aggregate((d) => d.slice(0, 7), 18)]]) {
+      for (let i = 1; i < groups.length - 1; i++) {
+        const g = groups[i];
+        if (g.high >= groups[i - 1].high && g.high >= groups[i + 1].high && g.high > anchorPrice * 1.002)
+          out.push({ price: g.high, period, date: g.key });
+      }
+    }
+    out.sort((a, b) => a.price - b.price || (a.period === "月线" ? -1 : 1));
+    return out.filter((x, i) => !i || Math.abs(x.price / out[i - 1].price - 1) > 0.001).slice(0, 5);
+  }
   function netGeometry(channel, f, setup, price, cfg, triggerPrice = f.close) {
     const atr = f.atr,
       a = setup.anchors;
@@ -697,6 +762,10 @@ const QuantCore = (() => {
       target = a.pressure + Math.max(a.baseRange, 2 * atr);
       anchorLabel = "突破压力";
     }
+    const rawTarget = target,
+      higherPressures = higherTimeframePressures(f.bars, triggerPrice),
+      higherPressure = higherPressures.find((x) => x.price < target) || null;
+    if (higherPressure) target = higherPressure.price;
     const slip = cfg.slippageBps / 10000,
       fee = cfg.feeBps / 20000,
       entry = price * (1 + slip + fee),
@@ -708,6 +777,9 @@ const QuantCore = (() => {
     return {
       stop,
       target,
+      rawTarget,
+      higherPressure,
+      higherPressures,
       zoneLo,
       zoneHi,
       anchorLabel,
@@ -823,9 +895,12 @@ const QuantCore = (() => {
       z = tzInfo(now, market === "A" ? "Asia/Shanghai" : "America/New_York");
     if (!b.length) return b;
     const session = marketSession(market, now);
-    return last(b).date === z.day && session.state !== "POST"
-      ? b.slice(0, -1)
-      : b;
+    const incomplete =
+      last(b).date === z.day &&
+      (market === "A"
+        ? ["PRE", "REGULAR", "MIDDAY"].includes(session.state)
+        : session.state !== "POST");
+    return incomplete ? b.slice(0, -1) : b;
   }
   function dataQuality(code, bars, quote, market, now, cfg) {
     const errors = [],
@@ -861,6 +936,7 @@ const QuantCore = (() => {
     return { pass: !errors.length, errors: [...new Set(errors)], warnings };
   }
   function priceLimit(code, name) {
+    if (code.startsWith("bj")) return 30;
     if (/^(sz300|sz301|sh688|sh689)/.test(code)) return 20;
     if (/ST/i.test(name || "")) return 5;
     return 10;
@@ -1162,8 +1238,9 @@ const QuantCore = (() => {
         ]),
       );
     if (bars.length < cfg.minBars + 15) return { trades, skipped };
+    const shared = featureShared(bars);
     for (let t = cfg.minBars - 1; t < bars.length - 2; t++) {
-      const f = features(bars.slice(0, t + 1)),
+      const f = featureAt(bars.slice(0, t + 1), shared, t),
         date = bars[t].date,
         bb = benchmarkSlice(benchmark, date);
       for (const channel of Object.keys(CHANNELS)) {
@@ -1213,6 +1290,65 @@ const QuantCore = (() => {
     }
     return { trades, skipped };
   }
+  function scoreDiagnostics(trades) {
+    const stats = (arr) => {
+      const rs = arr.map((x) => x.R).filter(Number.isFinite);
+      return {
+        count: arr.length,
+        avgR: mean(rs),
+        winRate: rs.length ? (rs.filter((x) => x > 0).length / rs.length) * 100 : null,
+      };
+    };
+    const out = [];
+    for (const channel of Object.keys(CHANNELS)) {
+      for (const metric of ["Q", "E", "S"]) {
+        const arr = trades
+          .filter(
+            (x) =>
+              x.channel === channel &&
+              Number.isFinite(x[metric]) &&
+              Number.isFinite(x.R),
+          )
+          .sort((a, b) => a[metric] - b[metric]);
+        if (arr.length < 30) {
+          out.push({
+            channel,
+            metric,
+            count: arr.length,
+            buckets: [],
+            spread: null,
+            monotonic: null,
+            status: "样本不足",
+          });
+          continue;
+        }
+        const cut1 = Math.floor(arr.length / 3),
+          cut2 = Math.floor((arr.length * 2) / 3),
+          lows = arr.slice(0, cut1),
+          mids = arr.slice(cut1, cut2),
+          highs = arr.slice(cut2),
+          buckets = [
+            { label: "低", ...stats(lows), range: [lows[0][metric], last(lows)[metric]] },
+            { label: "中", ...stats(mids), range: [mids[0][metric], last(mids)[metric]] },
+            { label: "高", ...stats(highs), range: [highs[0][metric], last(highs)[metric]] },
+          ],
+          spread = buckets[2].avgR - buckets[0].avgR,
+          monotonic =
+            buckets[0].avgR <= buckets[1].avgR &&
+            buckets[1].avgR <= buckets[2].avgR;
+        out.push({
+          channel,
+          metric,
+          count: arr.length,
+          buckets,
+          spread,
+          monotonic,
+          status: monotonic ? "分桶单调" : "分桶非单调",
+        });
+      }
+    }
+    return out;
+  }
   function replaySummary(items) {
     const trades = items.flatMap((x) => x.trades || []),
       skipped = items.flatMap((x) => x.skipped || []),
@@ -1246,7 +1382,9 @@ const QuantCore = (() => {
       overall: summarize({ trades, skipped: skipped.length }),
       channels: Object.values(by).map(summarize),
       trades,
+      skipped,
       skippedCount: skipped.length,
+      scoreDiagnostics: scoreDiagnostics(trades),
     };
   }
   function makeSynthetic(n = 140) {
@@ -1442,6 +1580,79 @@ const QuantCore = (() => {
           netGeometry("breakout", features(b), s0, lastBar.close, DEFAULTS).zoneHi
       );
     });
+    test("A股16点后采纳当日已完成K线", () => {
+      const b = makeSynthetic(100);
+      b[b.length - 1].date = "2026-10-26";
+      const kept = completedBars(
+        b,
+        "A",
+        new Date("2026-10-26T12:00:00Z"),
+      );
+      return kept[kept.length - 1].date === "2026-10-26";
+    });
+    test("北交所普通股票涨跌幅为30%", () =>
+      priceLimit("bj920001", "测试") === 30);
+    test("增量特征快照与独立逐日计算一致", () => {
+      const b = makeSynthetic(140),
+        shared = featureShared(b),
+        pick = (f) =>
+          f && [
+            f.date,
+            f.close,
+            f.atr,
+            f.prevHigh20,
+            f.prevLow60,
+            f.volAvg20,
+            f.amountAvg20,
+            f.baseHigh,
+            f.baseLow,
+            f.ma60Prev5,
+            f.swings,
+          ];
+      for (const n of [60, 80, 100, 139, 140]) {
+        const a = featureAt(b.slice(0, n), shared, n - 1),
+          z = features(b.slice(0, n));
+        if (JSON.stringify(pick(a)) !== JSON.stringify(pick(z))) return false;
+      }
+      return true;
+    });
+    test("A股15:01与16:00边界均保留完成K线", () => {
+      const b = makeSynthetic(100);
+      b[b.length - 1].date = "2026-10-26";
+      return ["2026-10-26T07:01:00Z", "2026-10-26T08:00:00Z"].every((t) => {
+        const kept = completedBars(b, "A", new Date(t));
+        return kept[kept.length - 1].date === "2026-10-26";
+      });
+    });
+    test("K线长期断档截取最近连续段", () => {
+      const b = makeSynthetic(90);
+      for (let i = 50; i < b.length; i++) b[i].date = new Date(Date.parse(b[i].date) + 60 * 864e5).toISOString().slice(0, 10);
+      const q = klineSeriesQuality(b);
+      return q.pass && q.bars.length === 40;
+    });
+    test("异常收益拼接被质量防线拒绝", () => {
+      const b = makeSynthetic(90), x = b[b.length - 1];
+      x.close = x.open * 3;
+      x.high = Math.max(x.high, x.close);
+      return !klineSeriesQuality(b).pass;
+    });
+    test("高周期压力不使用未完成周月", () => {
+      const b = makeSynthetic(160), p0 = higherTimeframePressures(b, 8);
+      b[b.length - 1].high = 9999;
+      return JSON.stringify(higherTimeframePressures(b, 8)) === JSON.stringify(p0);
+    });
+    test("高周期压力只收缩目标并保持入场止损", () => {
+      const b = makeSynthetic(180), f0 = features(b), setup = { anchors: { pressure: f0.close - 1, baseLow: f0.close - 4, baseRange: 3 } };
+      const g0 = netGeometry("breakout", f0, setup, f0.close, DEFAULTS);
+      const keys = [...new Set(b.map((x) => x.date.slice(0, 7)))], key = keys[keys.length - 5];
+      for (const x of b) if (x.date.startsWith(key)) x.high = f0.close + 0.5;
+      const f1 = { ...f0, bars: b }, g1 = netGeometry("breakout", f1, setup, f1.close, DEFAULTS);
+      return g1.higherPressure && g1.target < g0.target && g1.stop === g0.stop && g1.zoneLo === g0.zoneLo && g1.zoneHi === g0.zoneHi;
+    });
+    test("分桶诊断少于30笔只报样本不足", () => {
+      const trades = Array.from({ length: 29 }, (_, i) => ({ channel: "breakout", Q: i, E: i, S: i, R: 0.1 }));
+      return scoreDiagnostics(trades).filter((x) => x.channel === "breakout").every((x) => x.status === "样本不足" && !x.buckets.length);
+    });
     return tests;
   }
   return {
@@ -1452,6 +1663,8 @@ const QuantCore = (() => {
     mean,
     median,
     normalizeBars,
+    klineSeriesQuality,
+    higherTimeframePressures,
     features,
     historicalSetup,
     analyzeSymbol,
@@ -1463,6 +1676,7 @@ const QuantCore = (() => {
     tzInfo,
     statusLabel,
     statusRank,
+    priceLimit,
     repriceGeometry,
     runSelfTests,
     makeSynthetic,
@@ -1522,11 +1736,21 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     loading: false,
     scanning: false,
     scanToken: 0,
+    replaying: false,
+    replayToken: 0,
+    replayWorker: null,
+    replayWorkerUrl: null,
     mode: "watch",
     logs: [],
     config: { ...C.DEFAULTS, deepLimit: 60 },
     scanMeta: null,
     expanded: new Set(),
+    pins: new Set(),
+    pinOnly: false,
+    autoRefresh: false,
+    autoMinutes: 5,
+    lastRefreshAt: 0,
+    lastReplay: null,
   };
   let selfTestCache = null;
   function getSelfTests() {
@@ -1559,6 +1783,17 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     clearTimeout(toast.t);
     toast.t = setTimeout(() => t.classList.remove("show"), 2800);
   }
+  function downloadJSON(data, filename) {
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }),
+      url = URL.createObjectURL(blob),
+      a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
   function log(msg, type = "info") {
     const line = `${new Date().toLocaleTimeString("zh-CN", { hour12: false })} [${type}] ${msg}`;
     state.logs.unshift(line);
@@ -1587,7 +1822,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       a.every(
         (x) =>
           Array.isArray(x) &&
-          /^(sh|sz|us)[0-9A-Za-z.]+$/.test(x[0]) &&
+          /^(sh|sz|bj|us)[0-9A-Za-z.]+$/.test(x[0]) &&
           String(x[1] || "").trim(),
       )
     );
@@ -1599,6 +1834,21 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     );
     const cfg = safeGet("quant_v10_settings");
     if (cfg) state.config = { ...state.config, ...cfg };
+    const pins = safeGet("quant_v10_pins");
+    if (Array.isArray(pins)) state.pins = new Set(pins.filter((x) => typeof x === "string"));
+    const prefs = safeGet("quant_v10_monitor");
+    if (prefs) {
+      state.autoRefresh = prefs.autoRefresh === true;
+      state.autoMinutes = [1, 5, 10].includes(+prefs.autoMinutes) ? +prefs.autoMinutes : 5;
+    }
+  }
+  function saveMonitorPrefs() {
+    safeSet("quant_v10_monitor", { autoRefresh: state.autoRefresh, autoMinutes: state.autoMinutes });
+    safeSet("quant_v10_pins", [...state.pins]);
+  }
+  function renderAutoButton() {
+    $("autoBtn").textContent = state.autoRefresh ? `自动：${state.autoMinutes}分钟` : "自动：关";
+    $("autoBtn").setAttribute("aria-pressed", String(state.autoRefresh));
   }
   function saveList() {
     safeSet("quant_v10_watchlist", state.list);
@@ -1787,17 +2037,42 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
   function readCache(code) {
     try {
       const j = JSON.parse(sessionStorage.getItem(cacheKey(code)) || "null");
-      if (j && Date.now() - j.t < 20 * 60e3 && Array.isArray(j.b)) return j.b;
+      if (j && Date.now() - j.t < 20 * 60e3 && Array.isArray(j.b)) {
+        const q = C.klineSeriesQuality(j.b, C.DEFAULTS.minBars);
+        if (!q.pass) return null;
+        return {
+          bars: q.bars,
+          source: "会话缓存(" + (j.source || "未知") + ")",
+          adjustment: j.adjustment || "复权口径未确认",
+          adjustmentConfirmed: j.adjustmentConfirmed === true,
+        };
+      }
     } catch (e) {}
     return null;
   }
-  function writeCache(code, bars) {
+  function writeCache(code, bars, source, meta) {
     try {
       sessionStorage.setItem(
         cacheKey(code),
-        JSON.stringify({ t: Date.now(), b: bars }),
+        JSON.stringify({
+          t: Date.now(),
+          b: bars,
+          source,
+          adjustment: meta && meta.adjustment,
+          adjustmentConfirmed: !!(meta && meta.adjustmentConfirmed),
+        }),
       );
     } catch (e) {}
+  }
+  function acceptKline(input) {
+    const q = C.klineSeriesQuality(input, C.DEFAULTS.minBars);
+    if (!q.pass) throw new Error(q.errors.join("；"));
+    return q.bars;
+  }
+  function klineMeta(source, code) {
+    if (!isUS(code) && (source === "腾讯" || source === "东财"))
+      return { adjustment: "前复权", adjustmentConfirmed: true };
+    return { adjustment: "复权口径未确认", adjustmentConfirmed: false };
   }
   async function klineEM(code) {
     const url =
@@ -1820,8 +2095,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       };
     });
     const norm = C.normalizeBars(bars);
-    if (norm.length < 30) throw new Error("东财日K质量不合格");
-    return norm;
+    return acceptKline(norm);
   }
   async function klineTX(code) {
     const tq = isUS(code) ? code + ".OQ" : code,
@@ -1850,8 +2124,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
               amount: isUS(code) ? +k[2] * +k[5] : +k[2] * +k[5] * 100,
             })),
             norm = C.normalizeBars(bars);
-          if (norm.length < 30) throw new Error("腾讯日K质量不合格");
-          return norm;
+          return acceptKline(norm);
         } catch (e) {
           lastError = e;
         }
@@ -1911,8 +2184,11 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
                 amount: +x.close * +x.volume * 100,
               })),
           bars = C.normalizeBars(raw);
-        if (bars.length < 30) return reject(new Error("新浪日K质量不合格"));
-        resolve(bars);
+        try {
+          resolve(acceptKline(bars));
+        } catch (e) {
+          reject(new Error("新浪日K质量不合格：" + e.message));
+        }
       };
       s.onerror = () => {
         if (done) return;
@@ -1945,14 +2221,32 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       errors = [];
     for (let i = 0; i < chain.length; i++) {
       try {
-        const bars = await chain[i](code);
-        writeCache(code, bars);
-        return { bars, source: names[i] };
+        const bars = acceptKline(await chain[i](code)),
+          meta = klineMeta(names[i], code);
+        writeCache(code, bars, names[i], meta);
+        return { bars, source: names[i], ...meta };
       } catch (e) {
         errors.push(names[i] + ":" + e.message);
       }
     }
     throw new Error("日K三源均失败：" + errors.join(" / "));
+  }
+  function applyKlineMeta(r, k, quote) {
+    r.kSource = k.source;
+    r.kAdjustment = k.adjustment || "复权口径未确认";
+    r.adjustmentConfirmed = k.adjustmentConfirmed === true;
+    const warnings = [];
+    if (r.market === "A" && !r.adjustmentConfirmed)
+      warnings.push("A股K线复权口径未确认，除权除息附近结构需人工复核");
+    const lastClose = k.bars && k.bars.length ? k.bars[k.bars.length - 1].close : null;
+    if (r.market === "A" && quote && Number.isFinite(quote.price) && Number.isFinite(lastClose)) {
+      const diffPct = Math.abs(quote.price / lastClose - 1) * 100,
+        limit = C.priceLimit(r.code, r.name);
+      if (diffPct > limit + 1)
+        warnings.push("现价与最近日K偏离超过单日涨跌幅，可能存在复权、延迟或数据错位");
+    }
+    r.quality = r.quality || { errors: [], warnings: [] };
+    r.quality.warnings = [...(r.quality.warnings || []), ...warnings];
   }
   async function pool(items, size, fn) {
     let index = 0;
@@ -2006,11 +2300,14 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     const text = $("filterText").value.trim().toLowerCase(),
       status = $("filterStatus").value,
       channel = $("filterChannel").value,
+      market = $("filterMarket").value,
       sort = $("sortMode").value;
     let rows = [...state.rows.values()].filter((r) => !isIndex(r.code));
     rows = rows.filter(
       (r) =>
         (!text || (r.name + " " + r.code).toLowerCase().includes(text)) &&
+        (market === "all" || r.market === market) &&
+        (!state.pinOnly || state.pins.has(r.code)) &&
         (status === "all" ||
           (status === "eligible" ? eligibleRow(r) : r.status === status)) &&
         (channel === "all" ||
@@ -2049,7 +2346,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
         const p = r.primary && r.primary.stage === 3 ? r.primary : null,
           g = p && p.geometry,
           open = state.expanded.has(r.code);
-        return `<tr class="signal-row" data-code="${esc(r.code)}" tabindex="0" aria-expanded="${open}"><td data-label="标的"><div class="stock-name">${esc(r.name)}</div><div class="stock-code">${esc(r.code)}</div></td><td data-label="现价" class="price"><span class="${r.pct > 0 ? "up" : r.pct < 0 ? "down" : ""}">${fmt(r.price)}</span><br><span class="small ${r.pct > 0 ? "up" : r.pct < 0 ? "down" : "muted"}">${r.pct === null ? "—" : (r.pct > 0 ? "+" : "") + fmt(r.pct) + "%"}</span></td><td data-label="状态"><span class="badge ${statusClass(r.status)}">${esc(r.statusText || C.statusLabel(r.status))}</span></td><td data-label="主通道"><span class="channel-name">${p ? esc(p.name) : "—"}</span>${r.alternates && r.alternates.length ? `<div class="small muted">另有 ${r.alternates.length} 通道</div>` : ""}</td><td data-label="Q" class="metric col-q"><span class="score ${p ? "" : "na"}">${p ? fmt(p.Q.value, 1) : "—"}</span></td><td data-label="E" class="metric col-e"><span class="score ${p ? "" : "na"}">${p ? fmt(p.E.value, 1) : "—"}</span></td><td data-label="净赔率" class="metric col-rr"><span class="score ${g ? "" : "na"}">${g ? fmt(g.netRR, 2) : "—"}</span></td><td data-label="入场区" class="metric col-zone">${g ? fmt(g.zoneLo) + " ~ " + fmt(g.zoneHi) : "—"}</td><td data-label="止损/目标" class="metric col-stop">${g ? fmt(g.stop) + " / " + fmt(g.target) : "—"}</td><td data-label="数据"><span class="small num">${shortDate(r.barsDate)}</span><br><span class="small muted">${esc(r.source)}</span></td></tr>${open ? `<tr class="detail-row open" data-detail="${esc(r.code)}"><td colspan="10">${detailHTML(r)}</td></tr>` : ""}`;
+        return `<tr class="signal-row" data-code="${esc(r.code)}" tabindex="0" aria-expanded="${open}"><td data-label="标的"><div class="stock-heading"><button class="ghost pin-toggle" data-pin="${esc(r.code)}" type="button" aria-pressed="${state.pins.has(r.code)}" aria-label="${state.pins.has(r.code) ? "取消钉住" : "钉住"}${esc(r.name)}">${state.pins.has(r.code) ? "已钉" : "钉"}</button><div><div class="stock-name">${esc(r.name)}</div><div class="stock-code">${esc(r.code)}</div></div></div></td><td data-label="现价" class="price"><span class="${r.pct > 0 ? "up" : r.pct < 0 ? "down" : ""}">${fmt(r.price)}</span><br><span class="small ${r.pct > 0 ? "up" : r.pct < 0 ? "down" : "muted"}">${r.pct === null ? "—" : (r.pct > 0 ? "+" : "") + fmt(r.pct) + "%"}</span></td><td data-label="状态"><span class="badge ${statusClass(r.status)}">${esc(r.statusText || C.statusLabel(r.status))}</span>${g && g.higherPressure ? `<div class="small warn">日线触发／${esc(g.higherPressure.period)}压力受限</div>` : ""}</td><td data-label="主通道"><span class="channel-name">${p ? esc(p.name) : "—"}</span>${r.alternates && r.alternates.length ? `<div class="small muted">另有 ${r.alternates.length} 通道</div>` : ""}</td><td data-label="Q" class="metric col-q"><span class="score ${p ? "" : "na"}">${p ? fmt(p.Q.value, 1) : "—"}</span></td><td data-label="E" class="metric col-e"><span class="score ${p ? "" : "na"}">${p ? fmt(p.E.value, 1) : "—"}</span></td><td data-label="净赔率" class="metric col-rr"><span class="score ${g ? "" : "na"}">${g ? fmt(g.netRR, 2) : "—"}</span></td><td data-label="入场区" class="metric col-zone">${g ? fmt(g.zoneLo) + " ~ " + fmt(g.zoneHi) : "—"}</td><td data-label="止损/目标" class="metric col-stop">${g ? fmt(g.stop) + " / " + fmt(g.target) : "—"}</td><td data-label="数据"><span class="small num">${shortDate(r.barsDate)}</span><br><span class="small muted">${esc(r.source)}</span></td></tr>${open ? `<tr class="detail-row open" data-detail="${esc(r.code)}"><td colspan="10">${detailHTML(r)}</td></tr>` : ""}`;
       })
       .join("");
     $("signalEmpty").classList.toggle(
@@ -2070,6 +2367,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     $("coverageTop").textContent =
       all.filter((r) => r.status !== "DATA_ERROR").length + " / " + all.length;
     renderObservations();
+    renderBreadth();
     renderDiagnostics();
   }
   function dimHTML(title, obj) {
@@ -2081,12 +2379,17 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       .join("")}`;
   }
   function detailHTML(r) {
-    const p = r.primary && r.primary.stage === 3 ? r.primary : null;
+    const p = r.primary && r.primary.stage === 3 ? r.primary : null,
+      dataLine = `完成日K ${esc(r.barsDate)}；报价 ${esc(r.source)}；K线源 ${esc(r.kSource || "—")}；${esc(r.kAdjustment || "复权口径未确认")}`,
+      warnings = (r.quality && r.quality.warnings) || [];
     if (!p)
-      return `<div class="detail"><div><h3>观察原因</h3><p>${esc(r.statusText)}</p></div><div><h3>数据时点</h3><p>完成日K ${esc(r.barsDate)}；报价 ${esc(r.source)}</p></div><div><h3>质量诊断</h3><p>${esc(r.quality.errors.join("；") || "未形成三通道候选")}</p></div></div>`;
-    const g = p.geometry,
-      alt = r.alternates || [];
-    return `<div class="detail"><div><h3>${esc(p.name)} · ${esc(p.statusText)}</h3><ul class="reason-list">${(p.evidence || []).map((x) => `<li>${esc(x)}</li>`).join("")}<li>首次有效触发：${esc(p.triggerDate)}；信号年龄 ${p.age} 个完成交易日</li>${(p.reasons || []).map((x) => `<li class="warn">${esc(x)}</li>`).join("")}</ul><h4>其他合格通道</h4><p>${alt.length ? alt.map((x) => esc(x.name) + " / " + esc(x.statusText)).join("；") : "无"}</p><h4>数据时点</h4><p>完成日K ${esc(r.barsDate)}；现价源 ${esc(r.source)}；${r.session.state === "REGULAR" ? "常规交易时段" : "非盘中，盘中未完成K线未计入Q"}</p></div><div><h3>固定交易几何</h3><div class="geometry-grid"><div><span>入场区</span><b class="num">${fmt(g.zoneLo)} ~ ${fmt(g.zoneHi)}</b></div><div><span>成本后净赔率</span><b class="num">${fmt(g.netRR, 2)}</b></div><div><span>失效 / 止损锚</span><b class="num">${fmt(g.stop)}</b></div><div><span>第一目标</span><b class="num">${fmt(g.target)}</b></div><div><span>结构锚点</span><b>${esc(g.anchorLabel)}</b></div><div><span>S（仅同通道）</span><b class="num">${fmt(p.S, 1)}</b></div></div><p class="small muted" style="margin-top:8px">费用 ${state.config.feeBps} bps（往返）+ 滑点 ${state.config.slippageBps} bps（单边）假设。止损不保证成交。</p>${dimHTML("执行质量 E", p.E.dims)}</div><div><h3>形态质量 Q · ${fmt(p.Q.value, 1)}</h3>${dimHTML("Score v0 原始维度", p.Q.dims)}<h4>输出边界</h4><p>分数不是胜率、预期收益或账户建议。盘后状态为次日预案；离开入场区不追价。</p></div></div>`;
+      return `<div class="detail"><div><h3>观察原因</h3><p>${esc(r.statusText)}</p></div><div><h3>数据时点</h3><p>${dataLine}</p></div><div><h3>质量诊断</h3><p>${esc([...((r.quality && r.quality.errors) || []), ...warnings].join("；") || "未形成三通道候选")}</p></div></div>`;
+    const g = p.geometry, alt = r.alternates || [],
+      pressure = g.higherPressure
+        ? `<div><span>高周期压力</span><b class="warn">${esc(g.higherPressure.period)} ${fmt(g.higherPressure.price)}</b><small>原目标 ${fmt(g.rawTarget)}，已收缩</small></div>`
+        : `<div><span>高周期压力</span><b>未提前收缩目标</b></div>`,
+      pressureList = (g.higherPressures || []).slice(0, 3).map((x) => `${esc(x.period)} ${fmt(x.price)}`).join("；") || "未识别到上方已确认摆动压力";
+    return `<div class="detail"><div><h3>${esc(p.name)} · ${esc(p.statusText)}</h3><ul class="reason-list">${(p.evidence || []).map((x) => `<li>${esc(x)}</li>`).join("")}<li>首次有效触发：${esc(p.triggerDate)}；信号年龄 ${p.age} 个完成交易日</li>${(p.reasons || []).map((x) => `<li class="warn">${esc(x)}</li>`).join("")}</ul><h4>其他合格通道</h4><p>${alt.length ? alt.map((x) => esc(x.name) + " / " + esc(x.statusText)).join("；") : "无"}</p><h4>数据时点</h4><p>${dataLine}；${r.session.state === "REGULAR" ? "常规交易时段" : "非盘中，盘中未完成K线未计入Q"}</p>${warnings.length ? `<p class="small warn">${esc(warnings.join("；"))}</p>` : ""}</div><div><h3>固定交易几何</h3><div class="geometry-grid"><div><span>入场区</span><b class="num">${fmt(g.zoneLo)} ~ ${fmt(g.zoneHi)}</b></div><div><span>成本后净赔率</span><b class="num">${fmt(g.netRR, 2)}</b></div><div><span>失效 / 止损锚</span><b class="num">${fmt(g.stop)}</b></div><div><span>第一目标</span><b class="num">${fmt(g.target)}</b></div>${pressure}<div><span>结构锚点</span><b>${esc(g.anchorLabel)}</b></div><div><span>S（仅同通道）</span><b class="num">${fmt(p.S, 1)}</b></div></div><p class="small muted" style="margin-top:8px">上方压力序列：${pressureList}。费用 ${state.config.feeBps} bps（往返）+ 滑点 ${state.config.slippageBps} bps（单边）假设。止损不保证成交。</p>${dimHTML("执行质量 E", p.E.dims)}</div><div><h3>形态质量 Q · ${fmt(p.Q.value, 1)}</h3>${dimHTML("Score v0 原始维度", p.Q.dims)}<h4>输出边界</h4><p>分数不是胜率、预期收益或账户建议。盘后状态为次日预案；离开入场区不追价。</p></div></div>`;
   }
   function renderObservations() {
     const text = $("observeText").value.trim().toLowerCase(),
@@ -2109,20 +2412,50 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       .join("");
     $("observeEmpty").classList.toggle("hidden", rows.length > 0);
   }
+  function renderBreadth() {
+    const parts = [];
+    for (const market of ["A", "US"]) {
+      const rows = [...state.rows.values()].filter((r) => r.market === market && !isIndex(r.code) && Number.isFinite(r.price));
+      let adv = 0, dec = 0, flat = 0, nh = 0, nl = 0, stale = 0;
+      for (const r of rows) {
+        if (r.pct > 0) adv++; else if (r.pct < 0) dec++; else flat++;
+        const bars = C.completedBars(state.bars.get(r.code) || [], market, new Date()).slice(-20);
+        if (bars.length >= 20) {
+          if (r.price >= Math.max(...bars.map((b) => b.high))) nh++;
+          if (r.price <= Math.min(...bars.map((b) => b.low))) nl++;
+        }
+        if (r.session && r.session.state === "REGULAR" && r.quoteTime && Date.now() - r.quoteTime > 20 * 60e3) stale++;
+      }
+      if (rows.length) parts.push(`${market === "A" ? "A股" : "美股"} 涨${adv}/跌${dec}/平${flat} · 20日新高${nh}/新低${nl} · 陈旧报价${stale}`);
+    }
+    $("breadthLine").textContent = parts.length ? parts.join("｜") + "（仅当前池，不入分）" : "市场宽度：尚无有效报价";
+  }
   function renderEnvironment() {
-    const f = C.features(C.completedBars(state.benchmark.A, "A", new Date()));
-    $("envA").textContent = !f
-      ? "数据不足"
-      : f.close > f.ma20[f.n - 1] && f.ma20[f.n - 1] > f.ma60[f.n - 1]
-        ? "趋势支持（仅展示）"
-        : f.close < f.ma20[f.n - 1] && f.ma20[f.n - 1] < f.ma60[f.n - 1]
-          ? "环境谨慎（不扣分）"
-          : "中性（不扣分）";
-    $("envA").className = !f
-      ? "muted"
-      : f.close > f.ma20[f.n - 1] && f.ma20[f.n - 1] > f.ma60[f.n - 1]
-        ? "ok"
-        : "warn";
+    const render = (id, bars, market) => {
+      const f = C.features(C.completedBars(bars, market, new Date())),
+        support =
+          f &&
+          f.close > f.ma20[f.n - 1] &&
+          f.ma20[f.n - 1] > f.ma60[f.n - 1],
+        cautious =
+          f &&
+          f.close < f.ma20[f.n - 1] &&
+          f.ma20[f.n - 1] < f.ma60[f.n - 1];
+      $(id).textContent = !f
+        ? "数据不足"
+        : support
+          ? "趋势支持（仅展示）"
+          : cautious
+            ? "环境谨慎（不扣分）"
+            : "中性（不扣分）";
+      $(id).className = !f ? "muted" : support ? "ok" : "warn";
+      return f;
+    };
+    render("envA", state.benchmark.A, "A");
+    const us = render("envUS", state.benchmark.US, "US");
+    $("envUSMeta").textContent = us
+      ? `纳指 ${fmt(us.close)} · ${us.date}`
+      : "纳指数据不足";
   }
   function renderDiagnostics() {
     const rows = [...state.rows.values()],
@@ -2132,7 +2465,9 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     rows.forEach(
       (r) => (kSources[r.kSource || "—"] = (kSources[r.kSource || "—"] || 0) + 1),
     );
-    const passed = rows.filter((r) => r.status !== "DATA_ERROR").length;
+    const passed = rows.filter((r) => r.status !== "DATA_ERROR").length,
+      unconfirmedA = rows.filter((r) => r.market === "A" && r.kSource && !r.adjustmentConfirmed).length,
+      dataWarnings = rows.flatMap((r) => (r.quality && r.quality.warnings) || []);
     $("sourceStats").innerHTML =
       `<table><tbody><tr><td>当前模式</td><td class="num">${state.mode === "scan" ? "全A初筛深扫" : "本机客观研究池"}</td></tr><tr><td>有效 / 总数</td><td class="num">${passed} / ${rows.length}</td></tr><tr><td>报价来源</td><td>${esc(
         Object.entries(sources)
@@ -2142,7 +2477,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
         Object.entries(kSources)
           .map(([k, v]) => k + " " + v)
           .join("；") || "—",
-      )}</td></tr><tr><td>深扫覆盖</td><td>${esc(state.scanMeta || "尚未执行全A扫描")}</td></tr><tr><td>账户数据</td><td>未读取、未计算、未上传</td></tr></tbody></table>`;
+      )}</td></tr><tr><td>复权 / 一致性</td><td class="${unconfirmedA || dataWarnings.length ? "warn" : ""}">${unconfirmedA ? `A股复权未确认 ${unconfirmedA} 只；` : ""}${dataWarnings.length ? `警告 ${dataWarnings.length} 条` : "无警告"}</td></tr><tr><td>深扫覆盖</td><td>${esc(state.scanMeta || "尚未执行全A扫描")}</td></tr><tr><td>账户数据</td><td>未读取、未计算、未上传</td></tr></tbody></table>`;
     const tests = getSelfTests();
     $("selfTests").innerHTML =
       tests
@@ -2165,10 +2500,12 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
         CLOSED: "休市",
       },
       key = a.state + "|" + u.state;
+    const localTime = (market) => {
+      const z = C.tzInfo(now, market === "A" ? "Asia/Shanghai" : "America/New_York");
+      return `${z.day} ${String(Math.floor(z.minute / 60)).padStart(2, "0")}:${String(z.minute % 60).padStart(2, "0")}`;
+    };
     $("clockText").textContent = `A股${label[a.state]} · 美股${label[u.state]}`;
-    $("clockText").title =
-      now.toLocaleString("zh-CN", { hour12: false }) +
-      "；交易日以实际行情日期为准";
+    $("clockText").title = `上海 ${localTime("A")}；纽约 ${localTime("US")}；交易日以实际行情日期为准`;
     if (
       state.sessionKey &&
       state.sessionKey !== key &&
@@ -2180,6 +2517,10 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       refreshSignals(true);
     }
     state.sessionKey = key;
+    if (state.autoRefresh && !document.hidden && !state.loading && !state.scanning && !state.replaying && state.rows.size && now - state.lastRefreshAt >= state.autoMinutes * 60e3) {
+      log(`自动刷新：每${state.autoMinutes}分钟，当前空闲`);
+      refreshSignals(true);
+    }
   }
   function updateStatus(text) {
     $("statusLine").textContent = text;
@@ -2205,6 +2546,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
   }
   async function refreshSignals(force = true) {
     if (state.loading || state.scanning) return;
+    if (state.replaying) cancelReplay(false);
     state.loading = true;
     state.mode = "watch";
     state.scanMeta = null;
@@ -2240,7 +2582,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
             now: new Date(),
             config: state.config,
           });
-          r.kSource = k.source;
+          applyKlineMeta(r, k, quote);
           state.rows.set(code, r);
         } catch (e) {
           state.rows.set(code, {
@@ -2273,6 +2615,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       updateStatus(
         `研究池完成：${valid}/${items.length} 只有效；${new Date().toLocaleString("zh-CN", { hour12: false })}`,
       );
+      updateForwardJournal();
       log(`研究池刷新完成，有效 ${valid}/${items.length}`);
     } catch (e) {
       updateStatus("刷新失败：" + e.message);
@@ -2283,11 +2626,12 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       $("refreshBtn").disabled = false;
       $("refreshBtn").textContent = "刷新信号";
       setProgress(0, 1, false);
+      state.lastRefreshAt = Date.now();
       renderSignals();
     }
   }
   async function universePage(pn) {
-    const fs = "m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23",
+    const fs = "m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23,m:0+t:81+s:2048",
       url =
         "https://push2.eastmoney.com/api/qt/clist/get?pn=" +
         pn +
@@ -2300,11 +2644,11 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     if (!d || !arr) throw new Error("全A列表第" + pn + "页为空");
     return { rows: Array.isArray(arr) ? arr : [arr], total: +d.total || 0 };
   }
-  async function universeSinaPage(pn) {
+  async function universeSinaPage(pn, node = "hs_a") {
     const url =
       "https://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/Market_Center.getHQNodeData?page=" +
       pn +
-      "&num=100&sort=amount&asc=0&node=hs_a&symbol=&_=" +
+      "&num=100&sort=amount&asc=0&node=" + node + "&symbol=&_=" +
       Date.now(),
       arr = await fetchJSON(url, 10000);
     if (!Array.isArray(arr)) throw new Error("新浪全A列表第" + pn + "页异常");
@@ -2327,13 +2671,15 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     } catch (e) {
       log("东财全A列表失败，切换新浪：" + e.message, "error");
       const all = [];
-      for (let pn = 1; pn <= 70; pn++) {
-        if (token !== state.scanToken) return null;
-        const page = await universeSinaPage(pn);
-        all.push(...page.rows);
-        onProgress(all.length, "…", "新浪");
-        if (page.rows.length < 100) break;
-        await new Promise((r) => setTimeout(r, 120));
+      for (const node of ["hs_a", "hs_bjs"]) {
+        for (let pn = 1; pn <= 70; pn++) {
+          if (token !== state.scanToken) return null;
+          const page = await universeSinaPage(pn, node);
+          all.push(...page.rows);
+          onProgress(all.length, "…", "新浪/" + node);
+          if (page.rows.length < 100) break;
+          await new Promise((r) => setTimeout(r, 120));
+        }
       }
       if (!all.length) throw new Error("东财与新浪全A列表均失败");
       return { all, source: "新浪", total: null };
@@ -2348,6 +2694,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       return;
     }
     if (state.loading) return;
+    if (state.replaying) cancelReplay(false);
     const token = ++state.scanToken;
     state.scanning = true;
     state.mode = "scan";
@@ -2366,7 +2713,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
         token,
       );
       if (!loaded) return;
-      const all = loaded.all.map((d) =>
+      const all = [...new Map(loaded.all.map((d) => [d.symbol || ((+d.f13 === 1 ? "sh" : "sz") + d.f12), d])).values()].map((d) =>
           d.symbol
             ? {
                 code: d.symbol,
@@ -2389,7 +2736,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
                   : null,
               }
             : {
-                code: (+d.f13 === 1 ? "sh" : "sz") + d.f12,
+                code: /^([48]|920)/.test(String(d.f12)) ? "bj" + d.f12 : (+d.f13 === 1 ? "sh" : "sz") + d.f12,
                 name: d.f14,
                 price: +d.f2,
                 pct: Number.isFinite(+d.f3) ? +d.f3 : null,
@@ -2414,7 +2761,9 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
           })
           .sort((a, b) => b.amount - a.amount),
         deep = stage1.slice(0, +state.config.deepLimit);
-      state.scanMeta = `${loaded.source}初筛 ${all.length} 只 → 当额与风险标记合格 ${stage1.length} 只 → 深扫 ${deep.length} 只`;
+      const scanSession = C.marketSession("A", new Date()),
+        timingNote = ["REGULAR", "MIDDAY"].includes(scanSession.state) ? "；盘中按累计成交额初筛，与盘后横截面不可直接比较" : "";
+      state.scanMeta = `${loaded.source}初筛 ${all.length} 只（北交所 ${all.filter((d) => d.code.startsWith("bj")).length}）→ 当额与风险标记合格 ${stage1.length} 只 → 深扫 ${deep.length} 只${timingNote}`;
       log(state.scanMeta);
       if (!deep.length) throw new Error("初筛后无深扫标的");
       await loadBenchmarks(true);
@@ -2437,7 +2786,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
             now: new Date(),
             config: state.config,
           });
-          r.kSource = k.source;
+          applyKlineMeta(r, k, quote);
           state.rows.set(code, r);
         } catch (e) {
           if (token !== state.scanToken) return;
@@ -2485,51 +2834,162 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       }
     }
   }
-  async function runReplay() {
-    if (state.loading || state.scanning) return toast("请等待当前加载结束");
-    const items = [...state.bars.keys()].filter((c) => !isIndex(c));
-    if (!items.length) return toast("没有可回放的已加载日K");
-    $("replayBtn").disabled = true;
-    $("replayBtn").textContent = "回放中…";
-    $("replayOutput").innerHTML =
-      '<div class="empty"><strong>正在逐笔回放</strong>同一信号不重复入场；跳过与未成交样本单独保留。</div>';
-    await new Promise((r) => setTimeout(r, 30));
-    const cfg = currentConfig(),
-      results = [];
-    try {
-      for (let i = 0; i < items.length; i++) {
-        const code = items[i],
-          row = state.rows.get(code);
-        results.push(
-          C.replaySymbol({
-            code,
-            name: (row && row.name) || code,
-            market: isUS(code) ? "US" : "A",
-            bars: state.bars.get(code),
-            benchmarkBars: state.benchmark[isUS(code) ? "US" : "A"],
-            config: cfg,
-          }),
-        );
-        if (i % 3 === 0) await new Promise((r) => setTimeout(r, 0));
-      }
-      const summary = C.replaySummary(results);
-      renderReplay(summary, cfg);
-      log(
-        `回放完成：${summary.overall.count} 笔成交，${summary.skippedCount} 个未成交信号`,
-      );
-    } catch (e) {
+  function disposeReplay() {
+    if (state.replayWorker) state.replayWorker.terminate();
+    if (state.replayWorkerUrl) URL.revokeObjectURL(state.replayWorkerUrl);
+    state.replayWorker = null;
+    state.replayWorkerUrl = null;
+    state.replaying = false;
+    $("replayBtn").disabled = false;
+    $("replayBtn").textContent = "回放已加载标的";
+  }
+  function cancelReplay(showMessage = true) {
+    if (!state.replaying) return;
+    state.replayToken++;
+    disposeReplay();
+    if (showMessage)
       $("replayOutput").innerHTML =
-        '<div class="notice">回放失败：' + esc(e.message) + "</div>";
-    } finally {
-      $("replayBtn").disabled = false;
-      $("replayBtn").textContent = "回放已加载标的";
+        '<div class="notice">已取消本次回放；未生成不完整汇总，可重新开始。</div>';
+    log("已取消回放；已有研究池与信号不受影响");
+  }
+  function replayWorkerSource() {
+    return (
+      $("quantCoreSource").textContent +
+      `\nself.onmessage = (event) => {
+        const { items, benchmark, config } = event.data;
+        try {
+          for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            const result = QuantCore.replaySymbol({
+              ...item,
+              benchmarkBars: benchmark[item.market],
+              config,
+            });
+            self.postMessage({ type: "progress", done: i + 1, total: items.length, result });
+          }
+          self.postMessage({ type: "done" });
+        } catch (error) {
+          self.postMessage({ type: "error", message: error.message || String(error) });
+        }
+      };`
+    );
+  }
+  async function runReplayFallback(items, cfg, token, results, onProgress) {
+    for (let i = 0; i < items.length; i++) {
+      if (token !== state.replayToken) return;
+      const item = items[i];
+      results.push(
+        C.replaySymbol({
+          ...item,
+          benchmarkBars: state.benchmark[item.market],
+          config: cfg,
+        }),
+      );
+      onProgress(i + 1, items.length, results[results.length - 1]);
+      await new Promise((r) => setTimeout(r, 0));
+    }
+    if (token !== state.replayToken) return;
+    const summary = C.replaySummary(results);
+    renderReplay(summary, cfg);
+    log(
+      `回放完成（兼容模式）：${summary.overall.count} 笔成交，${summary.skippedCount} 个未成交信号`,
+    );
+    disposeReplay();
+  }
+  async function runReplay() {
+    if (state.replaying) return cancelReplay();
+    if (state.loading || state.scanning) return toast("请等待当前加载结束");
+    const codes = [...state.bars.keys()].filter((c) => !isIndex(c));
+    if (!codes.length) return toast("没有可回放的已加载日K");
+    const cfg = currentConfig(),
+      items = codes.map((code) => {
+        const row = state.rows.get(code);
+        return {
+          code,
+          name: (row && row.name) || code,
+          market: isUS(code) ? "US" : "A",
+          bars: state.bars.get(code),
+        };
+      }),
+      token = ++state.replayToken,
+      results = [];
+    state.replaying = true;
+    $("replayBtn").textContent = "取消回放";
+    const onProgress = (done, total, result) => {
+      if (token !== state.replayToken) return;
+      const trades = results.reduce((n, x) => n + (x.trades || []).length, 0),
+        skipped = results.reduce((n, x) => n + (x.skipped || []).length, 0);
+      $("replayOutput").innerHTML = `<div class="empty"><strong>正在后台回放 ${done} / ${total}</strong>已得到 ${trades} 笔成交、${skipped} 个未成交信号。可切换页面或取消，不会阻塞操作。</div>`;
+    };
+    $("replayOutput").innerHTML =
+      '<div class="empty"><strong>正在启动后台回放</strong>页面可以继续操作；完成前不会展示不完整结论。</div>';
+    try {
+      const blob = new Blob([replayWorkerSource()], {
+          type: "text/javascript",
+        }),
+        workerUrl = URL.createObjectURL(blob),
+        worker = new Worker(workerUrl);
+      state.replayWorker = worker;
+      state.replayWorkerUrl = workerUrl;
+      worker.onmessage = (event) => {
+        if (token !== state.replayToken) return;
+        const data = event.data;
+        if (data.type === "progress") {
+          results.push(data.result);
+          onProgress(data.done, data.total, data.result);
+        } else if (data.type === "done") {
+          const summary = C.replaySummary(results);
+          renderReplay(summary, cfg);
+          log(
+            `回放完成：${summary.overall.count} 笔成交，${summary.skippedCount} 个未成交信号`,
+          );
+          disposeReplay();
+        } else if (data.type === "error") {
+          $("replayOutput").innerHTML =
+            '<div class="notice">回放失败：' + esc(data.message) + "</div>";
+          disposeReplay();
+        }
+      };
+      worker.onerror = (event) => {
+        if (token !== state.replayToken) return;
+        event.preventDefault();
+        $("replayOutput").innerHTML =
+          '<div class="notice">后台回放启动失败：' +
+          esc(event.message || "Worker错误") +
+          "。请重试或使用支持Web Worker的浏览器。</div>";
+        disposeReplay();
+      };
+      worker.postMessage({ items, benchmark: state.benchmark, config: cfg });
+    } catch (e) {
+      if (state.replayWorker) state.replayWorker.terminate();
+      if (state.replayWorkerUrl) URL.revokeObjectURL(state.replayWorkerUrl);
+      state.replayWorker = null;
+      state.replayWorkerUrl = null;
+      log("Web Worker不可用，回放切换兼容模式：" + e.message, "error");
+      try {
+        await runReplayFallback(items, cfg, token, results, onProgress);
+      } catch (fallbackError) {
+        if (token === state.replayToken) {
+          $("replayOutput").innerHTML =
+            '<div class="notice">回放失败：' +
+            esc(fallbackError.message) +
+            "</div>";
+          disposeReplay();
+        }
+      }
     }
   }
+  function scoreDiagnosticsHTML(diags) {
+    const cell = (b) => b ? `<b class="num">${fmt(b.avgR, 3)}</b><br><span class="small muted">${b.count}笔 / 胜率${fmt(b.winRate, 1)}%</span><br><span class="small muted">${fmt(b.range[0], 1)}～${fmt(b.range[1], 1)}</span>` : "—";
+    return `<h3 style="margin:20px 0 8px">Q/E/S 分桶单调性（探索性）</h3><p class="small muted">每通道每分数至少30笔才分桶；只检查当前已加载池，不用于调参或证明收益。</p><table><thead><tr><th>通道 / 分数</th><th>低分组</th><th>中分组</th><th>高分组</th><th>高-低平均R</th><th>判定</th></tr></thead><tbody>${diags.map((d) => `<tr><td>${esc(C.CHANNELS[d.channel].name)} / ${d.metric}</td><td>${cell(d.buckets[0])}</td><td>${cell(d.buckets[1])}</td><td>${cell(d.buckets[2])}</td><td class="num">${fmt(d.spread, 3)}</td><td><span class="badge ${d.monotonic ? "current" : d.monotonic === false ? "error" : "wait"}">${esc(d.status)}</span></td></tr>`).join("")}</tbody></table>`;
+  }
   function renderReplay(s, cfg) {
+    state.lastReplay = { version: C.VERSION, createdAt: new Date().toISOString(), config: cfg, summary: s };
+    $("exportReplayBtn").disabled = false;
     const metric = (label, val) =>
       `<div><span class="small muted">${label}</span><b>${val}</b></div>`;
     $("replayOutput").innerHTML =
-      `<div class="result-grid">${metric("成交样本", s.overall.count)}${metric("胜率", s.overall.winRate === null ? "—" : fmt(s.overall.winRate, 1) + "%")}${metric("平均净R", fmt(s.overall.avgR, 3))}${metric("Profit factor", fmt(s.overall.profitFactor, 2))}</div><div class="notice ${s.overall.count < 30 ? "" : "info"}">${esc(s.overall.status)}。当前池回放不是样本外验证；未成交信号 ${s.skippedCount} 个，最大持有 ${cfg.holdingDays} 个交易日。</div><table><thead><tr><th>通道</th><th>成交 / 跳过</th><th>胜率</th><th>平均R</th><th>中位R</th><th>Profit factor</th><th>目标 / 止损</th></tr></thead><tbody>${s.channels.map((x) => `<tr><td>${esc(C.CHANNELS[x.channel].name)}</td><td class="num">${x.count} / ${x.skipped}</td><td class="num">${x.winRate === null ? "—" : fmt(x.winRate, 1) + "%"}</td><td class="num">${fmt(x.avgR, 3)}</td><td class="num">${fmt(x.medianR, 3)}</td><td class="num">${fmt(x.profitFactor, 2)}</td><td class="num">${x.targets} / ${x.stops}</td></tr>`).join("")}</tbody></table><h3 style="margin:20px 0 8px">最近回放明细（最多20笔）</h3><table><thead><tr><th>标的</th><th>通道</th><th>信号 / 入场 / 退出</th><th>退出原因</th><th>净R</th></tr></thead><tbody>${s.trades
+      `<div class="result-grid">${metric("成交样本", s.overall.count)}${metric("胜率", s.overall.winRate === null ? "—" : fmt(s.overall.winRate, 1) + "%")}${metric("平均净R", fmt(s.overall.avgR, 3))}${metric("Profit factor", fmt(s.overall.profitFactor, 2))}</div><div class="notice ${s.overall.count < 30 ? "" : "info"}">${esc(s.overall.status)}。当前池回放不是样本外验证；未成交信号 ${s.skippedCount} 个，最大持有 ${cfg.holdingDays} 个交易日。</div><table><thead><tr><th>通道</th><th>成交 / 跳过</th><th>胜率</th><th>平均R</th><th>中位R</th><th>Profit factor</th><th>目标 / 止损</th></tr></thead><tbody>${s.channels.map((x) => `<tr><td>${esc(C.CHANNELS[x.channel].name)}</td><td class="num">${x.count} / ${x.skipped}</td><td class="num">${x.winRate === null ? "—" : fmt(x.winRate, 1) + "%"}</td><td class="num">${fmt(x.avgR, 3)}</td><td class="num">${fmt(x.medianR, 3)}</td><td class="num">${fmt(x.profitFactor, 2)}</td><td class="num">${x.targets} / ${x.stops}</td></tr>`).join("")}</tbody></table>${scoreDiagnosticsHTML(s.scoreDiagnostics || [])}<h3 style="margin:20px 0 8px">最近回放明细（最多20笔）</h3><table><thead><tr><th>标的</th><th>通道</th><th>信号 / 入场 / 退出</th><th>退出原因</th><th>净R</th></tr></thead><tbody>${s.trades
         .slice(-20)
         .reverse()
         .map(
@@ -2537,6 +2997,57 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
             `<tr><td>${esc(t.name)}<div class="stock-code">${esc(t.code)}</div></td><td>${esc(C.CHANNELS[t.channel].name)}</td><td class="num small">${esc(t.signalDate)}<br>${esc(t.entryDate)} → ${esc(t.exitDate)}</td><td>${esc(t.reason)}</td><td class="num ${t.R > 0 ? "up" : "down"}">${fmt(t.R, 3)}</td></tr>`,
         )
         .join("")}</tbody></table>`;
+  }
+  const FORWARD_KEY = "quant_v10_forward_v1";
+  function forwardEntries() {
+    const j = safeGet(FORWARD_KEY);
+    return j && Array.isArray(j.entries) ? j.entries : [];
+  }
+  function saveForward(entries) {
+    safeSet(FORWARD_KEY, { version: C.VERSION, entries: entries.slice(0, 500) });
+  }
+  function updateForwardJournal() {
+    if (state.mode !== "watch") return;
+    const entries = forwardEntries();
+    for (const e of entries) {
+      if (e.done) continue;
+      const bars = state.bars.get(e.code);
+      if (!bars) continue;
+      const i = bars.findIndex((b) => b.date === e.triggerDate);
+      if (i < 0 || !bars[i + 1]) continue;
+      const future = bars.slice(i + 1, i + 1 + e.config.holdingDays),
+        result = C.executeTrade(e.signal, future[0], future, e.market, e.config);
+      if (result.status === "SKIP" || result.reason !== "TIMEOUT" || future.length >= e.config.holdingDays) {
+        e.done = true;
+        e.result = result;
+        e.settledAt = new Date().toISOString();
+      }
+    }
+    const ids = new Set(entries.map((e) => e.id));
+    for (const r of state.rows.values()) {
+      const p = r.primary;
+      if (!p || p.stage !== 3 || !["CURRENT_CANDIDATE", "NEXT_SESSION_PLAN", "WAIT_ENTRY"].includes(r.status)) continue;
+      const cfg = { ...state.config },
+        id = [C.VERSION, r.code, p.channel, p.triggerDate, cfg.minRR, cfg.feeBps, cfg.slippageBps, cfg.holdingDays].join("|");
+      if (ids.has(id)) continue;
+      ids.add(id);
+      entries.unshift({
+        id, version: C.VERSION, savedAt: new Date().toISOString(), done: false,
+        code: r.code, name: r.name, market: r.market, channel: p.channel, triggerDate: p.triggerDate,
+        Q: p.Q.value, E: p.E.value, S: p.S, config: cfg,
+        signal: { geometry: p.triggerGeometry, signalClose: p.triggerGeometry.entryPrice, limitPct: r.market === "A" ? C.priceLimit(r.code, r.name) : null },
+      });
+    }
+    saveForward(entries);
+    renderForward();
+  }
+  function renderForward() {
+    const entries = forwardEntries(), closed = entries.filter((e) => e.done && e.result && e.result.status === "CLOSED"),
+      skipped = entries.filter((e) => e.done && e.result && e.result.status === "SKIP"),
+      pending = entries.filter((e) => !e.done),
+      rs = closed.map((e) => e.result.R).filter(Number.isFinite),
+      avg = rs.length ? rs.reduce((a, b) => a + b, 0) / rs.length : null;
+    $("forwardOutput").innerHTML = `<div class="result-grid"><div><span class="small muted">已结算</span><b>${closed.length}</b></div><div><span class="small muted">未成交</span><b>${skipped.length}</b></div><div><span class="small muted">待结算</span><b>${pending.length}</b></div><div><span class="small muted">平均净R</span><b>${avg === null ? "—" : fmt(avg, 3)}</b></div></div><p class="small muted">前向样本不是样本外证明；同一信号的新版本或新参数会另建记录，历史快照不改写。最多保留500条。</p>${entries.length ? `<table><thead><tr><th>标的 / 通道</th><th>触发 / 版本</th><th>Q/E/S</th><th>状态</th><th>净R / 退出</th></tr></thead><tbody>${entries.slice(0, 30).map((e) => `<tr><td>${esc(e.name)}<div class="stock-code">${esc(e.code)}</div></td><td>${esc(C.CHANNELS[e.channel].name)}<div class="small muted">${esc(e.triggerDate)} · ${esc(e.version)}</div></td><td class="num small">${fmt(e.Q, 1)} / ${fmt(e.E, 1)} / ${fmt(e.S, 1)}</td><td>${e.done ? esc(e.result.status === "SKIP" ? "未成交" : "已结算") : "待结算"}</td><td class="num">${e.done ? (e.result.status === "CLOSED" ? fmt(e.result.R, 3) : "—") : "—"}<div class="small muted">${e.done ? esc(e.result.reason) : ""}</div></td></tr>`).join("")}</tbody></table>` : '<div class="empty">暂无前向记录；完成本机研究池刷新后自动建立。</div>'}`;
   }
   function renderWatchList() {
     $("watchList").innerHTML = state.list
@@ -2550,17 +3061,87 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     const s = raw.trim();
     if (/^us[A-Za-z.]{1,12}$/.test(s))
       return s.slice(0, 2) + s.slice(2).toUpperCase();
-    if (/^(sh|sz)\d{6}$/.test(s)) return s;
+    if (/^(sh|sz|bj)\d{6}$/.test(s)) return s;
     if (/^\d{6}$/.test(s)) {
-      if (/^[48]/.test(s)) throw new Error("v10.0 暂不支持北京市场");
+      if (/^[48]/.test(s) || /^920/.test(s)) return "bj" + s;
       return (/^[6]/.test(s) ? "sh" : "sz") + s;
     }
-    throw new Error("请输入6位A股代码、sh/sz代码或usTicker");
+    throw new Error("请输入6位A股代码、sh/sz/bj代码或usTicker");
+  }
+  function isCodeLike(v) {
+    return /^(sh|sz|bj|us)?[0-9A-Za-z.]{1,12}$/i.test(String(v).trim()) && (/\d{6}$/.test(String(v).trim()) || /^us/i.test(String(v).trim()));
+  }
+  function normSearchItem(raw, name) {
+    const c = String(raw || "").toUpperCase().trim();
+    let code = null;
+    if (/^(5|6|9)\d{5}\.(SH|SS)$/.test(c)) code = "sh" + c.slice(0, 6);
+    else if (/^(0|1|2|3)\d{5}\.SZ$/.test(c)) code = "sz" + c.slice(0, 6);
+    else if (/^([48]\d{5}|920\d{3})\.(BJ|BSE)$/.test(c)) code = "bj" + c.slice(0, 6);
+    else if (/^1\.(5|6|9)\d{5}$/.test(c)) code = "sh" + c.slice(2);
+    else if (/^0\.([48]\d{5}|920\d{3})$/.test(c)) code = "bj" + c.slice(2);
+    else if (/^0\.(0|1|2|3)\d{5}$/.test(c)) code = "sz" + c.slice(2);
+    else if (/^([48]\d{5}|920\d{3})$/.test(c)) code = "bj" + c;
+    else if (/^(5|6|9)\d{5}$/.test(c)) code = "sh" + c;
+    else if (/^(0|1|2|3)\d{5}$/.test(c)) code = "sz" + c;
+    const cleanName = String(name || "").replace(/<[^>]+>/g, "").trim();
+    return code && cleanName ? { code, name: cleanName } : null;
+  }
+  async function searchEM(kw) {
+    const url = "https://searchapi.eastmoney.com/api/suggest/get?input=" + encodeURIComponent(kw) + "&type=14&count=10&token=D43BF722C8E33BDC906FB84D85E326E8",
+      j = await jsonp(url, 7000),
+      arr = j && j.QuotationCodeTable && j.QuotationCodeTable.Data,
+      out = [], seen = new Set();
+    for (const d of arr || []) {
+      const name = d.SuggestName || d.Name || "";
+      for (const raw of [d.QuoteID, d.SecurityId, d.Code]) {
+        const it = normSearchItem(raw, name);
+        if (it && !seen.has(it.code)) { seen.add(it.code); out.push(it); break; }
+      }
+    }
+    return out;
+  }
+  function searchSmartbox(kw) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      let done = false;
+      const cleanup = () => { clearTimeout(timer); script.remove(); };
+      const timer = setTimeout(() => { if (!done) { done = true; cleanup(); reject(new Error("搜索超时")); } }, 6000);
+      script.charset = "GBK";
+      script.onload = () => {
+        if (done) return; done = true; cleanup();
+        const out = [], seen = new Set();
+        String(window.v_hint || "").split(";").forEach((line) => {
+          const f = line.split("~"), it = f.length > 1 && normSearchItem(f[1], f[0]);
+          if (it && !seen.has(it.code)) { seen.add(it.code); out.push(it); }
+        });
+        resolve(out);
+      };
+      script.onerror = () => { if (!done) { done = true; cleanup(); reject(new Error("搜索失败")); } };
+      script.src = "https://smartbox.gtimg.cn/s3/?v=2&q=" + encodeURIComponent(kw) + "&t=all&_=" + Date.now();
+      document.head.appendChild(script);
+    });
+  }
+  let searchSeq = 0, searchTimer = null;
+  async function searchSymbols(kw) {
+    const seq = ++searchSeq;
+    $("searchResults").innerHTML = '<div class="empty">正在搜索名称与代码…</div>';
+    let items = [], errors = [];
+    try { items = await searchEM(kw); } catch (e) { errors.push("东财" + e.message); }
+    if (!items.length) {
+      try { items = await searchSmartbox(kw); } catch (e) { errors.push("腾讯" + e.message); }
+    }
+    if (seq !== searchSeq) return;
+    $("searchResults").innerHTML = items.length
+      ? items.map((x) => `<button class="search-result" type="button" data-add-code="${esc(x.code)}" data-add-name="${esc(x.name)}"><span>${esc(x.name)}</span><span class="stock-code">${esc(x.code)}${state.list.some((v) => v[0] === x.code) ? " · 已在池" : ""}</span></button>`).join("")
+      : `<div class="empty">未找到可添加标的${errors.length ? "；" + esc(errors.join(" / ")) : ""}。可直接输入完整代码。</div>`;
   }
   async function addSymbol() {
     const input = $("addSymbol");
     try {
-      const code = normalizeCode(input.value);
+      const raw = input.value.trim();
+      if (!raw) return toast("请输入名称或代码");
+      if (!isCodeLike(raw)) return searchSymbols(raw);
+      const code = normalizeCode(raw);
       if (state.list.some((x) => x[0] === code))
         return toast("该标的已在研究池");
       $("addBtn").disabled = true;
@@ -2602,7 +3183,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     );
     $("refreshBtn").addEventListener("click", refreshSignals);
     $("scanBtn").addEventListener("click", scanAllA);
-    ["filterText", "filterStatus", "filterChannel", "sortMode"].forEach((id) =>
+    ["filterText", "filterStatus", "filterChannel", "filterMarket", "sortMode"].forEach((id) =>
       $(id).addEventListener(
         id === "filterText" ? "input" : "change",
         renderSignals,
@@ -2614,7 +3195,33 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
         renderObservations,
       ),
     );
+    $("autoBtn").addEventListener("click", () => {
+      state.autoRefresh = !state.autoRefresh;
+      saveMonitorPrefs();
+      renderAutoButton();
+      toast(state.autoRefresh ? `已开启${state.autoMinutes}分钟自动刷新；仅页面可见且空闲时执行` : "已关闭自动刷新");
+    });
+    $("setAutoMinutes").addEventListener("change", () => {
+      state.autoMinutes = +$("setAutoMinutes").value;
+      saveMonitorPrefs();
+      renderAutoButton();
+    });
+    $("pinFilterBtn").addEventListener("click", () => {
+      state.pinOnly = !state.pinOnly;
+      $("pinFilterBtn").textContent = state.pinOnly ? "钉住：仅已钉" : "钉住：全部";
+      $("pinFilterBtn").setAttribute("aria-pressed", String(state.pinOnly));
+      renderSignals();
+    });
     $("signalRows").addEventListener("click", (e) => {
+      const pin = e.target.closest("[data-pin]");
+      if (pin) {
+        e.stopPropagation();
+        const code = pin.dataset.pin;
+        state.pins.has(code) ? state.pins.delete(code) : state.pins.add(code);
+        saveMonitorPrefs();
+        renderSignals();
+        return;
+      }
       const tr = e.target.closest("tr.signal-row");
       if (!tr) return;
       const code = tr.dataset.code;
@@ -2624,7 +3231,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       renderSignals();
     });
     $("signalRows").addEventListener("keydown", (e) => {
-      if (!["Enter", " "].includes(e.key)) return;
+      if (!["Enter", " "].includes(e.key) || e.target.closest("[data-pin]")) return;
       const tr = e.target.closest("tr.signal-row");
       if (!tr) return;
       e.preventDefault();
@@ -2639,6 +3246,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       $("setDeepLimit").value = state.config.deepLimit;
       $("setMinAmountA").value = state.config.minAmountA / 1e4;
       $("setMinAmountUS").value = state.config.minAmountUS / 1e4;
+      $("setAutoMinutes").value = state.autoMinutes;
       openDialog("settingsDialog");
     });
     document
@@ -2655,34 +3263,35 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     $("addSymbol").addEventListener("keydown", (e) => {
       if (e.key === "Enter") addSymbol();
     });
+    $("addSymbol").addEventListener("input", () => {
+      clearTimeout(searchTimer);
+      const kw = $("addSymbol").value.trim();
+      if (!kw || isCodeLike(kw)) {
+        searchSeq++;
+        $("searchResults").innerHTML = "";
+        return;
+      }
+      searchTimer = setTimeout(() => searchSymbols(kw), 450);
+    });
+    $("searchResults").addEventListener("click", (e) => {
+      const b = e.target.closest("[data-add-code]");
+      if (!b) return;
+      if (state.list.some((x) => x[0] === b.dataset.addCode)) return toast("该标的已在研究池");
+      $("addSymbol").value = b.dataset.addCode;
+      addSymbol();
+    });
     $("watchList").addEventListener("click", (e) => {
       const b = e.target.closest("[data-remove]");
       if (!b) return;
+      const removed = state.list[+b.dataset.remove];
       state.list.splice(+b.dataset.remove, 1);
+      if (removed) state.pins.delete(removed[0]);
+      saveMonitorPrefs();
       saveList();
       renderWatchList();
     });
     $("exportBtn").addEventListener("click", () => {
-      const blob = new Blob(
-          [
-            JSON.stringify(
-              {
-                version: "v10.0-rc.1",
-                type: "objective-watchlist",
-                items: state.list,
-              },
-              null,
-              2,
-            ),
-          ],
-          { type: "application/json" },
-        ),
-        url = URL.createObjectURL(blob),
-        a = document.createElement("a");
-      a.href = url;
-      a.download = "quant_v10_客观研究池.json";
-      a.click();
-      setTimeout(() => URL.revokeObjectURL(url), 500);
+      downloadJSON({ version: C.VERSION, type: "objective-watchlist", items: state.list, pins: [...state.pins] }, "quant_v10_客观研究池.json");
     });
     $("importBtn").addEventListener("click", () => $("importFile").click());
     $("importFile").addEventListener("change", async (e) => {
@@ -2694,6 +3303,9 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
         if (!validList(items) || !items.length)
           throw new Error("文件不是有效的v10研究池");
         state.list = items.map((x) => [x[0], x[1], x[2] ? 1 : 0]);
+        const codes = new Set(state.list.map((x) => x[0]));
+        state.pins = new Set((Array.isArray(j.pins) ? j.pins : []).filter((x) => codes.has(x)));
+        saveMonitorPrefs();
         saveList();
         renderWatchList();
         toast("研究池已导入，刷新后生效");
@@ -2705,6 +3317,8 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     $("resetBtn").addEventListener("click", () => {
       if (!confirm("恢复默认客观研究池？当前本机研究池将被替换。")) return;
       state.list = DEFAULT_LIST.map((x) => x.slice());
+      state.pins.clear();
+      saveMonitorPrefs();
       saveList();
       renderWatchList();
       toast("已恢复默认池");
@@ -2728,15 +3342,33 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       toast("设置已保存，请刷新信号");
     });
     $("replayBtn").addEventListener("click", runReplay);
+    $("exportReplayBtn").addEventListener("click", () => {
+      if (!state.lastReplay) return toast("请先完成一次完整回放");
+      downloadJSON({ type: "objective-replay", ...state.lastReplay }, `quant_${C.VERSION}_完整回放.json`);
+    });
+    $("exportForwardBtn").addEventListener("click", () => {
+      downloadJSON({ type: "objective-forward-journal", exportedAt: new Date().toISOString(), entries: forwardEntries() }, "quant_v10_前向观察.json");
+    });
+    $("clearForwardBtn").addEventListener("click", () => {
+      if (!forwardEntries().length) return toast("当前没有前向记录");
+      if (!confirm("清空当前浏览器中的全部前向观察记录？此操作不可撤销；研究池不受影响。")) return;
+      saveForward([]);
+      renderForward();
+      toast("前向观察记录已清空");
+    });
   }
   loadLocal();
   bindEvents();
   renderWatchList();
+  renderAutoButton();
+  renderForward();
+  $("pinFilterBtn").textContent = state.pinOnly ? "钉住：仅已钉" : "钉住：全部";
+  $("pinFilterBtn").setAttribute("aria-pressed", String(state.pinOnly));
   renderDiagnostics();
   tickClock();
   setInterval(tickClock, 30000);
   log(
-    "Quant v10.0-rc.1 内核已加载：" +
+    "Quant v10.0-rc.3 内核已加载：" +
       getSelfTests().filter((x) => x.pass).length +
       "/" +
       getSelfTests().length +
