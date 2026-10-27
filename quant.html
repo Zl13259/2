@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Quant v10.0-rc.3 客观量价信号研究台：三通道、硬门槛、交易几何、可解释评分与探索性回放。">
+<meta name="description" content="Quant v10.2 客观量价信号研究台：三通道、硬门槛、交易几何、可解释评分与探索性回放。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%231c3a13'/%3E%3Cpath d='M8 21V11h8a5 5 0 0 1 0 10h-3v4H8zm5-7v4h3a2 2 0 0 0 0-4h-3z' fill='%23f6f6f4'/%3E%3C/svg%3E">
-<title>Quant v10.0-rc.3 · 客观信号研究台</title>
+<title>Quant v10.2 · 客观信号研究台</title>
 <style>
 :root{
 --p-forest:oklch(0.32 0.075 145);--p-forest-dark:oklch(0.25 0.06 145);--p-paper:oklch(0.975 0.003 95);--p-ink:oklch(0.24 0.015 60);--p-sage:oklch(0.9 0.018 145);--p-up:oklch(0.52 0.19 28);--p-down:oklch(0.46 0.12 155);--p-warn:oklch(0.55 0.13 75);
@@ -25,7 +25,7 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 <body>
 <header class="mast">
 <div class="mast-main">
-<div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h1>Quant <span class="num">v10.0-rc.3</span></h1><p>客观信号研究台 · 日线因果模型</p></div></div>
+<div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h1>Quant <span class="num">v10.2</span></h1><p>客观信号研究台 · 日线因果模型</p></div></div>
 <div class="mast-actions"><button class="secondary" id="autoBtn" type="button" aria-pressed="false">自动：关</button><button class="secondary" id="settingsBtn" type="button">模型设置</button><button class="secondary" id="scanBtn" type="button">全A初筛深扫</button><button class="primary" id="refreshBtn" type="button">刷新信号</button></div>
 </div>
 <nav class="tabs" role="tablist" aria-label="研究视图">
@@ -41,7 +41,7 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 <div class="market-strip"><div class="market-cell"><b>模型时点</b><strong id="clockText">尚未加载</strong></div><div class="market-cell"><b>A股参考环境</b><strong id="envA">—</strong></div><div class="market-cell"><b>美股参考环境</b><strong id="envUS">—</strong><span class="small muted" id="envUSMeta">纳指尚未加载</span></div><div class="market-cell"><b>数据覆盖</b><strong id="coverageTop" class="num">0 / 0</strong></div><div class="market-cell"><b>验证状态</b><strong class="warn">Score v0 · 未验证</strong></div></div>
 <div class="summary"><div class="summary-item"><span>当前候选</span><strong id="countCurrent">0</strong></div><div class="summary-item"><span>次日预案</span><strong id="countPlan">0</strong></div><div class="summary-item"><span>等待入场</span><strong id="countWait">0</strong></div><div class="summary-item"><span>数据异常</span><strong id="countError">0</strong></div></div>
 <div class="filter-grid"><input class="search-wide" id="filterText" type="search" placeholder="筛选代码或名称" aria-label="筛选代码或名称"><select id="filterStatus" aria-label="筛选状态"><option value="eligible">候选与预案</option><option value="all">全部状态</option><option value="CURRENT_CANDIDATE">当前候选</option><option value="NEXT_SESSION_PLAN">次日预案</option><option value="WAIT_ENTRY">等待入场</option><option value="RESEARCH_ONLY">降级研究</option><option value="DATA_ERROR">数据异常</option></select><select id="filterChannel" aria-label="筛选通道"><option value="all">全部通道</option><option value="oversold">超跌反弹</option><option value="pullback">趋势回踩</option><option value="breakout">突破确认</option></select><select id="filterMarket" aria-label="筛选市场"><option value="all">全部市场</option><option value="A">仅A股</option><option value="US">仅美股</option></select><select id="sortMode" aria-label="排序方式"><option value="status">状态优先</option><option value="fresh">触发新鲜度</option><option value="rr">净赔率（通道内）</option></select><button class="ghost" id="pinFilterBtn" type="button" aria-pressed="false">钉住：全部</button><button class="ghost" id="manageBtn" type="button">研究池</button></div>
-<div class="coverage"><span id="statusLine">准备加载客观研究池…</span><details><summary>口径说明</summary><p>Q 为触发时形态质量，E 为当前执行质量，S=0.60Q+0.40E，仅在同通道内比较。盘后只给次日预案；分数不代表胜率。现价来自公开行情接口，可能存在延迟。</p></details></div>
+<div class="coverage"><span id="statusLine">准备加载客观研究池…</span><details><summary>口径说明</summary><p>Q 为触发时形态质量，E 为当前执行质量，S=0.60Q+0.40E，仅在同通道内比较。盘后只给次日预案；区外信号标注等回踩／等收回，开盘区外或实际净赔率不足仍不成交；分数不代表胜率。现价来自公开行情接口，可能存在延迟。</p></details></div>
 <div class="small muted" id="breadthLine">市场宽度将在有效数据加载后显示；只描述当前池，不参与评分。</div>
 <div class="progress hidden" id="loadProgress"><i></i></div>
 <div class="table-shell"><table aria-label="客观信号结果"><thead><tr><th>标的</th><th>现价 / 涨跌</th><th>状态</th><th>主通道</th><th class="col-q">Q</th><th class="col-e">E</th><th class="col-rr">净赔率</th><th class="col-zone">入场区</th><th class="col-stop">止损 / 目标</th><th>数据</th></tr></thead><tbody id="signalRows"></tbody></table><div class="empty" id="signalEmpty"><strong>正在建立研究集</strong>首次加载需要逐只取得日K；失败会显式标记，不以旧分数代替。</div></div>
@@ -52,10 +52,10 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 <div class="table-shell"><table aria-label="通道观察结果"><thead><tr><th>标的</th><th>通道</th><th>阶段</th><th>缺失条件</th><th>客观证据</th><th>数据日期</th></tr></thead><tbody id="observeRows"></tbody></table><div class="empty hidden" id="observeEmpty"><strong>暂无观察对象</strong>调整筛选或等待数据加载。</div></div>
 </section>
 <section class="view" id="view-research" role="tabpanel">
-<div class="section-head"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h2>探索性历史回放</h2><p>信号在 t 日收盘确认，t+1 开盘只有在入场区内才成交；A股入场当日不退出。当前加载池存在选择与幸存者偏差，结果不是样本外证明。</p></div></div>
-<div class="notice">回放只使用已加载日K，不补造缺失历史。目标与止损同根K线同时触及时按止损优先；跳空按开盘可成交价估计。未成交信号单列，不删除。</div>
+<div class="section-head"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h2>探索性历史回放</h2><p>信号在 t 日收盘确认，只在原信号有效期内尝试开盘：突破次日 1 次，超跌／回踩随后最多 2 次；每次均须位于入场区且实际开盘净赔率达标。A股入场当日不退出。当前加载池存在选择与幸存者偏差，结果不是样本外证明。</p></div></div>
+<div class="notice">回放只使用已加载日K，不补造缺失历史。目标与止损同根K线同时触及时按止损优先；跳空按开盘可成交价估计。历史回放与 v10.2 新建前向记录均按原信号有效期尝试回区，未成交信号单列；等待期间收盘触及失效锚点即取消。v10.1 及更早前向快照保留原来的单次尝试口径。</div>
 <div class="research-controls"><div class="field"><label for="holdingDays">最大持有交易日</label><input id="holdingDays" type="number" min="3" max="30" value="10"></div><div class="field"><label for="feeBps">往返费用假设（bps）</label><input id="feeBps" type="number" min="0" max="200" value="15"></div><div class="field"><label for="slippageBps">单边滑点假设（bps）</label><input id="slippageBps" type="number" min="0" max="200" value="10"></div><button class="primary" id="replayBtn" type="button">回放已加载标的</button><button class="ghost" id="exportReplayBtn" type="button" disabled>导出完整回放</button></div>
-<div id="replayOutput"><div class="empty"><strong>尚未运行回放</strong>先完成信号加载，再用同一套内核回放。修改成本假设只影响本次研究结果。</div></div><div class="section-head"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h2>上线后前向观察</h2><p>只在本机研究池刷新时记录不可变信号快照；按原入场与退出规则结算，和历史回放分开。仅存当前浏览器，可导出备份。</p></div></div><div class="research-controls"><button class="ghost" id="exportForwardBtn" type="button">导出前向记录</button><button class="ghost danger" id="clearForwardBtn" type="button">清空前向记录</button></div><div id="forwardOutput"></div>
+<div id="replayOutput"><div class="empty"><strong>尚未运行回放</strong>先完成信号加载，再用同一套内核回放。修改成本假设只影响本次研究结果。</div></div><div class="section-head"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h2>上线后前向观察</h2><p>只在本机研究池刷新时记录不可变信号快照；v10.2 新记录按原信号有效期尝试开盘，旧记录仍按单次尝试结算，和历史回放分开。仅存当前浏览器，可导出备份。</p></div></div><div class="research-controls"><button class="ghost" id="exportForwardBtn" type="button">导出前向记录</button><button class="ghost danger" id="clearForwardBtn" type="button">清空前向记录</button></div><div id="forwardOutput"></div>
 </section>
 <section class="view" id="view-diagnostics" role="tabpanel">
 <div class="section-head"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h2>数据与内核诊断</h2><p>数据失败不静默；同一份标准化输入在扫描、详情、回放与自测中复用。</p></div></div>
@@ -68,11 +68,11 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 <h3>三通道</h3><ul><li><b>超跌反弹：</b>近10日出现超跌，随后有企稳证据，当前反弹触发且超跌低点未失效。</li><li><b>趋势回踩：</b>MA20/MA60 与斜率确认原趋势，回踩明确支撑后重新转强。</li><li><b>突破确认：</b>前20日基底与压力明确，价格、收盘位置和量能共同确认，RS 相对同市场参考基准计算。</li></ul>
 <h3>交易几何</h3><p>入场区、止损与目标由触发时的结构锚点固定，不随当前价格移动。净赔率计入费用与双边滑点假设；1.5 是研究门槛，不是正期望的数学证明。止损是计划价，不保证跳空或涨跌停时成交。</p>
 <div class="formula">净赔率 = 目标净收益 ÷ 止损净损失<br>S = 0.60 × Q + 0.40 × E（只作同通道启发式基线）</div>
-<h3>硬门槛</h3><p>数据不足或陈旧、通道未成立、结构失效、几何非法、净赔率不足、流动性不合格、明显离开入场区、疑似涨停不可成交，均不能被高分抵消。环境状态单列，不乘入 Q/E/S。</p>
-<h3>高周期压力</h3><p>只使用触发日前已经完成的周线和月线摆动高点，当前未完成周/月不参与。若最近高周期压力位于原第一目标之前，则将第一目标收缩到该压力并重算净赔率；日线是否触发不由高周期压力反向改写。</p><h3>验证边界</h3><p>页面内回放是当前加载池上的探索性研究，不含完整历史股票池、退市样本、滚动样本外、净化隔离和多重试验校正。样本少于30笔显示“样本不足”；达到30笔也不自动等于稳定规律。</p>
-<h3>v10.0-rc.3 候选版本记录 · 2026-10-27</h3><ol><li>融合复权口径元数据、数据警告、交易所本地时间与Q/E/S分桶诊断；保留后台Worker回放，取消时不输出不完整汇总。</li><li>K线连续性与异常跳变校验前移到各数据源及缓存验收，质量失败继续降级；全A主备列表统一纳入北交所，修复bj研究池持久化。</li><li>新增已完成周线/月线摆动压力：只在触发时约束第一目标并重算成本后净赔率，不改变日线触发条件；回放使用同一口径。</li><li>新增名称搜索、钉住筛选、市场宽度、空闲自动刷新、完整回放导出及本机前向信号快照；均不读取账户或持仓。</li></ol><h3>v10.0-rc.2 版本记录 · 2026-10-27</h3><ol><li>修复回放反复重算历史指标导致的长阻塞：指标序列每只标的只计算一次，回放移至独立工作线程，支持进度显示与取消。</li><li>增加美股参考环境、纳指数据时点与美股市场筛选；A股和美股环境仍只展示、不扣分。</li><li>修复A股16:00后误删当日完成日K；北交所普通股票涨跌幅修正为30%，并允许bj代码加入研究池。</li><li>新增增量特征一致性、A股16点后和北交所规则回归自测；修复不改变三通道参数、Q/E权重与回放交易口径。</li></ol><h3>v10.0-rc.1 版本记录 · 2026-10-26</h3><ol><li>废除通用技术总分，建立超跌、回踩、突破独立状态机与 Q/E 评分。</li><li>修复触发后几何漂移：触发日冻结ATR、锚点、入场区和目标，当前价只更新执行状态。</li><li>修复A股午休误用未完成K线；新增交易时段迁移后自动复核信号。</li><li>超跌评分改用事件日Z值，企稳证据必须在触发日前完成。</li><li>腾讯K线恢复web.ifzq主端点、proxy仅作镜像兜底；美股指数基准适配新浪.IXIC/.INX/.DJI口径；全A列表增加新浪备用源。</li><li>回放纳入流动性、涨停不可成交、Q/E/S和统一持有期；撤除会驻留全部历史特征的缓存，避免浏览器内存崩溃。</li><li>单文件、无后端、无登录、无自动交易；仅研究池与界面设置保存在当前浏览器。</li></ol>
+<h3>硬门槛</h3><p>数据不足或陈旧、通道未成立、结构失效、几何非法、净赔率不足、流动性不合格、疑似涨停不可成交，均不能被高分抵消。价格离开入场区只改变执行状态，不允许追价；环境状态单列，不乘入 Q/E/S。</p>
+<h3>高周期压力</h3><p>只使用触发日前已经完成的周线和月线摆动高点，当前未完成周/月不参与。若最近高周期压力位于原第一目标之前，则将第一目标收缩到该压力并重算净赔率；日线是否触发不由高周期压力反向改写。</p><h3>验证边界</h3><p>页面内回放是当前加载池上的探索性研究，不含完整历史股票池、退市样本、滚动样本外、净化隔离和多重试验校正。样本少于30笔显示“样本不足”；达到30笔也不自动等于稳定规律。回放与 v10.2 新建前向记录覆盖原信号有效期内的回区开盘；旧前向记录仍按原单次口径结算，不混写。</p>
+<h3>交易日一致性</h3><p>个股最近完成日K必须与同市场参考基准一致；不一致时继续降级数据源，仍不一致则列为数据异常，不生成候选、预案或等待入场。缓存同样接受交易日复核。参考基准本身缺失时，不以猜测交易日代替。</p><h3>v10.2 正式版 · 2026-10-27</h3><ol><li>新增预期交易日双层门禁：数据源与内核均核对个股和基准末日，陈旧源继续降级，旧缓存不得生成信号；同时修复非强制刷新命中缓存时返回结构嵌套的问题。</li><li>历史回放与新建前向记录按原有效期尝试入场：突破1次、超跌／回踩最多2次；等待期收盘破位取消。旧前向快照不改写，仍按原单次口径。</li><li>主表补充拒绝／降级原因，市场宽度增加近5日分布，加载增加预计剩余时间，诊断增加基准日期、缓存年龄与降级记录。</li><li>27项内核自测通过；三通道参数、Q/E权重、净赔率、流动性与入场区门槛均未放宽，Score v0仍未验证。</li></ol><h3>v10.1 正式版 · 2026-10-27</h3><ol><li>吸纳v10.0-rc.1至rc.4的三通道、固定交易几何、高周期压力、条件预案、数据诊断与回放修复；23项内核自测通过。</li><li>明确验证边界：实时条件预案可在信号有效期内等待回区；历史回放与前向观察只对首次触发后的下一交易日开盘尝试一次，不代表后续回区预案的绩效。</li><li>继续显式保留复权口径与公开数据源警告，不以静默降级或隐藏失败换取表面覆盖率；Score v0仍未验证，不构成收益承诺。</li></ol><h3>v10.0-rc.4 候选版本记录 · 2026-10-27</h3><ol><li>修复非交易时段状态分类：通过硬门槛的区外信号进入“次日预案·等回踩／等收回”，不再被误排除出次日预案；盘中区外仍等待。</li><li>状态修复不放宽三通道、净赔率、流动性、结构失效或入场区约束；次日开盘区外仍不成交。</li><li>修复回放只在信号日检查赔率的问题：次日区内开盘也重算成本后净赔率，不足则跳过；新增3项状态与成交门槛自测。</li></ol><h3>v10.0-rc.3 候选版本记录 · 2026-10-27</h3><ol><li>融合复权口径元数据、数据警告、交易所本地时间与Q/E/S分桶诊断；保留后台Worker回放，取消时不输出不完整汇总。</li><li>K线连续性与异常跳变校验前移到各数据源及缓存验收，质量失败继续降级；全A主备列表统一纳入北交所，修复bj研究池持久化。</li><li>新增已完成周线/月线摆动压力：只在触发时约束第一目标并重算成本后净赔率，不改变日线触发条件；回放使用同一口径。</li><li>新增名称搜索、钉住筛选、市场宽度、空闲自动刷新、完整回放导出及本机前向信号快照；均不读取账户或持仓。</li></ol><h3>v10.0-rc.2 版本记录 · 2026-10-27</h3><ol><li>修复回放反复重算历史指标导致的长阻塞：指标序列每只标的只计算一次，回放移至独立工作线程，支持进度显示与取消。</li><li>增加美股参考环境、纳指数据时点与美股市场筛选；A股和美股环境仍只展示、不扣分。</li><li>修复A股16:00后误删当日完成日K；北交所普通股票涨跌幅修正为30%，并允许bj代码加入研究池。</li><li>新增增量特征一致性、A股16点后和北交所规则回归自测；修复不改变三通道参数、Q/E权重与回放交易口径。</li></ol><h3>v10.0-rc.1 版本记录 · 2026-10-26</h3><ol><li>废除通用技术总分，建立超跌、回踩、突破独立状态机与 Q/E 评分。</li><li>修复触发后几何漂移：触发日冻结ATR、锚点、入场区和目标，当前价只更新执行状态。</li><li>修复A股午休误用未完成K线；新增交易时段迁移后自动复核信号。</li><li>超跌评分改用事件日Z值，企稳证据必须在触发日前完成。</li><li>腾讯K线恢复web.ifzq主端点、proxy仅作镜像兜底；美股指数基准适配新浪.IXIC/.INX/.DJI口径；全A列表增加新浪备用源。</li><li>回放纳入流动性、涨停不可成交、Q/E/S和统一持有期；撤除会驻留全部历史特征的缓存，避免浏览器内存崩溃。</li><li>单文件、无后端、无登录、无自动交易；仅研究池与界面设置保存在当前浏览器。</li></ol>
 </section>
-<footer class="footer"><span>Quant v10.0-rc.3 · Score v0 · 数据与结论均需在决策前复核</span><span>公开行情研究工具，不构成收益承诺</span></footer>
+<footer class="footer"><span>Quant v10.2 · Score v0 · 数据与结论均需在决策前复核</span><span>公开行情研究工具，不构成收益承诺</span></footer>
 </main>
 <dialog id="watchDialog" aria-labelledby="watchTitle"><div class="dialog-head"><h2 id="watchTitle">客观研究池</h2><button class="ghost" data-close="watchDialog" type="button">关闭</button></div><div class="dialog-body"><div class="add-grid"><input id="addSymbol" type="search" placeholder="名称 / 代码：茅台、600519、bj920001、usNVDA" aria-label="添加代码"><button class="primary" id="addBtn" type="button">校验并添加</button></div><div id="searchResults" class="search-results"></div><p class="small muted" style="margin:12px 0">研究池仅保存在此浏览器；清除浏览器数据会丢失。默认池用于跨行业参考，与任何账户持仓无关。</p><div id="watchList"></div></div><div class="dialog-actions"><button class="ghost" id="exportBtn" type="button">导出研究池</button><button class="ghost" id="importBtn" type="button">导入</button><input id="importFile" class="hidden" type="file" accept="application/json,.json"><button class="ghost danger" id="resetBtn" type="button">恢复默认</button></div></dialog>
 <dialog id="settingsDialog" aria-labelledby="settingsTitle"><div class="dialog-head"><h2 id="settingsTitle">客观模型设置</h2><button class="ghost" data-close="settingsDialog" type="button">关闭</button></div><div class="dialog-body"><div class="settings-grid"><div class="field"><label for="setMinRR">正常候选最低净赔率</label><input id="setMinRR" type="number" min="1" max="5" step="0.1" value="1.5"></div><div class="field"><label for="setDeepLimit">全A深扫数量上限</label><select id="setDeepLimit"><option>30</option><option selected>60</option><option>120</option></select></div><div class="field"><label for="setMinAmountA">A股20日均成交额门槛（万元）</label><input id="setMinAmountA" type="number" min="0" step="1000" value="5000"></div><div class="field"><label for="setMinAmountUS">美股20日均成交额门槛（万美元）</label><input id="setMinAmountUS" type="number" min="0" step="100" value="500"></div></div><div class="field" style="margin-top:14px"><label for="setAutoMinutes">自动刷新间隔（开启后生效）</label><select id="setAutoMinutes"><option value="1">1分钟</option><option value="5" selected>5分钟</option><option value="10">10分钟</option></select></div><p class="small muted" style="margin-top:14px">设置只改变客观研究口径，不代表任何账户纪律。自动刷新只在页面可见且空闲时运行；回放期间跳过。修改后重新刷新信号。</p></div><div class="dialog-actions"><button class="primary" id="saveSettings" type="button">保存设置</button></div></dialog>
@@ -81,7 +81,7 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 /* Quant v10.0 objective signal core. No DOM, storage, network or account rules. */
 const QuantCore = (() => {
   "use strict";
-  const VERSION = "v10.0-rc.3";
+  const VERSION = "v10.2";
   const DEFAULTS = Object.freeze({
     minBars: 80,
     minAmountA: 5e7,
@@ -902,7 +902,11 @@ const QuantCore = (() => {
         : session.state !== "POST");
     return incomplete ? b.slice(0, -1) : b;
   }
-  function dataQuality(code, bars, quote, market, now, cfg) {
+  function latestCompletedDate(input, market, now) {
+    const b = completedBars(input, market, now);
+    return b.length ? last(b).date : null;
+  }
+  function dataQuality(code, bars, quote, market, now, cfg, expectedDate = null) {
     const errors = [],
       warnings = [];
     if (bars.length < cfg.minBars) errors.push(`有效日K不足${cfg.minBars}根`);
@@ -915,8 +919,11 @@ const QuantCore = (() => {
           (Date.parse(bars[i].date) - Date.parse(bars[i - 1].date)) / 864e5;
         if (gap > 35) errors.push("近期K线存在超过35天的断档");
       }
-      const age = (now - Date.parse(last(bars).date + "T12:00:00Z")) / 864e5;
+      const actualDate = last(bars).date,
+        age = (now - Date.parse(actualDate + "T12:00:00Z")) / 864e5;
       if (age > 14) errors.push("最新完成日K陈旧");
+      if (expectedDate && actualDate !== expectedDate)
+        errors.push(`K线交易日不一致：实际 ${actualDate}，市场基准 ${expectedDate}`);
     }
     if (!quote || !finite(quote.price) || quote.price <= 0)
       errors.push("缺少有效现价");
@@ -972,7 +979,8 @@ const QuantCore = (() => {
       market = o.market || (o.code.startsWith("us") ? "US" : "A"),
       now = o.now || new Date(),
       bars = completedBars(o.bars, market, now),
-      quality = dataQuality(o.code, bars, o.quote, market, now, cfg),
+      expectedBarsDate = latestCompletedDate(o.benchmarkBars, market, now),
+      quality = dataQuality(o.code, bars, o.quote, market, now, cfg, expectedBarsDate),
       base = {
         code: o.code,
         name: o.name || o.code,
@@ -981,6 +989,7 @@ const QuantCore = (() => {
         pct: o.quote && finite(o.quote.pct) ? +o.quote.pct : null,
         quoteTime: (o.quote && o.quote.qtime) || null,
         barsDate: bars.length ? last(bars).date : null,
+        expectedBarsDate,
         source: (o.quote && o.quote.source) || "—",
         quality,
         session: marketSession(market, now),
@@ -1040,14 +1049,18 @@ const QuantCore = (() => {
       if (!structureOk) reasons.push("结构失效：已触及或跌破失效锚点");
       if (!g.valid) reasons.push("止损、目标或入场几何非法");
       if (g.netRR < 1) reasons.push("成本后净赔率低于1");
+      const inZone = base.price >= g.zoneLo && base.price <= g.zoneHi;
       let status = "CURRENT_CANDIDATE";
       if (reasons.length)
         status =
           g.netRR >= 1 && g.netRR < cfg.minRR ? "RESEARCH_ONLY" : "REJECTED";
       else if (g.netRR < cfg.minRR) status = "RESEARCH_ONLY";
-      else if (base.price > g.zoneHi || base.price < g.zoneLo)
-        status = "WAIT_ENTRY";
       else if (base.session.state !== "REGULAR") status = "NEXT_SESSION_PLAN";
+      else if (!inZone) status = "WAIT_ENTRY";
+      const statusText =
+        status === "NEXT_SESSION_PLAN" && !inZone
+          ? `次日预案·${base.price > g.zoneHi ? "等回踩" : "等收回"}`
+          : statusLabel(status);
       const limit = market === "A" ? priceLimit(o.code, o.name) : null;
       if (
         market === "A" &&
@@ -1065,7 +1078,7 @@ const QuantCore = (() => {
       base.channels.push({
         ...s,
         status,
-        statusText: statusLabel(status),
+        statusText,
         age,
         geometry: g,
         triggerGeometry,
@@ -1087,7 +1100,7 @@ const QuantCore = (() => {
       );
       base.primary = eligible[0];
       base.status = base.primary.status;
-      base.statusText = statusLabel(base.status);
+      base.statusText = base.primary.statusText || statusLabel(base.status);
       const active = eligible.filter((x) => x.status !== "REJECTED");
       if (
         active.some((x) => x.channel === "oversold") &&
@@ -1160,9 +1173,12 @@ const QuantCore = (() => {
       open / signal.signalClose - 1 >= (signal.limitPct - 0.2) / 100 &&
       open >= entryBar.high
     )
-      return { status: "SKIP", reason: "次日接近涨停开盘，无法确认成交" };
+      return { status: "SKIP", reason: "开盘接近涨停，无法确认成交" };
     if (open < zone.zoneLo || open > zone.zoneHi)
-      return { status: "SKIP", reason: "次日开盘不在入场区" };
+      return { status: "SKIP", reason: "开盘不在入场区" };
+    const entryGeometry = repriceGeometry(zone, open, cfg);
+    if (!entryGeometry.valid || entryGeometry.netRR < cfg.minRR)
+      return { status: "SKIP", reason: "开盘成本后净赔率不足" };
     const slip = cfg.slippageBps / 10000,
       fee = cfg.feeBps / 20000,
       entry = open * (1 + slip + fee),
@@ -1224,6 +1240,30 @@ const QuantCore = (() => {
       exitIndex,
     };
   }
+  function executeTradeWindow(signal, candidateBars, market, cfg, maxAttempts = 1) {
+    const attempts = [],
+      limit = Math.max(1, Math.min(maxAttempts, candidateBars.length)),
+      stop = signal.geometry && signal.geometry.stop;
+    for (let i = 0; i < limit; i++) {
+      if (i > 0 && Number.isFinite(stop)) {
+        const invalidated = candidateBars.slice(0, i).some((b) => b.close <= stop);
+        if (invalidated)
+          return { status: "SKIP", reason: "等待期间收盘触及失效锚点", pending: false, entryOffset: null, attempts };
+      }
+      const future = candidateBars.slice(i, i + cfg.holdingDays),
+        result = executeTrade(signal, candidateBars[i], future, market, cfg);
+      attempts.push({ date: candidateBars[i].date, status: result.status, reason: result.reason });
+      if (result.status === "CLOSED") return { ...result, entryOffset: i, attempts };
+    }
+    const pending = limit < Math.max(1, maxAttempts);
+    return {
+      status: "SKIP",
+      reason: pending ? "入场窗口未满，暂未成交" : "信号有效期内未出现可执行开盘",
+      pending,
+      entryOffset: null,
+      attempts,
+    };
+  }
   function replaySymbol(o) {
     const cfg = { ...DEFAULTS, ...(o.config || {}) },
       bars = normalizeBars(o.bars),
@@ -1261,17 +1301,18 @@ const QuantCore = (() => {
             s.liquidity &&
             s.liquidity.pass;
         if (trigger && !st.prevTriggered) {
-          const future = bars.slice(
-            t + 1,
-            Math.min(bars.length, t + 1 + cfg.holdingDays),
-          );
+          const entryWindowDays = Math.max(1, CHANNELS[channel].maxAge - 1),
+            future = bars.slice(
+              t + 1,
+              Math.min(bars.length, t + entryWindowDays + cfg.holdingDays),
+            );
           if (!future.length) continue;
           s.signalClose = bars[t].close;
           s.limitPct = market === "A" ? priceLimit(o.code, o.name) : null;
-          const result = executeTrade(s, bars[t + 1], future, market, cfg);
-          if (result.status === "SKIP")
-            skipped.push({ channel, signalDate: date, ...result });
-          else {
+          const result = executeTradeWindow(s, future, market, cfg, entryWindowDays);
+          if (result.status === "SKIP") {
+            if (!result.pending) skipped.push({ channel, signalDate: date, ...result });
+          } else {
             trades.push({
               code: o.code,
               name: o.name,
@@ -1282,7 +1323,7 @@ const QuantCore = (() => {
               S: s.S,
               ...result,
             });
-            st.blockedUntil = t + 1 + result.exitIndex;
+            st.blockedUntil = t + 1 + (result.entryOffset || 0) + result.exitIndex;
           }
         }
         st.prevTriggered = trigger;
@@ -1649,6 +1690,66 @@ const QuantCore = (() => {
       const f1 = { ...f0, bars: b }, g1 = netGeometry("breakout", f1, setup, f1.close, DEFAULTS);
       return g1.higherPressure && g1.target < g0.target && g1.stop === g0.stop && g1.zoneLo === g0.zoneLo && g1.zoneHi === g0.zoneHi;
     });
+    test("盘前区外有效信号进入条件预案", () => {
+      const b = makeBreakoutSynthetic();
+      for (let i = 79; i < 85; i++) b[i].low -= 0.4;
+      const s = historicalSetup("breakout", b, b, DEFAULTS),
+        next = new Date(Date.parse(last(b).date + "T00:00:00Z") + 864e5).toISOString().slice(0, 10),
+        r = analyzeSymbol({ code: "sh600000", name: "测试", bars: b, benchmarkBars: b,
+          quote: { price: s.geometry.zoneHi + 0.01, pct: 1 }, now: new Date(next + "T00:00:00Z") });
+      return r.status === "NEXT_SESSION_PLAN" && r.statusText.includes("等回踩") &&
+        r.primary.geometry.zoneHi === s.geometry.zoneHi && r.primary.geometry.netRR >= DEFAULTS.minRR;
+    });
+    test("盘中区外仍等待且次日开盘不追价", () => {
+      const b = makeBreakoutSynthetic();
+      for (let i = 79; i < 85; i++) b[i].low -= 0.4;
+      const s = historicalSetup("breakout", b, b, DEFAULTS),
+        next = new Date(Date.parse(last(b).date + "T00:00:00Z") + 864e5).toISOString().slice(0, 10),
+        price = s.geometry.zoneHi + 0.01,
+        r = analyzeSymbol({ code: "sh600000", name: "测试", bars: b, benchmarkBars: b,
+          quote: { price, pct: 1 }, now: new Date(next + "T02:00:00Z") }),
+        trade = executeTrade(s, { date: next, open: price, high: price, low: price }, [], "A", DEFAULTS);
+      return r.status === "WAIT_ENTRY" && trade.status === "SKIP";
+    });
+    test("次日区内开盘仍须通过净赔率门槛", () => {
+      const sig = { geometry: { valid: true, zoneLo: 9, zoneHi: 11, stop: 8, target: 12 } },
+        r = executeTrade(sig, { date: "2026-01-02", open: 11, high: 11, low: 11 }, [], "US", DEFAULTS);
+      return r.status === "SKIP" && r.reason === "开盘成本后净赔率不足";
+    });
+    test("个股K线落后于市场基准即数据异常", () => {
+      const b = makeBreakoutSynthetic(),
+        next = new Date(Date.parse(last(b).date + "T00:00:00Z") + 864e5).toISOString().slice(0, 10),
+        r = analyzeSymbol({ code: "usTEST", name: "测试", bars: b.slice(0, -1), benchmarkBars: b,
+          quote: { price: 10, pct: 0 }, now: new Date(next + "T00:00:00Z") });
+      return r.status === "DATA_ERROR" && r.quality.errors.some((x) => x.includes("K线交易日不一致"));
+    });
+    test("回踩信号可在有效期第二日区内开盘入场", () => {
+      const sig = { channel: "pullback", geometry: { valid: true, zoneLo: 9, zoneHi: 11, stop: 8, target: 16 } },
+        days = [
+          { date: "2026-01-02", open: 12, high: 12.2, low: 11.8, close: 12 },
+          { date: "2026-01-03", open: 10, high: 10.4, low: 9.8, close: 10.2 },
+        ],
+        r = executeTradeWindow(sig, days, "US", DEFAULTS, 2);
+      return r.status === "CLOSED" && r.entryDate === "2026-01-03" && r.entryOffset === 1 && r.attempts.length === 2;
+    });
+    test("突破信号不越过原有效期等待", () => {
+      const sig = { channel: "breakout", geometry: { valid: true, zoneLo: 9, zoneHi: 11, stop: 8, target: 12 } },
+        days = [
+          { date: "2026-01-02", open: 12, high: 12.2, low: 11.8, close: 12 },
+          { date: "2026-01-03", open: 10, high: 10.4, low: 9.8, close: 10.2 },
+        ],
+        r = executeTradeWindow(sig, days, "US", DEFAULTS, 1);
+      return r.status === "SKIP" && !r.pending && r.attempts.length === 1;
+    });
+    test("等待期间收盘破位则取消后续入场", () => {
+      const sig = { channel: "pullback", geometry: { valid: true, zoneLo: 9, zoneHi: 11, stop: 8, target: 12 } },
+        days = [
+          { date: "2026-01-02", open: 12, high: 12.2, low: 7.9, close: 7.8 },
+          { date: "2026-01-03", open: 10, high: 10.4, low: 9.8, close: 10.2 },
+        ],
+        r = executeTradeWindow(sig, days, "US", DEFAULTS, 2);
+      return r.status === "SKIP" && r.reason === "等待期间收盘触及失效锚点" && r.attempts.length === 1;
+    });
     test("分桶诊断少于30笔只报样本不足", () => {
       const trades = Array.from({ length: 29 }, (_, i) => ({ channel: "breakout", Q: i, E: i, S: i, R: 0.1 }));
       return scoreDiagnostics(trades).filter((x) => x.channel === "breakout").every((x) => x.status === "样本不足" && !x.buckets.length);
@@ -1671,7 +1772,9 @@ const QuantCore = (() => {
     replaySymbol,
     replaySummary,
     executeTrade,
+    executeTradeWindow,
     completedBars,
+    latestCompletedDate,
     marketSession,
     tzInfo,
     statusLabel,
@@ -1750,6 +1853,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     autoRefresh: false,
     autoMinutes: 5,
     lastRefreshAt: 0,
+    loadStartedAt: 0,
     lastReplay: null,
   };
   let selfTestCache = null;
@@ -2034,15 +2138,19 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
   function cacheKey(code) {
     return "quant_v10_k_" + code;
   }
-  function readCache(code) {
+  function readCache(code, expectedDate = null) {
     try {
       const j = JSON.parse(sessionStorage.getItem(cacheKey(code)) || "null");
       if (j && Date.now() - j.t < 20 * 60e3 && Array.isArray(j.b)) {
-        const q = C.klineSeriesQuality(j.b, C.DEFAULTS.minBars);
+        const q = C.klineSeriesQuality(j.b, C.DEFAULTS.minBars),
+          market = isUS(code) ? "US" : "A";
         if (!q.pass) return null;
+        const actualDate = C.latestCompletedDate(q.bars, market, new Date());
+        if (expectedDate && actualDate !== expectedDate) return null;
         return {
           bars: q.bars,
           source: "会话缓存(" + (j.source || "未知") + ")",
+          cachedAt: j.t,
           adjustment: j.adjustment || "复权口径未确认",
           adjustmentConfirmed: j.adjustmentConfirmed === true,
         };
@@ -2209,10 +2317,10 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       document.head.appendChild(s);
     });
   }
-  async function loadKline(code, force = false) {
+  async function loadKline(code, force = false, expectedDate = null) {
     if (!force) {
-      const cached = readCache(code);
-      if (cached) return { bars: cached, source: "会话缓存" };
+      const cached = readCache(code, expectedDate);
+      if (cached) return cached;
     }
     const chain = isUS(code)
       ? [klineSina, klineTX, klineEM]
@@ -2222,9 +2330,12 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     for (let i = 0; i < chain.length; i++) {
       try {
         const bars = acceptKline(await chain[i](code)),
-          meta = klineMeta(names[i], code);
+          meta = klineMeta(names[i], code),
+          actualDate = C.latestCompletedDate(bars, isUS(code) ? "US" : "A", new Date());
+        if (expectedDate && actualDate !== expectedDate)
+          throw new Error(`K线交易日不一致：实际 ${actualDate || "—"}，市场基准 ${expectedDate}`);
         writeCache(code, bars, names[i], meta);
-        return { bars, source: names[i], ...meta };
+        return { bars, source: names[i], ...meta, fallbacks: errors.slice() };
       } catch (e) {
         errors.push(names[i] + ":" + e.message);
       }
@@ -2233,6 +2344,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
   }
   function applyKlineMeta(r, k, quote) {
     r.kSource = k.source;
+    r.kFallbacks = k.fallbacks || [];
     r.kAdjustment = k.adjustment || "复权口径未确认";
     r.adjustmentConfirmed = k.adjustmentConfirmed === true;
     const warnings = [];
@@ -2338,6 +2450,14 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     });
     return rows;
   }
+  function statusReason(r) {
+    const p = r.primary;
+    if (!p || p.stage !== 3 || !["REJECTED", "RESEARCH_ONLY"].includes(r.status)) return "";
+    const g = p.geometry;
+    if (r.status === "RESEARCH_ONLY" && g && g.netRR >= 1 && g.netRR < state.config.minRR)
+      return `净赔率 ${fmt(g.netRR, 2)}＜${fmt(state.config.minRR, 1)}`;
+    return (p.reasons || [])[0] || "未通过执行门槛";
+  }
   function renderSignals() {
     const rows = filteredRows(),
       body = $("signalRows");
@@ -2346,7 +2466,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
         const p = r.primary && r.primary.stage === 3 ? r.primary : null,
           g = p && p.geometry,
           open = state.expanded.has(r.code);
-        return `<tr class="signal-row" data-code="${esc(r.code)}" tabindex="0" aria-expanded="${open}"><td data-label="标的"><div class="stock-heading"><button class="ghost pin-toggle" data-pin="${esc(r.code)}" type="button" aria-pressed="${state.pins.has(r.code)}" aria-label="${state.pins.has(r.code) ? "取消钉住" : "钉住"}${esc(r.name)}">${state.pins.has(r.code) ? "已钉" : "钉"}</button><div><div class="stock-name">${esc(r.name)}</div><div class="stock-code">${esc(r.code)}</div></div></div></td><td data-label="现价" class="price"><span class="${r.pct > 0 ? "up" : r.pct < 0 ? "down" : ""}">${fmt(r.price)}</span><br><span class="small ${r.pct > 0 ? "up" : r.pct < 0 ? "down" : "muted"}">${r.pct === null ? "—" : (r.pct > 0 ? "+" : "") + fmt(r.pct) + "%"}</span></td><td data-label="状态"><span class="badge ${statusClass(r.status)}">${esc(r.statusText || C.statusLabel(r.status))}</span>${g && g.higherPressure ? `<div class="small warn">日线触发／${esc(g.higherPressure.period)}压力受限</div>` : ""}</td><td data-label="主通道"><span class="channel-name">${p ? esc(p.name) : "—"}</span>${r.alternates && r.alternates.length ? `<div class="small muted">另有 ${r.alternates.length} 通道</div>` : ""}</td><td data-label="Q" class="metric col-q"><span class="score ${p ? "" : "na"}">${p ? fmt(p.Q.value, 1) : "—"}</span></td><td data-label="E" class="metric col-e"><span class="score ${p ? "" : "na"}">${p ? fmt(p.E.value, 1) : "—"}</span></td><td data-label="净赔率" class="metric col-rr"><span class="score ${g ? "" : "na"}">${g ? fmt(g.netRR, 2) : "—"}</span></td><td data-label="入场区" class="metric col-zone">${g ? fmt(g.zoneLo) + " ~ " + fmt(g.zoneHi) : "—"}</td><td data-label="止损/目标" class="metric col-stop">${g ? fmt(g.stop) + " / " + fmt(g.target) : "—"}</td><td data-label="数据"><span class="small num">${shortDate(r.barsDate)}</span><br><span class="small muted">${esc(r.source)}</span></td></tr>${open ? `<tr class="detail-row open" data-detail="${esc(r.code)}"><td colspan="10">${detailHTML(r)}</td></tr>` : ""}`;
+        return `<tr class="signal-row" data-code="${esc(r.code)}" tabindex="0" aria-expanded="${open}"><td data-label="标的"><div class="stock-heading"><button class="ghost pin-toggle" data-pin="${esc(r.code)}" type="button" aria-pressed="${state.pins.has(r.code)}" aria-label="${state.pins.has(r.code) ? "取消钉住" : "钉住"}${esc(r.name)}">${state.pins.has(r.code) ? "已钉" : "钉"}</button><div><div class="stock-name">${esc(r.name)}</div><div class="stock-code">${esc(r.code)}</div></div></div></td><td data-label="现价" class="price"><span class="${r.pct > 0 ? "up" : r.pct < 0 ? "down" : ""}">${fmt(r.price)}</span><br><span class="small ${r.pct > 0 ? "up" : r.pct < 0 ? "down" : "muted"}">${r.pct === null ? "—" : (r.pct > 0 ? "+" : "") + fmt(r.pct) + "%"}</span></td><td data-label="状态"><span class="badge ${statusClass(r.status)}">${esc(r.statusText || C.statusLabel(r.status))}</span>${statusReason(r) ? `<div class="small warn">${esc(statusReason(r))}</div>` : ""}${g && g.higherPressure ? `<div class="small warn">日线触发／${esc(g.higherPressure.period)}压力受限</div>` : ""}</td><td data-label="主通道"><span class="channel-name">${p ? esc(p.name) : "—"}</span>${r.alternates && r.alternates.length ? `<div class="small muted">另有 ${r.alternates.length} 通道</div>` : ""}</td><td data-label="Q" class="metric col-q"><span class="score ${p ? "" : "na"}">${p ? fmt(p.Q.value, 1) : "—"}</span></td><td data-label="E" class="metric col-e"><span class="score ${p ? "" : "na"}">${p ? fmt(p.E.value, 1) : "—"}</span></td><td data-label="净赔率" class="metric col-rr"><span class="score ${g ? "" : "na"}">${g ? fmt(g.netRR, 2) : "—"}</span></td><td data-label="入场区" class="metric col-zone">${g ? fmt(g.zoneLo) + " ~ " + fmt(g.zoneHi) : "—"}</td><td data-label="止损/目标" class="metric col-stop">${g ? fmt(g.stop) + " / " + fmt(g.target) : "—"}</td><td data-label="数据"><span class="small num">${shortDate(r.barsDate)}</span><br><span class="small muted">${esc(r.source)}</span></td></tr>${open ? `<tr class="detail-row open" data-detail="${esc(r.code)}"><td colspan="10">${detailHTML(r)}</td></tr>` : ""}`;
       })
       .join("");
     $("signalEmpty").classList.toggle(
@@ -2389,7 +2509,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
         ? `<div><span>高周期压力</span><b class="warn">${esc(g.higherPressure.period)} ${fmt(g.higherPressure.price)}</b><small>原目标 ${fmt(g.rawTarget)}，已收缩</small></div>`
         : `<div><span>高周期压力</span><b>未提前收缩目标</b></div>`,
       pressureList = (g.higherPressures || []).slice(0, 3).map((x) => `${esc(x.period)} ${fmt(x.price)}`).join("；") || "未识别到上方已确认摆动压力";
-    return `<div class="detail"><div><h3>${esc(p.name)} · ${esc(p.statusText)}</h3><ul class="reason-list">${(p.evidence || []).map((x) => `<li>${esc(x)}</li>`).join("")}<li>首次有效触发：${esc(p.triggerDate)}；信号年龄 ${p.age} 个完成交易日</li>${(p.reasons || []).map((x) => `<li class="warn">${esc(x)}</li>`).join("")}</ul><h4>其他合格通道</h4><p>${alt.length ? alt.map((x) => esc(x.name) + " / " + esc(x.statusText)).join("；") : "无"}</p><h4>数据时点</h4><p>${dataLine}；${r.session.state === "REGULAR" ? "常规交易时段" : "非盘中，盘中未完成K线未计入Q"}</p>${warnings.length ? `<p class="small warn">${esc(warnings.join("；"))}</p>` : ""}</div><div><h3>固定交易几何</h3><div class="geometry-grid"><div><span>入场区</span><b class="num">${fmt(g.zoneLo)} ~ ${fmt(g.zoneHi)}</b></div><div><span>成本后净赔率</span><b class="num">${fmt(g.netRR, 2)}</b></div><div><span>失效 / 止损锚</span><b class="num">${fmt(g.stop)}</b></div><div><span>第一目标</span><b class="num">${fmt(g.target)}</b></div>${pressure}<div><span>结构锚点</span><b>${esc(g.anchorLabel)}</b></div><div><span>S（仅同通道）</span><b class="num">${fmt(p.S, 1)}</b></div></div><p class="small muted" style="margin-top:8px">上方压力序列：${pressureList}。费用 ${state.config.feeBps} bps（往返）+ 滑点 ${state.config.slippageBps} bps（单边）假设。止损不保证成交。</p>${dimHTML("执行质量 E", p.E.dims)}</div><div><h3>形态质量 Q · ${fmt(p.Q.value, 1)}</h3>${dimHTML("Score v0 原始维度", p.Q.dims)}<h4>输出边界</h4><p>分数不是胜率、预期收益或账户建议。盘后状态为次日预案；离开入场区不追价。</p></div></div>`;
+    return `<div class="detail"><div><h3>${esc(p.name)} · ${esc(p.statusText)}</h3><ul class="reason-list">${(p.evidence || []).map((x) => `<li>${esc(x)}</li>`).join("")}<li>首次有效触发：${esc(p.triggerDate)}；信号年龄 ${p.age} 个完成交易日</li>${(p.reasons || []).map((x) => `<li class="warn">${esc(x)}</li>`).join("")}</ul><h4>其他合格通道</h4><p>${alt.length ? alt.map((x) => esc(x.name) + " / " + esc(x.statusText)).join("；") : "无"}</p><h4>数据时点</h4><p>${dataLine}；${r.session.state === "REGULAR" ? "常规交易时段" : "非盘中，盘中未完成K线未计入Q"}</p>${warnings.length ? `<p class="small warn">${esc(warnings.join("；"))}</p>` : ""}</div><div><h3>固定交易几何</h3><div class="geometry-grid"><div><span>入场区</span><b class="num">${fmt(g.zoneLo)} ~ ${fmt(g.zoneHi)}</b></div><div><span>成本后净赔率</span><b class="num">${fmt(g.netRR, 2)}</b></div><div><span>失效 / 止损锚</span><b class="num">${fmt(g.stop)}</b></div><div><span>第一目标</span><b class="num">${fmt(g.target)}</b></div>${pressure}<div><span>结构锚点</span><b>${esc(g.anchorLabel)}</b></div><div><span>S（仅同通道）</span><b class="num">${fmt(p.S, 1)}</b></div></div><p class="small muted" style="margin-top:8px">上方压力序列：${pressureList}。费用 ${state.config.feeBps} bps（往返）+ 滑点 ${state.config.slippageBps} bps（单边）假设。止损不保证成交。</p>${dimHTML("执行质量 E", p.E.dims)}</div><div><h3>形态质量 Q · ${fmt(p.Q.value, 1)}</h3>${dimHTML("Score v0 原始维度", p.Q.dims)}<h4>输出边界</h4><p>分数不是胜率、预期收益或账户建议。盘后状态为次日预案；区外仅作等回踩／等收回的条件预案，开盘区外或实际净赔率不足不成交。</p></div></div>`;
   }
   function renderObservations() {
     const text = $("observeText").value.trim().toLowerCase(),
@@ -2417,18 +2537,28 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     for (const market of ["A", "US"]) {
       const rows = [...state.rows.values()].filter((r) => r.market === market && !isIndex(r.code) && Number.isFinite(r.price));
       let adv = 0, dec = 0, flat = 0, nh = 0, nl = 0, stale = 0;
+      const weekly = [];
       for (const r of rows) {
         if (r.pct > 0) adv++; else if (r.pct < 0) dec++; else flat++;
-        const bars = C.completedBars(state.bars.get(r.code) || [], market, new Date()).slice(-20);
+        const completed = C.completedBars(state.bars.get(r.code) || [], market, new Date()),
+          bars = completed.slice(-20);
         if (bars.length >= 20) {
           if (r.price >= Math.max(...bars.map((b) => b.high))) nh++;
           if (r.price <= Math.min(...bars.map((b) => b.low))) nl++;
         }
+        if (r.status !== "DATA_ERROR" && completed.length >= 6)
+          weekly.push((completed[completed.length - 1].close / completed[completed.length - 6].close - 1) * 100);
         if (r.session && r.session.state === "REGULAR" && r.quoteTime && Date.now() - r.quoteTime > 20 * 60e3) stale++;
       }
-      if (rows.length) parts.push(`${market === "A" ? "A股" : "美股"} 涨${adv}/跌${dec}/平${flat} · 20日新高${nh}/新低${nl} · 陈旧报价${stale}`);
+      const wUp = weekly.filter((x) => x > 0).length,
+        wDown = weekly.filter((x) => x < 0).length,
+        wMedian = C.median(weekly),
+        wHigh = weekly.filter((x) => x >= 5).length,
+        wLow = weekly.filter((x) => x <= -5).length,
+        weekText = weekly.length ? ` · 近5日涨${wUp}/跌${wDown} · 中位${wMedian >= 0 ? "+" : ""}${fmt(wMedian, 1)}% · ±5% ${wHigh}/${wLow}` : "";
+      if (rows.length) parts.push(`${market === "A" ? "A股" : "美股"} 涨${adv}/跌${dec}/平${flat} · 20日新高${nh}/新低${nl} · 陈旧报价${stale}${weekText}`);
     }
-    $("breadthLine").textContent = parts.length ? parts.join("｜") + "（仅当前池，不入分）" : "市场宽度：尚无有效报价";
+    $("breadthLine").textContent = parts.length ? parts.join("｜") + "（仅当前池，近5日按完成K线，不入分）" : "市场宽度：尚无有效报价";
   }
   function renderEnvironment() {
     const render = (id, bars, market) => {
@@ -2467,7 +2597,22 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     );
     const passed = rows.filter((r) => r.status !== "DATA_ERROR").length,
       unconfirmedA = rows.filter((r) => r.market === "A" && r.kSource && !r.adjustmentConfirmed).length,
-      dataWarnings = rows.flatMap((r) => (r.quality && r.quality.warnings) || []);
+      dataWarnings = rows.flatMap((r) => (r.quality && r.quality.warnings) || []),
+      fallbackCount = rows.reduce((n, r) => n + ((r.kFallbacks && r.kFallbacks.length) || 0), 0),
+      expectedA = C.latestCompletedDate(state.benchmark.A, "A", new Date()),
+      expectedUS = C.latestCompletedDate(state.benchmark.US, "US", new Date());
+    let oldestCache = null, cacheCount = 0;
+    for (const key of Object.keys(sessionStorage)) {
+      if (!key.startsWith("quant_v10_k_")) continue;
+      try {
+        const j = JSON.parse(sessionStorage.getItem(key) || "null");
+        if (j && Number.isFinite(j.t)) {
+          cacheCount++;
+          if (oldestCache === null || j.t < oldestCache) oldestCache = j.t;
+        }
+      } catch (e) {}
+    }
+    const cacheText = oldestCache ? `${cacheCount} 条；最旧 ${Math.max(0, Math.round((Date.now() - oldestCache) / 60000))} 分钟` : "无会话K线缓存";
     $("sourceStats").innerHTML =
       `<table><tbody><tr><td>当前模式</td><td class="num">${state.mode === "scan" ? "全A初筛深扫" : "本机客观研究池"}</td></tr><tr><td>有效 / 总数</td><td class="num">${passed} / ${rows.length}</td></tr><tr><td>报价来源</td><td>${esc(
         Object.entries(sources)
@@ -2477,7 +2622,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
         Object.entries(kSources)
           .map(([k, v]) => k + " " + v)
           .join("；") || "—",
-      )}</td></tr><tr><td>复权 / 一致性</td><td class="${unconfirmedA || dataWarnings.length ? "warn" : ""}">${unconfirmedA ? `A股复权未确认 ${unconfirmedA} 只；` : ""}${dataWarnings.length ? `警告 ${dataWarnings.length} 条` : "无警告"}</td></tr><tr><td>深扫覆盖</td><td>${esc(state.scanMeta || "尚未执行全A扫描")}</td></tr><tr><td>账户数据</td><td>未读取、未计算、未上传</td></tr></tbody></table>`;
+      )}</td></tr><tr><td>基准完成日</td><td>A股 ${esc(expectedA || "缺失")}；美股 ${esc(expectedUS || "缺失")}</td></tr><tr><td>缓存 / 降级</td><td>${esc(cacheText)}；K线降级记录 ${fallbackCount} 条</td></tr><tr><td>复权 / 一致性</td><td class="${unconfirmedA || dataWarnings.length ? "warn" : ""}">${unconfirmedA ? `A股复权未确认 ${unconfirmedA} 只；` : ""}${dataWarnings.length ? `警告 ${dataWarnings.length} 条` : "无警告"}</td></tr><tr><td>深扫覆盖</td><td>${esc(state.scanMeta || "尚未执行全A扫描")}</td></tr><tr><td>账户数据</td><td>未读取、未计算、未上传</td></tr></tbody></table>`;
     const tests = getSelfTests();
     $("selfTests").innerHTML =
       tests
@@ -2530,6 +2675,12 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     $("loadProgress").firstElementChild.style.width =
       (total ? (done / total) * 100 : 0) + "%";
   }
+  function loadingText(text, done, total) {
+    if (!state.loadStartedAt || !done || done >= total) return text;
+    const elapsed = (Date.now() - state.loadStartedAt) / 1000,
+      remain = Math.max(1, Math.round(((total - done) * elapsed) / done));
+    return `${text}；预计剩余约 ${remain} 秒`;
+  }
   async function loadBenchmarks(force = true) {
     for (const [market, code] of [
       ["A", "sh000001"],
@@ -2548,6 +2699,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     if (state.loading || state.scanning) return;
     if (state.replaying) cancelReplay(false);
     state.loading = true;
+    state.loadStartedAt = Date.now();
     state.mode = "watch";
     state.scanMeta = null;
     $("refreshBtn").disabled = true;
@@ -2570,12 +2722,15 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
         try {
           if (!quote || !Number.isFinite(quote.price))
             throw new Error((quote && quote.error) || "无有效报价");
-          const k = await loadKline(code, force);
+          const market = isUS(code) ? "US" : "A",
+            expectedDate = C.latestCompletedDate(state.benchmark[market], market, new Date());
+          if (!expectedDate) throw new Error(market + " 参考基准缺失，无法核验K线交易日");
+          const k = await loadKline(code, force, expectedDate);
           state.bars.set(code, k.bars);
           const r = C.analyzeSymbol({
             code,
             name: quote.name || name,
-            market: isUS(code) ? "US" : "A",
+            market,
             bars: k.bars,
             quote,
             benchmarkBars: state.benchmark[isUS(code) ? "US" : "A"],
@@ -2604,9 +2759,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
         }
         done++;
         setProgress(done, items.length, true);
-        updateStatus(
-          `研究池加载 ${done}/${items.length}；失败显式保留，不用旧分数替代`,
-        );
+        updateStatus(loadingText(`研究池加载 ${done}/${items.length}；失败显式保留，不用旧分数替代`, done, items.length));
         renderSignals();
       });
       const valid = [...state.rows.values()].filter(
@@ -2697,6 +2850,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     if (state.replaying) cancelReplay(false);
     const token = ++state.scanToken;
     state.scanning = true;
+    state.loadStartedAt = Date.now();
     state.mode = "scan";
     state.rows.clear();
     state.bars.clear();
@@ -2774,7 +2928,9 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
         const code = d.code,
           quote = { ...d, source: loaded.source };
         try {
-          const k = await loadKline(code, true);
+          const expectedDate = C.latestCompletedDate(state.benchmark.A, "A", new Date());
+          if (!expectedDate) throw new Error("A股参考基准缺失，无法核验K线交易日");
+          const k = await loadKline(code, true, expectedDate);
           state.bars.set(code, k.bars);
           const r = C.analyzeSymbol({
             code,
@@ -2808,9 +2964,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
         }
         done++;
         setProgress(done, deep.length, true);
-        updateStatus(
-          `全A深扫 ${done}/${deep.length}；${loaded.source}初筛 ${all.length} 只，非全市场逐只深扫`,
-        );
+        updateStatus(loadingText(`全A深扫 ${done}/${deep.length}；${loaded.source}初筛 ${all.length} 只，非全市场逐只深扫`, done, deep.length));
         renderSignals();
       });
       if (token !== state.scanToken) return;
@@ -3015,9 +3169,12 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       if (!bars) continue;
       const i = bars.findIndex((b) => b.date === e.triggerDate);
       if (i < 0 || !bars[i + 1]) continue;
-      const future = bars.slice(i + 1, i + 1 + e.config.holdingDays),
-        result = C.executeTrade(e.signal, future[0], future, e.market, e.config);
-      if (result.status === "SKIP" || result.reason !== "TIMEOUT" || future.length >= e.config.holdingDays) {
+      const entryWindowDays = e.entryWindowDays || 1,
+        future = bars.slice(i + 1, i + entryWindowDays + e.config.holdingDays),
+        result = C.executeTradeWindow(e.signal, future, e.market, e.config, entryWindowDays),
+        holdingComplete = result.status === "CLOSED" && future.length >= (result.entryOffset || 0) + e.config.holdingDays,
+        closedComplete = result.status === "CLOSED" && (result.reason !== "TIMEOUT" || holdingComplete);
+      if ((result.status === "SKIP" && !result.pending) || closedComplete) {
         e.done = true;
         e.result = result;
         e.settledAt = new Date().toISOString();
@@ -3028,13 +3185,14 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       const p = r.primary;
       if (!p || p.stage !== 3 || !["CURRENT_CANDIDATE", "NEXT_SESSION_PLAN", "WAIT_ENTRY"].includes(r.status)) continue;
       const cfg = { ...state.config },
-        id = [C.VERSION, r.code, p.channel, p.triggerDate, cfg.minRR, cfg.feeBps, cfg.slippageBps, cfg.holdingDays].join("|");
+        entryWindowDays = Math.max(1, C.CHANNELS[p.channel].maxAge - 1),
+        id = [C.VERSION, r.code, p.channel, p.triggerDate, cfg.minRR, cfg.feeBps, cfg.slippageBps, cfg.holdingDays, entryWindowDays].join("|");
       if (ids.has(id)) continue;
       ids.add(id);
       entries.unshift({
         id, version: C.VERSION, savedAt: new Date().toISOString(), done: false,
         code: r.code, name: r.name, market: r.market, channel: p.channel, triggerDate: p.triggerDate,
-        Q: p.Q.value, E: p.E.value, S: p.S, config: cfg,
+        Q: p.Q.value, E: p.E.value, S: p.S, config: cfg, entryWindowDays,
         signal: { geometry: p.triggerGeometry, signalClose: p.triggerGeometry.entryPrice, limitPct: r.market === "A" ? C.priceLimit(r.code, r.name) : null },
       });
     }
@@ -3368,7 +3526,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
   tickClock();
   setInterval(tickClock, 30000);
   log(
-    "Quant v10.0-rc.3 内核已加载：" +
+    "Quant v10.2 内核已加载：" +
       getSelfTests().filter((x) => x.pass).length +
       "/" +
       getSelfTests().length +
