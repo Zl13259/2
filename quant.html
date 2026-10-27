@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Quant v10.4 客观量价信号研究台：三通道、硬门槛、交易几何、可解释评分与探索性回放。">
+<meta name="description" content="Quant v10.5 客观量价信号研究台：三通道、硬门槛、交易几何、可解释评分与探索性回放。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%231c3a13'/%3E%3Cpath d='M8 21V11h8a5 5 0 0 1 0 10h-3v4H8zm5-7v4h3a2 2 0 0 0 0-4h-3z' fill='%23f6f6f4'/%3E%3C/svg%3E">
-<title>Quant v10.4 · 客观信号研究台</title>
+<title>Quant v10.5 · 客观信号研究台</title>
 <style>
 :root{
 --p-forest:oklch(0.32 0.075 145);--p-forest-dark:oklch(0.25 0.06 145);--p-paper:oklch(0.975 0.003 95);--p-ink:oklch(0.24 0.015 60);--p-sage:oklch(0.9 0.018 145);--p-up:oklch(0.52 0.19 28);--p-down:oklch(0.46 0.12 155);--p-warn:oklch(0.55 0.13 75);
@@ -13,19 +13,22 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{min-height:100dvh;background:var(--surface);color:var(--ink);font:15px/1.6 var(--font-sans);-webkit-font-smoothing:antialiased}button,input,select{font:inherit}button,[role=button],select{cursor:pointer}button{min-height:44px;border:1px solid transparent;border-radius:6px;padding:8px 15px;font-weight:600;transition:transform .16s ease-out,background-color .16s ease-out,opacity .16s ease-out}button:hover{transform:translateY(-1px)}button:active{transform:translateY(0)}button:disabled{cursor:not-allowed;opacity:.48;transform:none}a{color:inherit}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid oklch(0.65 0.15 145);outline-offset:3px}.primary{background:var(--accent);color:oklch(0.97 0.01 110)}.primary:hover{background:var(--accent-dark)}.secondary{background:transparent;color:inherit;border-color:currentColor}.ghost{background:var(--soft);color:var(--ink);border-color:var(--line)}.danger{color:var(--up)}input,select{min-height:44px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);padding:8px 11px}input::placeholder{color:var(--muted)}.num,.score,td.price,td.metric{font-family:var(--font-mono);font-variant-numeric:tabular-nums lining-nums;white-space:nowrap}.muted{color:var(--muted)}.up{color:var(--up)}.down{color:var(--down)}.warn{color:var(--warn)}.ok{color:var(--accent)}.small{font-size:12px}.hidden{display:none!important}
 .mast{background:var(--accent);color:oklch(0.965 0.012 110);position:sticky;top:0;z-index:30;box-shadow:0 1px 0 oklch(0.2 0.03 145 / .2)}.mast-main{max-width:1600px;margin:auto;min-height:68px;padding:10px 24px;display:flex;align-items:center;gap:20px}.brand{display:flex;align-items:center;gap:12px;margin-right:auto}.brand-mark{display:grid;grid-template-columns:repeat(3,5px);gap:3px}.brand-mark i{width:5px;height:5px;background:currentColor;display:block}.brand h1{font-size:19px;line-height:1.1;letter-spacing:-.4px}.brand p{font-size:11px;opacity:.76;letter-spacing:.8px}.mast-actions{display:flex;gap:8px}.mast .secondary{border-color:oklch(0.9 0.02 120 / .55)}.tabs{max-width:1600px;margin:auto;padding:0 24px;display:flex;gap:24px;overflow-x:auto}.tab{background:transparent;color:inherit;border:0;border-radius:0;padding:10px 0;min-height:46px;opacity:.7;position:relative;white-space:nowrap}.tab[aria-selected=true]{opacity:1}.tab[aria-selected=true]::after{content:"";position:absolute;height:2px;left:0;right:0;bottom:0;background:currentColor}.wrap{max-width:1600px;margin:auto;padding:20px 24px 50px}.view{display:none}.view.active{display:block}.section-head{display:flex;align-items:flex-start;gap:12px;margin:24px 0 12px}.section-head .brand-mark{color:var(--accent);margin-top:6px}.section-head h2{font-size:18px;line-height:1.3;letter-spacing:-.2px}.section-head p{font-size:13px;color:var(--muted)}
-.market-strip{display:grid;grid-template-columns:1.2fr repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--panel)}.market-cell{padding:14px 16px;border-right:1px solid var(--line)}.market-cell:last-child{border:0}.market-cell b{display:block;font-size:12px;font-weight:600;color:var(--muted)}.market-cell strong{display:block;font-size:16px;margin-top:2px}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:16px 0}.summary-item{background:var(--panel);padding:14px 16px}.summary-item span{font-size:12px;color:var(--muted)}.summary-item strong{display:block;font:700 26px/1.2 var(--font-mono);margin-top:3px}.filter-grid{display:grid;grid-template-columns:minmax(180px,2fr) repeat(3,minmax(130px,1fr)) auto;gap:8px;margin:12px 0}.filter-grid button{align-self:end}.coverage{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:9px 0 12px;color:var(--muted);font-size:12px;border-bottom:1px solid var(--line)}.coverage details{max-width:70%}.coverage summary{cursor:pointer}.table-shell{background:var(--panel)}table{width:100%;border-collapse:collapse;table-layout:auto}th{text-align:left;padding:11px 10px;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.4px;border-bottom:1px solid var(--line);white-space:nowrap}td{padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:middle;font-size:13px}tbody tr.signal-row{cursor:pointer;transition:background-color .14s ease-out}tbody tr.signal-row:hover{background:var(--soft)}tbody tr.signal-row[aria-expanded=true]{background:oklch(0.93 0.02 145)}.stock-name{font-weight:650;font-size:14px}.stock-code{font:11px var(--font-mono);color:var(--muted)}.channel-name{font-weight:600}.badge{display:inline-flex;align-items:center;min-height:25px;padding:2px 8px;border-radius:4px;background:var(--soft);font-size:11px;font-weight:650;white-space:normal;overflow-wrap:anywhere}.badge.current{background:oklch(0.91 0.055 145);color:var(--accent-dark)}.badge.plan{background:oklch(0.93 0.045 85);color:oklch(0.43 0.12 70)}.badge.wait,.badge.research{background:oklch(0.93 0.02 80);color:var(--muted)}.badge.error,.badge.reject{background:oklch(0.94 0.035 28);color:var(--up)}.score{font-size:15px;font-weight:700}.score.na{color:var(--muted);font-weight:400}.detail-row td{padding:0;background:var(--panel)}.detail{padding:18px 20px 22px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:24px}.detail h3{font-size:13px;margin-bottom:8px}.detail h4{font-size:12px;margin:12px 0 4px}.detail p,.detail li{font-size:13px}.detail ul{padding-left:18px}.geometry-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.geometry-grid div{border-bottom:1px solid var(--line);padding:5px 0}.geometry-grid span{display:block;color:var(--muted);font-size:11px}.dim{margin:7px 0}.dim-label{display:flex;justify-content:space-between;font-size:12px}.dim-track{height:3px;background:var(--line);margin-top:3px}.dim-fill{height:100%;background:var(--accent);transform-origin:left}.reason-list li{margin:3px 0}.empty{padding:46px 18px;text-align:center;color:var(--muted);background:var(--panel);border-bottom:1px solid var(--line)}.empty strong{display:block;color:var(--ink);font-size:16px;margin-bottom:5px}.progress{height:4px;background:var(--line);margin:12px 0;overflow:hidden}.progress>i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s ease-out}.notice{border-left:2px solid var(--warn);padding:8px 12px;background:oklch(0.96 0.025 85);font-size:13px;margin:12px 0}.notice.info{border-color:var(--accent);background:oklch(0.95 0.018 145)}
+.market-strip{display:grid;grid-template-columns:1.2fr repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--panel)}.market-cell{padding:14px 16px;border-right:1px solid var(--line)}.market-cell:last-child{border:0}.market-cell b{display:block;font-size:12px;font-weight:600;color:var(--muted)}.market-cell strong{display:block;font-size:16px;margin-top:2px}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:16px 0}.summary-item{background:var(--panel);padding:14px 16px}.summary-item span{font-size:12px;color:var(--muted)}.summary-item strong{display:block;font:700 26px/1.2 var(--font-mono);margin-top:3px}.filter-grid{display:grid;grid-template-columns:minmax(180px,2fr) repeat(3,minmax(130px,1fr)) auto;gap:8px;margin:12px 0}.filter-grid button{align-self:end}.coverage{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:9px 0 12px;color:var(--muted);font-size:12px;border-bottom:1px solid var(--line)}.coverage details{max-width:70%}.coverage summary{cursor:pointer}.table-shell{background:var(--panel)}table{width:100%;border-collapse:collapse;table-layout:auto}th{text-align:left;padding:11px 10px;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.4px;border-bottom:1px solid var(--line);white-space:nowrap}td{padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:middle;font-size:13px}tbody tr.signal-row{cursor:pointer;transition:background-color .14s ease-out}tbody tr.signal-row:hover{background:var(--soft)}tbody tr.signal-row[aria-expanded=true]{background:oklch(0.93 0.02 145)}.stock-name{font-weight:650;font-size:14px}.stock-code{font:11px var(--font-mono);color:var(--muted)}.channel-name{font-weight:600}.badge{display:inline-flex;align-items:center;min-height:25px;padding:2px 8px;border-radius:4px;background:var(--soft);font-size:11px;font-weight:650;white-space:normal;overflow-wrap:anywhere}.badge.current{background:oklch(0.91 0.055 145);color:var(--accent-dark)}.badge.plan{background:oklch(0.93 0.045 85);color:oklch(0.43 0.12 70)}.badge.wait,.badge.research{background:oklch(0.93 0.02 80);color:var(--muted)}.badge.error,.badge.reject{background:oklch(0.94 0.035 28);color:var(--up)}.score{font-size:15px;font-weight:700}.score.na{color:var(--muted);font-weight:400}.detail-row td{padding:0;background:var(--panel)}.detail{padding:18px 20px 22px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:24px}.detail h3{font-size:13px;margin-bottom:8px}.detail h4{font-size:12px;margin:12px 0 4px}.detail p,.detail li{font-size:13px}.detail ul{padding-left:18px}.geometry-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.geometry-grid div{border-bottom:1px solid var(--line);padding:5px 0}.geometry-grid span{display:block;color:var(--muted);font-size:11px}.reason-list li{margin:3px 0}.empty{padding:46px 18px;text-align:center;color:var(--muted);background:var(--panel);border-bottom:1px solid var(--line)}.empty strong{display:block;color:var(--ink);font-size:16px;margin-bottom:5px}.progress{height:4px;background:var(--line);margin:12px 0;overflow:hidden}.progress>i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s ease-out}.notice{border-left:2px solid var(--warn);padding:8px 12px;background:oklch(0.96 0.025 85);font-size:13px;margin:12px 0}.notice.info{border-color:var(--accent);background:oklch(0.95 0.018 145)}
 .research-controls{display:grid;grid-template-columns:repeat(3,1fr) auto;gap:10px;align-items:end;margin:16px 0}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}.field input,.field select{width:100%}.result-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:14px 0}.result-grid>div{background:var(--panel);padding:12px}.result-grid b{display:block;font:700 20px var(--font-mono)}.diag-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}.diag-section{border-top:2px solid var(--ink);padding-top:10px}.diag-section h3{font-size:15px;margin-bottom:8px}.log{max-height:340px;overflow:auto;font:12px/1.65 var(--font-mono);background:var(--ink);color:var(--p-paper);padding:12px;border-radius:4px}.test-line{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding:7px 0;font-size:13px}.method{max-width:900px}.method h3{font-size:16px;margin:24px 0 8px}.method p,.method li{font-size:14px;line-height:1.75}.method ul,.method ol{padding-left:22px}.formula{font:13px/1.7 var(--font-mono);background:var(--ink);color:var(--p-paper);padding:14px;overflow-wrap:anywhere;margin:10px 0}.method table td,.method table th{white-space:normal}.footer{margin-top:36px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:20px}
 dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);padding:0;width:min(720px,calc(100vw - 32px));max-height:85dvh;box-shadow:0 18px 60px oklch(0.2 0.02 145 / .25)}dialog::backdrop{background:oklch(0.18 0.02 145 / .5)}.dialog-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line)}.dialog-head h2{font-size:17px}.dialog-body{padding:18px;overflow:auto;max-height:65dvh}.dialog-actions{display:flex;gap:8px;justify-content:flex-end;padding:12px 18px;border-top:1px solid var(--line)}.watch-row{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding:8px 0}.add-grid{display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:14px}.search-results{margin-top:8px}.search-result{width:100%;display:flex;justify-content:space-between;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--line);border-radius:0}.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,10px);background:var(--ink);color:var(--p-paper);padding:10px 16px;border-radius:6px;z-index:60;opacity:0;pointer-events:none;transition:opacity .18s ease-out,transform .18s ease-out;max-width:calc(100vw - 32px);font-size:13px}.toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-width:1100px){.market-strip{grid-template-columns:1fr 1fr}.market-cell:nth-child(2){border-right:0}.filter-grid{grid-template-columns:1fr 1fr}.filter-grid .search-wide{grid-column:1/-1}.detail{grid-template-columns:1fr 1fr}.detail>div:last-child{grid-column:1/-1}.col-e,.col-zone{display:none}.research-controls{grid-template-columns:1fr 1fr}.diag-grid{grid-template-columns:1fr}}
 @media(max-width:700px){body{font-size:14px}.mast{position:relative}.mast-main{padding:10px 14px;flex-wrap:wrap;gap:10px}.brand{width:100%}.mast-actions{width:100%}.mast-actions button{flex:1}.tabs{padding:0 14px;gap:20px}.wrap{padding:14px 12px 36px}.market-strip{grid-template-columns:1fr 1fr}.market-cell{padding:10px}.summary{grid-template-columns:1fr 1fr}.summary-item{padding:10px 12px}.summary-item strong{font-size:22px}.filter-grid{grid-template-columns:1fr}.filter-grid .search-wide{grid-column:auto}.coverage{align-items:flex-start;flex-direction:column}.coverage details{max-width:100%}thead{display:none}table,tbody,tr,td{display:block;width:100%}tbody tr.signal-row{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);padding:10px 12px;min-width:0}tbody tr.signal-row td{border:0;padding:4px 0;min-width:0;overflow-wrap:anywhere}tbody tr.signal-row td::before{content:attr(data-label);display:block;font-size:10px;color:var(--muted)}.col-q,.col-rr,.col-stop{display:none}.detail-row{display:none}.detail-row.open{display:block}.detail{grid-template-columns:1fr;padding:16px 14px;gap:18px}.detail>div:last-child{grid-column:auto}.research-controls{grid-template-columns:1fr}.result-grid{grid-template-columns:1fr 1fr}.settings-grid{grid-template-columns:1fr}.footer{flex-direction:column}.dialog-actions{flex-wrap:wrap}.search-wide{min-width:0}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 .pin-toggle{min-width:44px;min-height:44px;padding:0;color:var(--muted)}.pin-toggle[aria-pressed=true]{color:var(--accent);font-weight:700}.stock-heading{display:flex;align-items:center;gap:2px}.search-result{text-align:left;padding:10px 4px}.forward-actions{display:flex;gap:8px;flex-wrap:wrap}.filter-grid{grid-template-columns:minmax(180px,2fr) repeat(3,minmax(120px,1fr)) auto auto auto}.research-controls{align-items:end}@media(max-width:1100px){.filter-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.search-wide{grid-column:span 2}}@media(max-width:700px){.filter-grid{grid-template-columns:1fr}.search-wide{grid-column:auto}.mast-actions{flex-wrap:wrap}.mast-actions button{min-width:30%}}
+
+.action-copy{min-width:170px;max-width:280px}.action-title{display:block;font-weight:700;line-height:1.4}.action-detail{display:block;margin-top:2px;color:var(--muted);font-size:11px;line-height:1.45;white-space:normal}.metric-stack{display:flex;flex-direction:column;gap:1px}.metric-stack small{color:var(--muted);font-size:10px}.detail-action{grid-column:1/-1;display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--soft)}.detail-action .action-copy{max-width:none}.detail-action .action-title{font-size:15px}.detail-action .action-detail{font-size:12px}.score-table{border-top:1px solid var(--line)}.score-row{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:6px 0;border-bottom:1px solid var(--line);font-size:12px}.score-row span:last-child{font-family:var(--font-mono);font-variant-numeric:tabular-nums;white-space:nowrap}.score-row small{display:block;color:var(--muted);font-size:10px}.score-note{margin:6px 0 10px!important;color:var(--muted);font-size:11px!important}.space-warning{margin-top:8px!important}.rr-now{font-size:16px;font-weight:750}
+@media(max-width:700px){.filter-grid{grid-template-columns:1fr 1fr}.filter-grid .search-wide{grid-column:1/-1}.col-q,.col-e,.col-channel,.col-data{display:none}.col-rr,.col-stop{display:block}.col-action{grid-column:1/-1;padding:8px 0!important;border-top:1px solid var(--line)!important}.action-copy{max-width:none}.detail-action{flex-direction:column;gap:8px}.detail-action .action-title{font-size:14px}.score-row{padding:7px 0}}
 </style>
 </head>
 <body>
 <header class="mast">
 <div class="mast-main">
-<div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h1>Quant <span class="num">v10.4</span></h1><p>客观信号研究台 · 日线因果模型</p></div></div>
+<div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h1>Quant <span class="num">v10.5</span></h1><p>客观信号研究台 · 日线因果模型</p></div></div>
 <div class="mast-actions"><button class="secondary" id="autoBtn" type="button" aria-pressed="false">自动：关</button><button class="secondary" id="settingsBtn" type="button">模型设置</button><button class="secondary" id="scanBtn" type="button">全A初筛深扫</button><button class="primary" id="refreshBtn" type="button">刷新信号</button></div>
 </div>
 <nav class="tabs" role="tablist" aria-label="研究视图">
@@ -44,7 +47,7 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 <div class="coverage"><span id="statusLine">准备加载客观研究池…</span><details><summary>口径说明</summary><p>Q 为触发时形态质量，E 为当前执行质量，S=0.60Q+0.40E，仅在同通道内比较。日线信号只在既定开盘窗口执行：突破1次、超跌／回踩2次。首次未检查为开盘预案；失败后有余量为等待下次开盘；开盘合格转模型待结算；窗口耗尽或结构失效即退出。盘中回区不生成现价候选，现价净赔率仅供观察；分数不代表胜率。现价来自公开行情接口，可能存在延迟。</p></details></div>
 <div class="small muted" id="breadthLine">市场宽度将在有效数据加载后显示；只描述当前池，不参与评分。</div>
 <div class="progress hidden" id="loadProgress"><i></i></div>
-<div class="table-shell"><table aria-label="客观信号结果"><thead><tr><th>标的</th><th>现价 / 涨跌</th><th>状态</th><th>主通道</th><th class="col-q">Q</th><th class="col-e">E</th><th class="col-rr">现价净赔率</th><th class="col-zone">入场区</th><th class="col-stop">止损 / 目标</th><th>数据</th></tr></thead><tbody id="signalRows"></tbody></table><div class="empty" id="signalEmpty"><strong>正在建立研究集</strong>首次加载需要逐只取得日K；失败会显式标记，不以旧分数代替。</div></div>
+<div class="table-shell"><table aria-label="客观信号结果"><thead><tr><th>标的</th><th>现价 / 涨跌</th><th>状态</th><th class="col-channel">主通道</th><th class="col-q">形态 Q</th><th class="col-e">执行 E</th><th class="col-rr">净赔率</th><th class="col-zone">入场区</th><th class="col-stop">止损 / 目标</th><th>操作结论</th><th class="col-data">数据</th></tr></thead><tbody id="signalRows"></tbody></table><div class="empty" id="signalEmpty"><strong>正在建立研究集</strong>首次加载需要逐只取得日K；失败会显式标记，不以旧分数代替。</div></div>
 </section>
 <section class="view" id="view-observing" role="tabpanel">
 <div class="section-head"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h2>通道准备度</h2><p>阶段①/②只说明缺少哪些条件，不计算候选执行分，不提前生成买点。</p></div></div>
@@ -55,7 +58,7 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 <div class="section-head"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h2>探索性历史回放</h2><p>信号在 t 日收盘确认，只在原信号有效期内尝试开盘：突破次日 1 次，超跌／回踩随后最多 2 次；每次均须位于入场区且实际开盘净赔率达标。A股入场当日不退出。当前加载池存在选择与幸存者偏差，结果不是样本外证明。</p></div></div>
 <div class="notice">回放只使用已加载日K，不补造缺失历史。目标与止损同根K线同时触及时按止损优先；跳空按开盘可成交价估计。历史回放与 v10.2 起新建前向记录均按原信号有效期尝试回区，未成交信号单列；等待期间收盘触及失效锚点即取消。v10.1 及更早前向快照保留原来的单次尝试口径。</div>
 <div class="research-controls"><div class="field"><label for="holdingDays">最大持有交易日</label><input id="holdingDays" type="number" min="3" max="30" value="10"></div><div class="field"><label for="feeBps">往返费用假设（bps）</label><input id="feeBps" type="number" min="0" max="200" value="15"></div><div class="field"><label for="slippageBps">单边滑点假设（bps）</label><input id="slippageBps" type="number" min="0" max="200" value="10"></div><button class="primary" id="replayBtn" type="button">回放已加载标的</button><button class="ghost" id="exportReplayBtn" type="button" disabled>导出完整回放</button></div>
-<div id="replayOutput"><div class="empty"><strong>尚未运行回放</strong>先完成信号加载，再用同一套内核回放。修改成本假设只影响本次研究结果。</div></div><div class="section-head"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h2>上线后前向观察</h2><p>只在本机研究池刷新时记录不可变信号快照；v10.2 起新记录按原信号有效期尝试开盘，旧记录仍按单次尝试结算，和历史回放分开。仅存当前浏览器，可导出备份。</p></div></div><div class="research-controls"><button class="ghost" id="exportForwardBtn" type="button">导出前向记录</button><button class="ghost danger" id="clearForwardBtn" type="button">清空前向记录</button></div><div id="forwardOutput"></div>
+<div id="replayOutput"><div class="empty"><strong>尚未运行回放</strong>先完成信号加载，再用同一套内核回放。修改成本假设只影响本次研究结果。</div></div><div class="section-head"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h2>上线后前向观察</h2><p>只在本机研究池刷新时记录不可变信号快照；v10.5 起冻结触发时评分、完整参数指纹并区分事前登记与补录。汇总按经济信号去重，全部版本档案仍保留。仅存当前浏览器，可导出备份。</p></div></div><div class="research-controls"><button class="ghost" id="exportForwardBtn" type="button">导出前向记录</button><button class="ghost danger" id="clearForwardBtn" type="button">清空前向记录</button></div><div id="forwardOutput"></div>
 </section>
 <section class="view" id="view-diagnostics" role="tabpanel">
 <div class="section-head"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h2>数据与内核诊断</h2><p>数据失败不静默；同一份标准化输入在扫描、详情、回放与自测中复用。</p></div></div>
@@ -66,13 +69,13 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 <h3>因果时间合同</h3><p>只使用截至 t 日收盘已完成的数据形成日K信号，最早在下一交易时段执行。盘中未完成K线不参与 Q。摆动低点必须有右侧K线确认，不能把信号回填到事后最低点。</p>
 <h3>决策链</h3><div class="formula">数据质量 → 三通道状态机 → 独立交易几何 → 成本后净赔率与可成交门槛 → Q / E → 同通道排序 → 探索性回放</div>
 <h3>三通道</h3><ul><li><b>超跌反弹：</b>近10日出现超跌，随后有企稳证据，当前反弹触发且超跌低点未失效。</li><li><b>趋势回踩：</b>MA20/MA60 与斜率确认原趋势，回踩明确支撑后重新转强。</li><li><b>突破确认：</b>前20日基底与压力明确，价格、收盘位置和量能共同确认，RS 相对同市场参考基准计算。</li></ul>
-<h3>交易几何</h3><p>入场区、止损与目标由触发时的结构锚点固定，不随当前价格移动。净赔率计入费用与双边滑点假设；1.5 是研究门槛，不是正期望的数学证明。止损是计划价，不保证跳空或涨跌停时成交。</p>
+<h3>交易几何</h3><p>入场区、止损与目标由触发时的结构锚点固定，不随当前价格移动。净赔率计入费用与双边滑点假设；1.5 是研究门槛，不是正期望的数学证明。目标与止损同时展示百分比和 ATR 距离；ATR 空间提示不是新增门槛，压力近时应降级或放弃，而非拉远目标。止损是计划价，不保证跳空或涨跌停时成交。</p>
 <div class="formula">净赔率 = 目标净收益 ÷ 止损净损失<br>S = 0.60 × Q + 0.40 × E（只作同通道启发式基线）</div>
 <h3>硬门槛</h3><p>数据不足或陈旧、通道未成立、结构失效、几何非法、净赔率不足、流动性不合格、疑似涨停不可成交，均不能被高分抵消。价格离开入场区只改变执行状态，不允许追价；环境状态单列，不乘入 Q/E/S。</p>
 <h3>开盘生命周期</h3><p>实时状态与回放复用同一开盘判定：触发时冻结几何，随后按实际开盘价检查。突破只有1次窗口，超跌／回踩有2次；未检查、失败待重试、模型已入场、窗口耗尽和结构失效分别展示。盘中回区不形成新的现价买点，模型入场不代表用户实际成交。缺少当日开盘价时不猜测剩余窗口。</p><h3>高周期压力</h3><p>只使用触发日前已经完成的周线和月线摆动高点，当前未完成周/月不参与。若最近高周期压力位于原第一目标之前，则将第一目标收缩到该压力并重算净赔率；日线是否触发不由高周期压力反向改写。</p><h3>验证边界</h3><p>页面内回放是当前加载池上的探索性研究，不含完整历史股票池、退市样本、滚动样本外、净化隔离和多重试验校正。样本少于30笔显示“样本不足”；达到30笔也不自动等于稳定规律。回放与 v10.2 起新建前向记录覆盖原信号有效期内的回区开盘；旧前向记录仍按原单次口径结算，不混写。</p>
-<h3>交易日一致性</h3><p>个股最近完成日K必须与同市场参考基准一致；不一致时继续降级数据源，仍不一致则列为数据异常，不生成开盘预案、等待开盘或模型入场状态。缓存同样接受交易日复核。参考基准本身缺失时，不以猜测交易日代替。</p><h3>v10.4 正式版 · 2026-10-27</h3><ol><li>状态机接入真实开盘生命周期：按触发日、完成日K和当日可核验开盘价计算已用／剩余窗口，不再仅凭信号年龄或盘中现价分类。</li><li>撤回v10.3与开盘-only模型冲突的“盘中当前候选”：首次未检查为开盘预案，失败后为等待下次开盘，开盘合格为模型待结算，窗口耗尽或结构失效即退出。</li><li>实时状态与历史回放共用同一开盘门槛；开盘是否合格只使用冻结几何和实际开盘价，现价净赔率不再反向改写已入场或已失效状态。</li><li>页头、筛选和详情同步显示首次预案／等待开盘／模型已入场及每次开盘检查结果；缺少当日开盘价时显式报窗口待确认。</li><li>34项内核自测通过；三通道参数、Q/E权重、净赔率门槛、流动性和回放交易口径未改变，Score v0仍未验证。</li></ol><h3>v10.3 正式版 · 2026-10-27</h3><ol><li>修复状态机把非连续竞价时段一刀切为“次日预案”：价格位置与交易时段独立判定，区外信号始终保持“等待入场”，区内信号按盘中、午间、盘前、盘后分别标注。</li><li>午间区内信号改为“当前候选·午后复核”；盘前与盘后预案分别明确“今日开盘”与“下一交易日”，汇总和筛选统一为“开盘预案”。</li><li>详情展示每个信号自身的执行说明，并修复“暂不可成交”状态被旧状态文案覆盖的问题；三通道、Q/E/S、净赔率、流动性和回放口径均未改变。</li><li>31项内核自测通过，新增午间、盘前、盘后及区内／区外组合回归；自测只验证程序不变量，不证明策略收益。</li></ol><h3>v10.2 正式版 · 2026-10-27</h3><ol><li>新增预期交易日双层门禁：数据源与内核均核对个股和基准末日，陈旧源继续降级，旧缓存不得生成信号；同时修复非强制刷新命中缓存时返回结构嵌套的问题。</li><li>历史回放与新建前向记录按原有效期尝试入场：突破1次、超跌／回踩最多2次；等待期收盘破位取消。旧前向快照不改写，仍按原单次口径。</li><li>主表补充拒绝／降级原因，市场宽度增加近5日分布，加载增加预计剩余时间，诊断增加基准日期、缓存年龄与降级记录。</li><li>27项内核自测通过；三通道参数、Q/E权重、净赔率、流动性与入场区门槛均未放宽，Score v0仍未验证。</li></ol><h3>v10.1 正式版 · 2026-10-27</h3><ol><li>吸纳v10.0-rc.1至rc.4的三通道、固定交易几何、高周期压力、条件预案、数据诊断与回放修复；23项内核自测通过。</li><li>明确验证边界：实时条件预案可在信号有效期内等待回区；历史回放与前向观察只对首次触发后的下一交易日开盘尝试一次，不代表后续回区预案的绩效。</li><li>继续显式保留复权口径与公开数据源警告，不以静默降级或隐藏失败换取表面覆盖率；Score v0仍未验证，不构成收益承诺。</li></ol><h3>v10.0-rc.4 候选版本记录 · 2026-10-27</h3><ol><li>修复非交易时段状态分类：通过硬门槛的区外信号进入“次日预案·等回踩／等收回”，不再被误排除出次日预案；盘中区外仍等待。</li><li>状态修复不放宽三通道、净赔率、流动性、结构失效或入场区约束；次日开盘区外仍不成交。</li><li>修复回放只在信号日检查赔率的问题：次日区内开盘也重算成本后净赔率，不足则跳过；新增3项状态与成交门槛自测。</li></ol><h3>v10.0-rc.3 候选版本记录 · 2026-10-27</h3><ol><li>融合复权口径元数据、数据警告、交易所本地时间与Q/E/S分桶诊断；保留后台Worker回放，取消时不输出不完整汇总。</li><li>K线连续性与异常跳变校验前移到各数据源及缓存验收，质量失败继续降级；全A主备列表统一纳入北交所，修复bj研究池持久化。</li><li>新增已完成周线/月线摆动压力：只在触发时约束第一目标并重算成本后净赔率，不改变日线触发条件；回放使用同一口径。</li><li>新增名称搜索、钉住筛选、市场宽度、空闲自动刷新、完整回放导出及本机前向信号快照；均不读取账户或持仓。</li></ol><h3>v10.0-rc.2 版本记录 · 2026-10-27</h3><ol><li>修复回放反复重算历史指标导致的长阻塞：指标序列每只标的只计算一次，回放移至独立工作线程，支持进度显示与取消。</li><li>增加美股参考环境、纳指数据时点与美股市场筛选；A股和美股环境仍只展示、不扣分。</li><li>修复A股16:00后误删当日完成日K；北交所普通股票涨跌幅修正为30%，并允许bj代码加入研究池。</li><li>新增增量特征一致性、A股16点后和北交所规则回归自测；修复不改变三通道参数、Q/E权重与回放交易口径。</li></ol><h3>v10.0-rc.1 版本记录 · 2026-10-26</h3><ol><li>废除通用技术总分，建立超跌、回踩、突破独立状态机与 Q/E 评分。</li><li>修复触发后几何漂移：触发日冻结ATR、锚点、入场区和目标，当前价只更新执行状态。</li><li>修复A股午休误用未完成K线；新增交易时段迁移后自动复核信号。</li><li>超跌评分改用事件日Z值，企稳证据必须在触发日前完成。</li><li>腾讯K线恢复web.ifzq主端点、proxy仅作镜像兜底；美股指数基准适配新浪.IXIC/.INX/.DJI口径；全A列表增加新浪备用源。</li><li>回放纳入流动性、涨停不可成交、Q/E/S和统一持有期；撤除会驻留全部历史特征的缓存，避免浏览器内存崩溃。</li><li>单文件、无后端、无登录、无自动交易；仅研究池与界面设置保存在当前浏览器。</li></ol>
+<h3>交易日一致性</h3><p>个股最近完成日K必须与同市场参考基准一致；不一致时继续降级数据源，仍不一致则列为数据异常，不生成开盘预案、等待开盘或模型入场状态。缓存同样接受交易日复核。参考基准本身缺失时，不以猜测交易日代替。</p><h3>v10.5 正式版 · 2026-10-27</h3><ol><li>Q／E 子项改为纯数字表，删除评分柱状条；净赔率统一显示为“数值∶1”，并补充实际价位说明。</li><li>新增主表与详情双层操作结论：明确等待开盘、区外不追、只观察、放弃及模型已入场非新买点，状态不再代替动作。</li><li>止损、目标与压力同时显示价格、距现价百分比和 ATR 距离；目标不足 1 倍 ATR 仅提示空间偏窄，不自动拉远目标或改变硬门槛。</li><li>手机端保留操作结论、净赔率及止损目标，不再隐藏关键交易信息。</li><li>前向记录冻结触发时 Q／E／S，完整参数与几何生成指纹；区分事前登记和补录，汇总按经济信号取最早档案去重，全量版本记录仍保留。</li><li>35 项内核自测通过；三通道、Q/E 权重、目标压力公式、净赔率门槛与回放交易口径均未改变，废弃的盘中执行等实验方案不纳入本版。</li></ol><h3>v10.4 正式版 · 2026-10-27</h3><ol><li>状态机接入真实开盘生命周期：按触发日、完成日K和当日可核验开盘价计算已用／剩余窗口，不再仅凭信号年龄或盘中现价分类。</li><li>撤回v10.3与开盘-only模型冲突的“盘中当前候选”：首次未检查为开盘预案，失败后为等待下次开盘，开盘合格为模型待结算，窗口耗尽或结构失效即退出。</li><li>实时状态与历史回放共用同一开盘门槛；开盘是否合格只使用冻结几何和实际开盘价，现价净赔率不再反向改写已入场或已失效状态。</li><li>页头、筛选和详情同步显示首次预案／等待开盘／模型已入场及每次开盘检查结果；缺少当日开盘价时显式报窗口待确认。</li><li>34项内核自测通过；三通道参数、Q/E权重、净赔率门槛、流动性和回放交易口径未改变，Score v0仍未验证。</li></ol><h3>v10.3 正式版 · 2026-10-27</h3><ol><li>修复状态机把非连续竞价时段一刀切为“次日预案”：价格位置与交易时段独立判定，区外信号始终保持“等待入场”，区内信号按盘中、午间、盘前、盘后分别标注。</li><li>午间区内信号改为“当前候选·午后复核”；盘前与盘后预案分别明确“今日开盘”与“下一交易日”，汇总和筛选统一为“开盘预案”。</li><li>详情展示每个信号自身的执行说明，并修复“暂不可成交”状态被旧状态文案覆盖的问题；三通道、Q/E/S、净赔率、流动性和回放口径均未改变。</li><li>31项内核自测通过，新增午间、盘前、盘后及区内／区外组合回归；自测只验证程序不变量，不证明策略收益。</li></ol><h3>v10.2 正式版 · 2026-10-27</h3><ol><li>新增预期交易日双层门禁：数据源与内核均核对个股和基准末日，陈旧源继续降级，旧缓存不得生成信号；同时修复非强制刷新命中缓存时返回结构嵌套的问题。</li><li>历史回放与新建前向记录按原有效期尝试入场：突破1次、超跌／回踩最多2次；等待期收盘破位取消。旧前向快照不改写，仍按原单次口径。</li><li>主表补充拒绝／降级原因，市场宽度增加近5日分布，加载增加预计剩余时间，诊断增加基准日期、缓存年龄与降级记录。</li><li>27项内核自测通过；三通道参数、Q/E权重、净赔率、流动性与入场区门槛均未放宽，Score v0仍未验证。</li></ol><h3>v10.1 正式版 · 2026-10-27</h3><ol><li>吸纳v10.0-rc.1至rc.4的三通道、固定交易几何、高周期压力、条件预案、数据诊断与回放修复；23项内核自测通过。</li><li>明确验证边界：实时条件预案可在信号有效期内等待回区；历史回放与前向观察只对首次触发后的下一交易日开盘尝试一次，不代表后续回区预案的绩效。</li><li>继续显式保留复权口径与公开数据源警告，不以静默降级或隐藏失败换取表面覆盖率；Score v0仍未验证，不构成收益承诺。</li></ol><h3>v10.0-rc.4 候选版本记录 · 2026-10-27</h3><ol><li>修复非交易时段状态分类：通过硬门槛的区外信号进入“次日预案·等回踩／等收回”，不再被误排除出次日预案；盘中区外仍等待。</li><li>状态修复不放宽三通道、净赔率、流动性、结构失效或入场区约束；次日开盘区外仍不成交。</li><li>修复回放只在信号日检查赔率的问题：次日区内开盘也重算成本后净赔率，不足则跳过；新增3项状态与成交门槛自测。</li></ol><h3>v10.0-rc.3 候选版本记录 · 2026-10-27</h3><ol><li>融合复权口径元数据、数据警告、交易所本地时间与Q/E/S分桶诊断；保留后台Worker回放，取消时不输出不完整汇总。</li><li>K线连续性与异常跳变校验前移到各数据源及缓存验收，质量失败继续降级；全A主备列表统一纳入北交所，修复bj研究池持久化。</li><li>新增已完成周线/月线摆动压力：只在触发时约束第一目标并重算成本后净赔率，不改变日线触发条件；回放使用同一口径。</li><li>新增名称搜索、钉住筛选、市场宽度、空闲自动刷新、完整回放导出及本机前向信号快照；均不读取账户或持仓。</li></ol><h3>v10.0-rc.2 版本记录 · 2026-10-27</h3><ol><li>修复回放反复重算历史指标导致的长阻塞：指标序列每只标的只计算一次，回放移至独立工作线程，支持进度显示与取消。</li><li>增加美股参考环境、纳指数据时点与美股市场筛选；A股和美股环境仍只展示、不扣分。</li><li>修复A股16:00后误删当日完成日K；北交所普通股票涨跌幅修正为30%，并允许bj代码加入研究池。</li><li>新增增量特征一致性、A股16点后和北交所规则回归自测；修复不改变三通道参数、Q/E权重与回放交易口径。</li></ol><h3>v10.0-rc.1 版本记录 · 2026-10-26</h3><ol><li>废除通用技术总分，建立超跌、回踩、突破独立状态机与 Q/E 评分。</li><li>修复触发后几何漂移：触发日冻结ATR、锚点、入场区和目标，当前价只更新执行状态。</li><li>修复A股午休误用未完成K线；新增交易时段迁移后自动复核信号。</li><li>超跌评分改用事件日Z值，企稳证据必须在触发日前完成。</li><li>腾讯K线恢复web.ifzq主端点、proxy仅作镜像兜底；美股指数基准适配新浪.IXIC/.INX/.DJI口径；全A列表增加新浪备用源。</li><li>回放纳入流动性、涨停不可成交、Q/E/S和统一持有期；撤除会驻留全部历史特征的缓存，避免浏览器内存崩溃。</li><li>单文件、无后端、无登录、无自动交易；仅研究池与界面设置保存在当前浏览器。</li></ol>
 </section>
-<footer class="footer"><span>Quant v10.4 · Score v0 · 数据与结论均需在决策前复核</span><span>公开行情研究工具，不构成收益承诺</span></footer>
+<footer class="footer"><span>Quant v10.5 · Score v0 · 数据与结论均需在决策前复核</span><span>公开行情研究工具，不构成收益承诺</span></footer>
 </main>
 <dialog id="watchDialog" aria-labelledby="watchTitle"><div class="dialog-head"><h2 id="watchTitle">客观研究池</h2><button class="ghost" data-close="watchDialog" type="button">关闭</button></div><div class="dialog-body"><div class="add-grid"><input id="addSymbol" type="search" placeholder="名称 / 代码：茅台、600519、bj920001、usNVDA" aria-label="添加代码"><button class="primary" id="addBtn" type="button">校验并添加</button></div><div id="searchResults" class="search-results"></div><p class="small muted" style="margin:12px 0">研究池仅保存在此浏览器；清除浏览器数据会丢失。默认池用于跨行业参考，与任何账户持仓无关。</p><div id="watchList"></div></div><div class="dialog-actions"><button class="ghost" id="exportBtn" type="button">导出研究池</button><button class="ghost" id="importBtn" type="button">导入</button><input id="importFile" class="hidden" type="file" accept="application/json,.json"><button class="ghost danger" id="resetBtn" type="button">恢复默认</button></div></dialog>
 <dialog id="settingsDialog" aria-labelledby="settingsTitle"><div class="dialog-head"><h2 id="settingsTitle">客观模型设置</h2><button class="ghost" data-close="settingsDialog" type="button">关闭</button></div><div class="dialog-body"><div class="settings-grid"><div class="field"><label for="setMinRR">正常候选最低净赔率</label><input id="setMinRR" type="number" min="1" max="5" step="0.1" value="1.5"></div><div class="field"><label for="setDeepLimit">全A深扫数量上限</label><select id="setDeepLimit"><option>30</option><option selected>60</option><option>120</option></select></div><div class="field"><label for="setMinAmountA">A股20日均成交额门槛（万元）</label><input id="setMinAmountA" type="number" min="0" step="1000" value="5000"></div><div class="field"><label for="setMinAmountUS">美股20日均成交额门槛（万美元）</label><input id="setMinAmountUS" type="number" min="0" step="100" value="500"></div></div><div class="field" style="margin-top:14px"><label for="setAutoMinutes">自动刷新间隔（开启后生效）</label><select id="setAutoMinutes"><option value="1">1分钟</option><option value="5" selected>5分钟</option><option value="10">10分钟</option></select></div><p class="small muted" style="margin-top:14px">设置只改变客观研究口径，不代表任何账户纪律。自动刷新只在页面可见且空闲时运行；回放期间跳过。修改后重新刷新信号。</p></div><div class="dialog-actions"><button class="primary" id="saveSettings" type="button">保存设置</button></div></dialog>
@@ -81,7 +84,7 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 /* Quant v10.0 objective signal core. No DOM, storage, network or account rules. */
 const QuantCore = (() => {
   "use strict";
-  const VERSION = "v10.4";
+  const VERSION = "v10.5";
   const DEFAULTS = Object.freeze({
     minBars: 80,
     minAmountA: 5e7,
@@ -784,6 +787,9 @@ const QuantCore = (() => {
       zoneHi,
       anchorLabel,
       netRR: rr,
+      atrValue: atr,
+      targetAtr: atr > 0 ? (target - price) / atr : null,
+      stopAtr: atr > 0 ? (price - stop) / atr : null,
       grossUp: (target / price - 1) * 100,
       grossDown: (1 - stop / price) * 100,
       valid:
@@ -817,6 +823,8 @@ const QuantCore = (() => {
     return {
       ...g,
       netRR: rr,
+      targetAtr: g.atrValue > 0 ? (g.target - price) / g.atrValue : null,
+      stopAtr: g.atrValue > 0 ? (price - g.stop) / g.atrValue : null,
       grossUp: (g.target / price - 1) * 100,
       grossDown: (1 - g.stop / price) * 100,
       entryPrice: price,
@@ -1183,6 +1191,9 @@ const QuantCore = (() => {
         triggerGeometry,
         E,
         S,
+        triggerQ: s.Q,
+        triggerE: s.E,
+        triggerS: s.S,
         reasons,
         triggerDate,
         firstTrigger: age === 0 && lifecycle.usedAttempts === 0,
@@ -1945,6 +1956,15 @@ const QuantCore = (() => {
       const trades = Array.from({ length: 29 }, (_, i) => ({ channel: "breakout", Q: i, E: i, S: i, R: 0.1 }));
       return scoreDiagnostics(trades).filter((x) => x.channel === "breakout").every((x) => x.status === "样本不足" && !x.buckets.length);
     });
+    test("空间诊断只增加元数据且不改变交易几何", () => {
+      const f = features(makeSynthetic(180)),
+        setup = { anchors: { pressure: f.close - 1, baseLow: f.close - 4, baseRange: 3 } },
+        g = netGeometry("breakout", f, setup, f.close, DEFAULTS),
+        moved = repriceGeometry(g, f.close * 1.01, DEFAULTS);
+      return g.atrValue > 0 && Number.isFinite(g.targetAtr) && Number.isFinite(g.stopAtr) &&
+        moved.stop === g.stop && moved.target === g.target &&
+        Math.abs(moved.targetAtr - (g.target - f.close * 1.01) / g.atrValue) < 1e-9;
+    });
     return tests;
   }
   return {
@@ -2633,63 +2653,88 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     if (!p || p.stage !== 3 || !["REJECTED", "RESEARCH_ONLY"].includes(r.status)) return "";
     const g = p.geometry;
     if (r.status === "RESEARCH_ONLY" && g && g.netRR >= 1 && g.netRR < state.config.minRR)
-      return `净赔率 ${fmt(g.netRR, 2)}＜${fmt(state.config.minRR, 1)}`;
+      return `净赔率 ${fmt(g.netRR, 2)}∶1＜${fmt(state.config.minRR, 1)}∶1`;
     return (p.reasons || [])[0] || "未通过执行门槛";
   }
-  function renderSignals() {
-    const rows = filteredRows(),
-      body = $("signalRows");
-    body.innerHTML = rows
-      .map((r) => {
-        const p = r.primary && r.primary.stage === 3 ? r.primary : null,
-          g = p && p.geometry,
-          open = state.expanded.has(r.code);
-        return `<tr class="signal-row" data-code="${esc(r.code)}" tabindex="0" aria-expanded="${open}"><td data-label="标的"><div class="stock-heading"><button class="ghost pin-toggle" data-pin="${esc(r.code)}" type="button" aria-pressed="${state.pins.has(r.code)}" aria-label="${state.pins.has(r.code) ? "取消钉住" : "钉住"}${esc(r.name)}">${state.pins.has(r.code) ? "已钉" : "钉"}</button><div><div class="stock-name">${esc(r.name)}</div><div class="stock-code">${esc(r.code)}</div></div></div></td><td data-label="现价" class="price"><span class="${r.pct > 0 ? "up" : r.pct < 0 ? "down" : ""}">${fmt(r.price)}</span><br><span class="small ${r.pct > 0 ? "up" : r.pct < 0 ? "down" : "muted"}">${r.pct === null ? "—" : (r.pct > 0 ? "+" : "") + fmt(r.pct) + "%"}</span></td><td data-label="状态"><span class="badge ${statusClass(r.status)}">${esc(r.statusText || C.statusLabel(r.status))}</span>${statusReason(r) ? `<div class="small warn">${esc(statusReason(r))}</div>` : ""}${g && g.higherPressure ? `<div class="small warn">日线触发／${esc(g.higherPressure.period)}压力受限</div>` : ""}</td><td data-label="主通道"><span class="channel-name">${p ? esc(p.name) : "—"}</span>${r.alternates && r.alternates.length ? `<div class="small muted">另有 ${r.alternates.length} 通道</div>` : ""}</td><td data-label="Q" class="metric col-q"><span class="score ${p ? "" : "na"}">${p ? fmt(p.Q.value, 1) : "—"}</span></td><td data-label="E" class="metric col-e"><span class="score ${p ? "" : "na"}">${p ? fmt(p.E.value, 1) : "—"}</span></td><td data-label="净赔率" class="metric col-rr"><span class="score ${g ? "" : "na"}">${g ? fmt(g.netRR, 2) : "—"}</span></td><td data-label="入场区" class="metric col-zone">${g ? fmt(g.zoneLo) + " ~ " + fmt(g.zoneHi) : "—"}</td><td data-label="止损/目标" class="metric col-stop">${g ? fmt(g.stop) + " / " + fmt(g.target) : "—"}</td><td data-label="数据"><span class="small num">${shortDate(r.barsDate)}</span><br><span class="small muted">${esc(r.source)}</span></td></tr>${open ? `<tr class="detail-row open" data-detail="${esc(r.code)}"><td colspan="10">${detailHTML(r)}</td></tr>` : ""}`;
-      })
-      .join("");
-    $("signalEmpty").classList.toggle(
-      "hidden",
-      rows.length > 0 || state.loading || state.scanning,
-    );
-    if (!rows.length && !state.loading && !state.scanning)
-      $("signalEmpty").innerHTML =
-        "<strong>当前筛选下没有候选</strong>空候选是合法结果；可切换“全部状态”查看拒绝原因。";
-    const all = [...state.rows.values()].filter((r) => !isIndex(r.code));
-    for (const [id, status] of [
-      ["countPlan", "NEXT_SESSION_PLAN"],
-      ["countWait", "WAIT_ENTRY"],
-      ["countEntered", "MODEL_ENTERED"],
-      ["countError", "DATA_ERROR"],
-    ])
-      $(id).textContent = all.filter((r) => r.status === status).length;
-    $("coverageTop").textContent =
-      all.filter((r) => r.status !== "DATA_ERROR").length + " / " + all.length;
-    renderObservations();
-    renderBreadth();
-    renderDiagnostics();
+  function actionGuidance(r) {
+    const p = r.primary && r.primary.stage === 3 ? r.primary : null,
+      g = p && p.geometry,
+      zone = g ? `${fmt(g.zoneLo)}～${fmt(g.zoneHi)}` : "—",
+      rr = g && Number.isFinite(g.netRR) ? `${fmt(g.netRR, 2)}∶1` : "—";
+    if (!p) {
+      if (r.status === "DATA_ERROR") return { title: "不操作｜先修复数据", detail: (r.quality && r.quality.errors[0]) || r.statusText };
+      if (r.status === "UNSUPPORTED") return { title: "不适用｜不生成隔夜买点", detail: r.statusText };
+      return { title: "继续观察｜尚未触发", detail: r.statusText || "等待通道条件成立" };
+    }
+    switch (r.status) {
+      case "NEXT_SESSION_PLAN": {
+        const when = p.executionHorizon === "TODAY_OPEN" ? "今日开盘" : "下一交易日开盘";
+        return { title: `${when}再评估｜区外不追`, detail: `开盘在 ${zone} 且净赔率≥${fmt(state.config.minRR, 1)}∶1 才符合模型入场；否则放弃。` };
+      }
+      case "WAIT_ENTRY":
+        return { title: "等下次开盘｜现在不追", detail: `剩余 ${p.remainingAttempts ?? "—"} 次窗口；仍须位于 ${zone} 并重新通过净赔率门槛。` };
+      case "MODEL_ENTERED":
+        return { title: "模型已入场｜不是新买点", detail: `${p.entryDate || "入场日待核"} 已触发；模型止损 ${fmt(g.stop)}、目标 ${fmt(g.target)}，不代表你的实际持仓。` };
+      case "RESEARCH_ONLY":
+        return { title: "只观察｜不开仓", detail: `${statusReason(r) || "执行条件不足"}；当前净赔率 ${rr}，高分不能抵消。` };
+      case "REJECTED":
+        return { title: "放弃｜不满足执行门槛", detail: `${statusReason(r) || r.statusText}；当前净赔率 ${rr}。` };
+      case "EXPIRED":
+        return { title: "不再操作｜信号已失效", detail: r.statusText || "窗口耗尽或结构失效，不沿用旧入场区。" };
+      case "MANUAL_REVIEW":
+        return { title: "先人工复核｜暂不操作", detail: "超跌与突破通道判断冲突，不能静默选择高分通道。" };
+      case "UNTRADABLE":
+        return { title: "不可成交｜不操作", detail: r.statusText };
+      default:
+        return { title: "暂不操作｜等待复核", detail: r.statusText || "当前没有可执行动作" };
+    }
   }
-  function dimHTML(title, obj) {
-    return `<h4>${esc(title)}</h4>${Object.entries(obj || {})
-      .map(
-        ([k, v]) =>
-          `<div class="dim"><div class="dim-label"><span>${esc(k)}</span><span class="num">${v === null ? "—" : fmt(v, 1)}</span></div><div class="dim-track"><div class="dim-fill" style="width:${v === null ? 0 : C.clamp(v)}%"></div></div></div>`,
-      )
-      .join("")}`;
+  function actionHTML(r, detail = false) {
+    const a = actionGuidance(r);
+    return `<div class="action-copy"><strong class="action-title">${esc(a.title)}</strong><span class="action-detail">${esc(a.detail)}</span></div>${detail ? `<span class="badge ${statusClass(r.status)}">${esc(r.statusText || C.statusLabel(r.status))}</span>` : ""}`;
+  }
+  function pctText(v, signed = true) {
+    if (!Number.isFinite(v)) return "—";
+    return `${signed && v > 0 ? "+" : ""}${fmt(v, 1)}%`;
+  }
+  function renderSignals() {
+    const rows = filteredRows(), body = $("signalRows");
+    body.innerHTML = rows.map((r) => {
+      const p = r.primary && r.primary.stage === 3 ? r.primary : null,
+        g = p && p.geometry,
+        open = state.expanded.has(r.code);
+      return `<tr class="signal-row" data-code="${esc(r.code)}" tabindex="0" aria-expanded="${open}"><td data-label="标的"><div class="stock-heading"><button class="ghost pin-toggle" data-pin="${esc(r.code)}" type="button" aria-pressed="${state.pins.has(r.code)}" aria-label="${state.pins.has(r.code) ? "取消钉住" : "钉住"}${esc(r.name)}">${state.pins.has(r.code) ? "已钉" : "钉"}</button><div><div class="stock-name">${esc(r.name)}</div><div class="stock-code">${esc(r.code)}</div></div></div></td><td data-label="现价" class="price"><span class="${r.pct > 0 ? "up" : r.pct < 0 ? "down" : ""}">${fmt(r.price)}</span><br><span class="small ${r.pct > 0 ? "up" : r.pct < 0 ? "down" : "muted"}">${r.pct === null ? "—" : (r.pct > 0 ? "+" : "") + fmt(r.pct) + "%"}</span></td><td data-label="状态"><span class="badge ${statusClass(r.status)}">${esc(r.statusText || C.statusLabel(r.status))}</span>${g && g.higherPressure ? `<div class="small warn">${esc(g.higherPressure.period)}压力限制目标</div>` : ""}</td><td data-label="主通道" class="col-channel"><span class="channel-name">${p ? esc(p.name) : "—"}</span>${r.alternates && r.alternates.length ? `<div class="small muted">另有 ${r.alternates.length} 通道</div>` : ""}</td><td data-label="形态 Q" class="metric col-q"><span class="score ${p ? "" : "na"}">${p ? fmt(p.Q.value, 1) : "—"}</span></td><td data-label="执行 E" class="metric col-e"><span class="score ${p ? "" : "na"}">${p ? fmt(p.E.value, 1) : "—"}</span></td><td data-label="净赔率" class="metric col-rr"><span class="score ${g ? "" : "na"}">${g ? fmt(g.netRR, 2) + "∶1" : "—"}</span></td><td data-label="入场区" class="metric col-zone">${g ? fmt(g.zoneLo) + "～" + fmt(g.zoneHi) : "—"}</td><td data-label="止损 / 目标" class="metric col-stop">${g ? `<div class="metric-stack"><span>${fmt(g.stop)} / ${fmt(g.target)}</span><small>${pctText(-g.grossDown, false)} / ${pctText(g.grossUp)}</small></div>` : "—"}</td><td data-label="操作结论" class="col-action">${actionHTML(r)}</td><td data-label="数据" class="col-data"><span class="small num">${shortDate(r.barsDate)}</span><br><span class="small muted">${esc(r.source)}</span></td></tr>${open ? `<tr class="detail-row open" data-detail="${esc(r.code)}"><td colspan="11">${detailHTML(r)}</td></tr>` : ""}`;
+    }).join("");
+    $("signalEmpty").classList.toggle("hidden", rows.length > 0 || state.loading || state.scanning);
+    if (!rows.length && !state.loading && !state.scanning)
+      $("signalEmpty").innerHTML = "<strong>当前筛选下没有候选</strong>空候选是合法结果；可切换“全部状态”查看拒绝原因。";
+    const all = [...state.rows.values()].filter((r) => !isIndex(r.code));
+    for (const [id, status] of [["countPlan", "NEXT_SESSION_PLAN"], ["countWait", "WAIT_ENTRY"], ["countEntered", "MODEL_ENTERED"], ["countError", "DATA_ERROR"]])
+      $(id).textContent = all.filter((r) => r.status === status).length;
+    $("coverageTop").textContent = all.filter((r) => r.status !== "DATA_ERROR").length + " / " + all.length;
+    renderObservations(); renderBreadth(); renderDiagnostics();
+  }
+  function dimHTML(title, obj, notes = {}) {
+    return `<h4>${esc(title)}</h4><div class="score-table">${Object.entries(obj || {}).map(([k, v]) => `<div class="score-row"><span>${esc(k)}${notes[k] ? `<small>${esc(notes[k])}</small>` : ""}</span><span>${v === null ? "—" : fmt(v, 1)}</span></div>`).join("")}</div>`;
   }
   function detailHTML(r) {
     const p = r.primary && r.primary.stage === 3 ? r.primary : null,
       dataLine = `完成日K ${esc(r.barsDate)}；报价 ${esc(r.source)}；K线源 ${esc(r.kSource || "—")}；${esc(r.kAdjustment || "复权口径未确认")}`,
       warnings = (r.quality && r.quality.warnings) || [];
     if (!p)
-      return `<div class="detail"><div><h3>观察原因</h3><p>${esc(r.statusText)}</p></div><div><h3>数据时点</h3><p>${dataLine}</p></div><div><h3>质量诊断</h3><p>${esc([...((r.quality && r.quality.errors) || []), ...warnings].join("；") || "未形成三通道候选")}</p></div></div>`;
+      return `<div class="detail"><div class="detail-action">${actionHTML(r, true)}</div><div><h3>观察原因</h3><p>${esc(r.statusText)}</p></div><div><h3>数据时点</h3><p>${dataLine}</p></div><div><h3>质量诊断</h3><p>${esc([...((r.quality && r.quality.errors) || []), ...warnings].join("；") || "未形成三通道候选")}</p></div></div>`;
     const g = p.geometry, alt = r.alternates || [],
+      pressurePct = g.higherPressure && r.price > 0 ? (g.higherPressure.price / r.price - 1) * 100 : null,
+      rawTargetPct = r.price > 0 ? (g.rawTarget / r.price - 1) * 100 : null,
       pressure = g.higherPressure
-        ? `<div><span>高周期压力</span><b class="warn">${esc(g.higherPressure.period)} ${fmt(g.higherPressure.price)}</b><small>原目标 ${fmt(g.rawTarget)}，已收缩</small></div>`
+        ? `<div><span>最近高周期压力</span><b class="warn num">${esc(g.higherPressure.period)} ${fmt(g.higherPressure.price)}（${pctText(pressurePct)}）</b><small>原目标 ${fmt(g.rawTarget)}（${pctText(rawTargetPct)}），已收缩</small></div>`
         : `<div><span>高周期压力</span><b>未提前收缩目标</b></div>`,
-      pressureList = (g.higherPressures || []).slice(0, 3).map((x) => `${esc(x.period)} ${fmt(x.price)}`).join("；") || "未识别到上方已确认摆动压力",
+      pressureList = (g.higherPressures || []).slice(0, 3).map((x) => `${esc(x.period)} ${fmt(x.price)}（${pctText(r.price > 0 ? (x.price / r.price - 1) * 100 : null)}）`).join("；") || "未识别到上方已确认摆动压力",
       attemptLine = (p.attempts || []).map((x) => `${x.date} ${x.status === "ENTER" ? "条件满足" : "未入场"}：${x.reason}`).join("；") || "尚未进行开盘检查",
-      windowLine = `开盘窗口：已检查 ${p.usedAttempts ?? 0} / ${p.maxAttempts ?? "—"} 次；剩余 ${p.remainingAttempts ?? "—"} 次；${attemptLine}`;
-    return `<div class="detail"><div><h3>${esc(p.name)} · ${esc(p.statusText)}</h3><ul class="reason-list">${(p.evidence || []).map((x) => `<li>${esc(x)}</li>`).join("")}<li>首次有效触发：${esc(p.triggerDate)}；信号年龄 ${p.age} 个完成交易日</li><li>${esc(windowLine)}</li>${(p.reasons || []).map((x) => `<li class="warn">${esc(x)}</li>`).join("")}</ul><h4>其他合格通道</h4><p>${alt.length ? alt.map((x) => esc(x.name) + " / " + esc(x.statusText)).join("；") : "无"}</p><h4>数据时点</h4><p>${dataLine}；${r.session.state === "REGULAR" ? "常规交易时段" : "非盘中，盘中未完成K线未计入Q"}</p>${warnings.length ? `<p class="small warn">${esc(warnings.join("；"))}</p>` : ""}</div><div><h3>固定交易几何</h3><div class="geometry-grid"><div><span>入场区</span><b class="num">${fmt(g.zoneLo)} ~ ${fmt(g.zoneHi)}</b></div><div><span>现价净赔率·仅参考</span><b class="num">${fmt(g.netRR, 2)}</b></div><div><span>失效 / 止损锚</span><b class="num">${fmt(g.stop)}</b></div><div><span>第一目标</span><b class="num">${fmt(g.target)}</b></div>${pressure}<div><span>结构锚点</span><b>${esc(g.anchorLabel)}</b></div><div><span>S（仅同通道）</span><b class="num">${fmt(p.S, 1)}</b></div></div><p class="small muted" style="margin-top:8px">上方压力序列：${pressureList}。费用 ${state.config.feeBps} bps（往返）+ 滑点 ${state.config.slippageBps} bps（单边）假设。止损不保证成交。</p>${dimHTML("执行质量 E", p.E.dims)}</div><div><h3>形态质量 Q · ${fmt(p.Q.value, 1)}</h3>${dimHTML("Score v0 原始维度", p.Q.dims)}<h4>输出边界</h4><p>分数不是胜率、预期收益或账户建议。${esc(p.executionNote || "开盘区外或实际净赔率不足不成交。")}</p></div></div>`;
+      windowLine = `开盘窗口：已检查 ${p.usedAttempts ?? 0} / ${p.maxAttempts ?? "—"} 次；剩余 ${p.remainingAttempts ?? "—"} 次；${attemptLine}`,
+      narrow = Number.isFinite(g.targetAtr) && g.targetAtr < 1,
+      eNotes = { 交易赔率: `实际净赔率 ${fmt(g.netRR, 2)}∶1`, 入场质量: `现价 ${fmt(r.price)}；入场区 ${fmt(g.zoneLo)}～${fmt(g.zoneHi)}`, 流动性与摩擦: "分数不是成交额，成交额门槛见数据诊断", 触发新鲜度: p.age === 0 ? "首次有效触发" : `距首次触发 ${p.age} 个完成交易日` };
+    return `<div class="detail"><div class="detail-action">${actionHTML(r, true)}</div><div><h3>${esc(p.name)} · 信号依据</h3><ul class="reason-list">${(p.evidence || []).map((x) => `<li>${esc(x)}</li>`).join("")}<li>首次有效触发：${esc(p.triggerDate)}；信号年龄 ${p.age} 个完成交易日</li><li>${esc(windowLine)}</li>${(p.reasons || []).map((x) => `<li class="warn">${esc(x)}</li>`).join("")}</ul><h4>其他合格通道</h4><p>${alt.length ? alt.map((x) => esc(x.name) + " / " + esc(x.statusText)).join("；") : "无"}</p><h4>数据时点</h4><p>${dataLine}；${r.session.state === "REGULAR" ? "常规交易时段" : "非盘中，盘中未完成K线未计入Q"}</p>${warnings.length ? `<p class="small warn">${esc(warnings.join("；"))}</p>` : ""}</div><div><h3>交易空间与价位</h3><div class="geometry-grid"><div><span>入场区</span><b class="num">${fmt(g.zoneLo)}～${fmt(g.zoneHi)}</b></div><div><span>现价净赔率</span><b class="num rr-now">${fmt(g.netRR, 2)}∶1</b></div><div><span>止损</span><b class="num">${fmt(g.stop)}（${pctText(-g.grossDown, false)}）</b><small>${fmt(g.stopAtr, 2)} 倍 ATR</small></div><div><span>第一目标</span><b class="num">${fmt(g.target)}（${pctText(g.grossUp)}）</b><small>${fmt(g.targetAtr, 2)} 倍 ATR</small></div>${pressure}<div><span>结构锚点</span><b>${esc(g.anchorLabel)}</b></div><div><span>排序 S（仅同通道）</span><b class="num">${fmt(p.S, 1)}</b></div></div>${narrow ? `<p class="small warn space-warning">空间偏窄：第一目标距现价不足 1 倍 ATR，可能处于日常波动范围内；这只是提示，不自动改写候选或拉远目标。</p>` : ""}<p class="small muted" style="margin-top:8px">百分比按现价计算；ATR 距离用于判断空间是否被日常波动主导，不是新硬门槛。上方压力：${pressureList}。费用 ${state.config.feeBps} bps（往返）＋滑点 ${state.config.slippageBps} bps（单边）。止损不保证成交。</p>${dimHTML(`执行质量 E · ${fmt(p.E.value, 1)}`, p.E.dims, eNotes)}</div><div><h3>形态质量 Q · ${fmt(p.Q.value, 1)}</h3><p class="score-note">右侧为 0～100 维度分，不是百分比胜率；仅用于同通道研究排序。</p>${dimHTML("Score v0 原始维度", p.Q.dims)}<h4>输出边界</h4><p>Q／E／S 都不是胜率、预期收益或账户建议。${esc(p.executionNote || "开盘区外或实际净赔率不足不成交。")}</p></div></div>`;
   }
   function renderObservations() {
     const text = $("observeText").value.trim().toLowerCase(),
@@ -3340,24 +3385,52 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
   function saveForward(entries) {
     safeSet(FORWARD_KEY, { version: C.VERSION, entries: entries.slice(0, 500) });
   }
+  function stableHash(value) {
+    const text = JSON.stringify(value), x = String(text);
+    let h = 2166136261;
+    for (let i = 0; i < x.length; i++) {
+      h ^= x.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return (h >>> 0).toString(36);
+  }
+  function signalKey(e) {
+    return e.signalKey || [e.code, e.channel, e.triggerDate].join("|");
+  }
+  function uniqueForward(entries) {
+    const chosen = new Map();
+    for (const e of entries) {
+      const key = signalKey(e), old = chosen.get(key);
+      if (!old || String(e.savedAt || "").localeCompare(String(old.savedAt || "")) < 0) chosen.set(key, e);
+    }
+    return [...chosen.values()];
+  }
+  function originLabel(e) {
+    return { PRE_ENTRY: "事前登记", WINDOW_BACKFILL: "窗口中补录", POST_ENTRY: "入场后补录" }[e.recordOrigin] || "旧版档案";
+  }
   function updateForwardJournal() {
     if (state.mode !== "watch") return;
     const entries = forwardEntries();
     for (const e of entries) {
       if (e.done) continue;
       const bars = state.bars.get(e.code);
-      if (!bars) continue;
+      if (!bars) { e.pendingStage = "等待标的日K"; continue; }
       const i = bars.findIndex((b) => b.date === e.triggerDate);
-      if (i < 0 || !bars[i + 1]) continue;
+      if (i < 0) { e.pendingStage = "触发日K缺失"; continue; }
+      if (!bars[i + 1]) { e.pendingStage = "等待首次开盘"; continue; }
       const entryWindowDays = e.entryWindowDays || 1,
         future = bars.slice(i + 1, i + entryWindowDays + e.config.holdingDays),
         result = C.executeTradeWindow(e.signal, future, e.market, e.config, entryWindowDays),
         holdingComplete = result.status === "CLOSED" && future.length >= (result.entryOffset || 0) + e.config.holdingDays,
         closedComplete = result.status === "CLOSED" && (result.reason !== "TIMEOUT" || holdingComplete);
+      e.pendingResult = result;
       if ((result.status === "SKIP" && !result.pending) || closedComplete) {
         e.done = true;
         e.result = result;
         e.settledAt = new Date().toISOString();
+        e.pendingStage = null;
+      } else {
+        e.pendingStage = result.status === "CLOSED" ? "模型持仓中" : "等待入场窗口";
       }
     }
     const ids = new Set(entries.map((e) => e.id));
@@ -3366,13 +3439,22 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       if (!p || p.stage !== 3 || !["NEXT_SESSION_PLAN", "WAIT_ENTRY", "MODEL_ENTERED"].includes(r.status)) continue;
       const cfg = { ...state.config },
         entryWindowDays = Math.max(1, C.CHANNELS[p.channel].maxAge - 1),
-        id = [C.VERSION, r.code, p.channel, p.triggerDate, cfg.minRR, cfg.feeBps, cfg.slippageBps, cfg.holdingDays, entryWindowDays].join("|");
+        key = [r.code, p.channel, p.triggerDate].join("|"),
+        fingerprint = stableHash({ config: cfg, entryWindowDays, geometry: p.triggerGeometry }),
+        id = [C.VERSION, key, fingerprint].join("|");
       if (ids.has(id)) continue;
       ids.add(id);
+      const tq = p.triggerQ || p.Q,
+        te = p.triggerE || p.E,
+        ts = Number.isFinite(p.triggerS) ? p.triggerS : p.S,
+        recordOrigin = p.entryDate ? "POST_ENTRY" : p.age === 0 ? "PRE_ENTRY" : "WINDOW_BACKFILL";
       entries.unshift({
-        id, version: C.VERSION, savedAt: new Date().toISOString(), done: false,
+        id, signalKey: key, version: C.VERSION, savedAt: new Date().toISOString(), done: false,
+        recordOrigin, pendingStage: p.entryDate ? "模型持仓中" : "等待入场窗口",
         code: r.code, name: r.name, market: r.market, channel: p.channel, triggerDate: p.triggerDate,
-        Q: p.Q.value, E: p.E.value, S: p.S, config: cfg, entryWindowDays,
+        Q: tq.value, E: te && te.value, S: ts,
+        observedQ: p.Q.value, observedE: p.E.value, observedS: p.S,
+        config: cfg, entryWindowDays,
         signal: { geometry: p.triggerGeometry, signalClose: p.triggerGeometry.entryPrice, limitPct: r.market === "A" ? C.priceLimit(r.code, r.name) : null },
       });
     }
@@ -3380,12 +3462,14 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     renderForward();
   }
   function renderForward() {
-    const entries = forwardEntries(), closed = entries.filter((e) => e.done && e.result && e.result.status === "CLOSED"),
+    const all = forwardEntries(), entries = uniqueForward(all),
+      closed = entries.filter((e) => e.done && e.result && e.result.status === "CLOSED"),
       skipped = entries.filter((e) => e.done && e.result && e.result.status === "SKIP"),
       pending = entries.filter((e) => !e.done),
       rs = closed.map((e) => e.result.R).filter(Number.isFinite),
-      avg = rs.length ? rs.reduce((a, b) => a + b, 0) / rs.length : null;
-    $("forwardOutput").innerHTML = `<div class="result-grid"><div><span class="small muted">已结算</span><b>${closed.length}</b></div><div><span class="small muted">未成交</span><b>${skipped.length}</b></div><div><span class="small muted">待结算</span><b>${pending.length}</b></div><div><span class="small muted">平均净R</span><b>${avg === null ? "—" : fmt(avg, 3)}</b></div></div><p class="small muted">前向样本不是样本外证明；同一信号的新版本或新参数会另建记录，历史快照不改写。最多保留500条。</p>${entries.length ? `<table><thead><tr><th>标的 / 通道</th><th>触发 / 版本</th><th>Q/E/S</th><th>状态</th><th>净R / 退出</th></tr></thead><tbody>${entries.slice(0, 30).map((e) => `<tr><td>${esc(e.name)}<div class="stock-code">${esc(e.code)}</div></td><td>${esc(C.CHANNELS[e.channel].name)}<div class="small muted">${esc(e.triggerDate)} · ${esc(e.version)}</div></td><td class="num small">${fmt(e.Q, 1)} / ${fmt(e.E, 1)} / ${fmt(e.S, 1)}</td><td>${e.done ? esc(e.result.status === "SKIP" ? "未成交" : "已结算") : "待结算"}</td><td class="num">${e.done ? (e.result.status === "CLOSED" ? fmt(e.result.R, 3) : "—") : "—"}<div class="small muted">${e.done ? esc(e.result.reason) : ""}</div></td></tr>`).join("")}</tbody></table>` : '<div class="empty">暂无前向记录；完成本机研究池刷新后自动建立。</div>'}`;
+      avg = rs.length ? rs.reduce((a, b) => a + b, 0) / rs.length : null,
+      prospective = entries.filter((e) => e.recordOrigin === "PRE_ENTRY").length;
+    $("forwardOutput").innerHTML = `<div class="result-grid"><div><span class="small muted">已结算·去重</span><b>${closed.length}</b></div><div><span class="small muted">未成交·去重</span><b>${skipped.length}</b></div><div><span class="small muted">待结算·去重</span><b>${pending.length}</b></div><div><span class="small muted">平均净R·去重</span><b>${avg === null ? "—" : fmt(avg, 3)}</b></div></div><p class="small muted">汇总按“标的＋通道＋触发日”取最早档案，避免多版本重复计数；下方仍保留全部版本。当前纯前向事前登记 ${prospective} 条，窗口中／入场后补录及旧版档案只作观察，不能冒充事前样本。最多保留500条。</p>${all.length ? `<table><thead><tr><th>标的 / 通道</th><th>触发 / 版本</th><th>触发时 Q/E/S</th><th>登记 / 状态</th><th>净R / 退出</th></tr></thead><tbody>${all.slice(0, 30).map((e) => `<tr><td>${esc(e.name)}<div class="stock-code">${esc(e.code)}</div></td><td>${esc(C.CHANNELS[e.channel].name)}<div class="small muted">${esc(e.triggerDate)} · ${esc(e.version)}</div></td><td class="num small">${fmt(e.Q, 1)} / ${fmt(e.E, 1)} / ${fmt(e.S, 1)}</td><td>${esc(originLabel(e))}<div class="small muted">${e.done ? esc(e.result.status === "SKIP" ? "未成交" : "已结算") : esc(e.pendingStage || "待结算")}</div></td><td class="num">${e.done ? (e.result.status === "CLOSED" ? fmt(e.result.R, 3) : "—") : "—"}<div class="small muted">${e.done ? esc(e.result.reason) : ""}</div></td></tr>`).join("")}</tbody></table>` : '<div class="empty">暂无前向记录；完成本机研究池刷新后自动建立。</div>'}`;
   }
   function renderWatchList() {
     $("watchList").innerHTML = state.list
@@ -3706,7 +3790,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
   tickClock();
   setInterval(tickClock, 30000);
   log(
-    "Quant v10.4 内核已加载：" +
+    "Quant v10.5 内核已加载：" +
       getSelfTests().filter((x) => x.pass).length +
       "/" +
       getSelfTests().length +
