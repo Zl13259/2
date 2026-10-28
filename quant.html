@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Quant v13.0 客观信号与盘中执行台：分段双目标、观察级几何、盘中实时侦察 Intraday v2、策略版本独立与前向捕获链。">
+<meta name="description" content="Quant v12.4 客观信号与盘中执行台：策略版本独立、前向捕获链、分组审计与稳健性诊断。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%2312141f'/%3E%3Cpath d='M8 21V11h8a5 5 0 0 1 0 10h-3v4H8zm5-7v4h3a2 2 0 0 0 0-4h-3z' fill='%23f6f6f4'/%3E%3C/svg%3E">
-<title>Quant v13.0 · 客观信号与盘中执行台</title>
+<title>Quant v12.4 · 客观信号与盘中执行台</title>
 <style>
 :root{
   --p-navy:oklch(0.21 0.025 265);--p-navy-2:oklch(0.27 0.035 265);--p-paper:oklch(0.982 0.003 95);--p-panel:oklch(0.996 0.002 95);--p-ink:oklch(0.235 0.022 265);--p-muted:oklch(0.47 0.022 265);--p-line:oklch(0.875 0.012 265);--p-soft:oklch(0.95 0.009 265);--p-teal:oklch(0.48 0.09 185);--p-teal-soft:oklch(0.93 0.035 185);--p-red:oklch(0.51 0.18 28);--p-red-soft:oklch(0.94 0.035 28);--p-green:oklch(0.46 0.11 155);--p-amber:oklch(0.49 0.11 75);--p-amber-soft:oklch(0.95 0.04 90);
@@ -42,7 +42,7 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 <body>
 <header class="mast">
 <div class="mast-main">
-<div class="brand"><div><h1>Quant <span class="num">v13.0</span></h1><p>客观信号与盘中执行台</p></div></div>
+<div class="brand"><div><h1>Quant <span class="num">v12.4</span></h1><p>客观信号与盘中执行台</p></div></div>
 <div class="mast-actions"><button class="secondary" id="manageBtn" type="button">研究池与设置</button><button class="primary" id="refreshBtn" type="button">刷新信号</button></div>
 </div>
 <nav class="tabs" role="tablist" aria-label="研究视图">
@@ -54,7 +54,7 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 <main class="wrap">
 <section class="view active" id="view-signals" role="tabpanel">
 <div class="market-strip"><div class="market-cell"><b>交易时点</b><strong id="clockText">尚未加载</strong></div><div class="market-cell"><b>A股环境 · 仅展示</b><strong id="envA">—</strong></div><div class="market-cell"><b>美股环境 · 仅展示</b><strong id="envUS">—</strong><span class="small muted" id="envUSMeta">纳指尚未加载</span></div><div class="market-cell"><b>成功加载 / 完成日</b><strong id="coverageTop" class="num">0 / 0</strong><span class="small" id="freshnessTop">待核验</span></div></div>
-<section class="intraday-panel" aria-live="polite"><div class="intraday-heading"><span>盘中执行 · Intraday v1/v2</span><strong id="intradayStatus">等待日线信号加载</strong><p id="intradaySummary">盘前预案 → 盘中五门确认 → 首次触发留痕；仅当日有效。</p></div><div class="intraday-side"><span id="intradayMeta">尚未执行独立报价刷新</span><button class="ghost" id="intradayBtn" type="button">刷新盘中报价</button></div></section>
+<section class="intraday-panel" aria-live="polite"><div class="intraday-heading"><span>盘中执行 · Intraday v1</span><strong id="intradayStatus">等待日线信号加载</strong><p id="intradaySummary">盘前预案 → 盘中五门确认 → 首次触发留痕；仅当日有效。</p></div><div class="intraday-side"><span id="intradayMeta">尚未执行独立报价刷新</span><button class="ghost" id="intradayBtn" type="button">刷新盘中报价</button></div></section>
 <div class="summary"><div class="summary-item"><span>盘中可执行</span><strong id="countIntraday">0</strong><small>五门全部通过</small></div><div class="summary-item"><span>待开盘</span><strong class="dual-count"><span id="countPlan">0</span><i>/</i><span id="countWait">0</span></strong><small>首次预案 / 等待开盘</small></div><div class="summary-item"><span>模型已入场</span><strong id="countEntered">0</strong><small>监控风险，不是新买点</small></div><div class="summary-item"><span>数据异常</span><strong id="countError">0</strong><small>失败显式保留</small></div></div>
 <section class="primary-workspace" aria-labelledby="signalTitle">
 <div class="section-head compact"><div><h2 id="signalTitle">执行候选</h2><p>先看结论，再看赔率、入场区、止损目标；点击标的展开证据。未触发不等于加载失败。</p></div></div>
@@ -82,10 +82,10 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 <h3>交易几何</h3><p>入场区、止损与目标由触发时的结构锚点固定，不随当前价格移动。净赔率计入费用与双边滑点假设；1.5 是研究门槛，不是正期望的数学证明。目标与止损同时展示百分比和 ATR 距离；ATR 空间提示不是新增门槛，压力近时应降级或放弃，而非拉远目标。止损是计划价，不保证跳空或涨跌停时成交。</p>
 <div class="formula">净赔率 = 目标净收益 ÷ 止损净损失<br>S = 0.60 × Q + 0.40 × E（只作同通道启发式基线）</div>
 <h3>硬门槛</h3><p>数据不足或陈旧、通道未成立、结构失效、几何非法、净赔率不足、流动性不合格、疑似涨停不可成交，均不能被高分抵消。实际开盘与盘中入场另检查止损距离：低于0.5 ATR或高于2.5 ATR均拒绝执行，不移动结构止损。价格离开入场区只改变执行状态，不允许追价；环境状态单列，不乘入 Q/E/S。</p>
-<h3>双执行模型与当日生命周期</h3><p>开盘研究模型继续按实际开盘价检查，突破1次、超跌2次，用于和既有历史回放保持可比。盘中执行模型独立运行：盘前不生成隔夜挂单；连续竞价时，报价不得超过180秒，突破须在有效期内，超跌还须先测试入场区下沿后收复；至少2次连续区内有效报价，间隔45～600秒且未走弱，同时当日量能节奏达到20日全日节奏基准的0.8倍。上述是 Intraday v1 的待验证初始参数，不是已证明最优规则。开盘窗口耗尽不自动否决盘中模型，结构失效则两者都否决。盘中首次五门通过只记录一次，订单口径仅当日有效，收盘未触发自动作废。</p><h3>Intraday v2 盘中实时侦察</h3><p>对无日线预案的标的，盘中用实时报价叠加已完成日K做虚拟K线试算：现价越过前20日压力即进入侦察，入场区＝压力～压力＋0.35ATR，止损＝压力−0.75ATR，目标沿用分段双目标；通过结构、区、净赔率、止损距离、可成交、量能节奏、连续确认五门后生成当日有效的盘中预案，独立登记、独立结算（参数簇 INTRADAY_V2）。收盘后以正式日K复核：收盘仍站稳压力则转正，未过线自动作废并留档。盘中预案不反向改写日线Q、通道触发或开盘模型状态，与 Intraday v1、开盘模型绝不混合绩效。</p><h3>成交后研究口径</h3><p>T+1／3／5／10 均指入场后的对应交易日。策略实际固定期限在提前退出后锁定实际净R；反事实路径假设不退出，只用于研究止损后收复与目标后继续上涨。MFE／MAE 由日K高低价估计，同日先后不可知；首次触及日均以T+0为入场日。历史末端不足持有期的TIMEOUT属于右删失，不得当作已完成交易。</p><h3>前向证据与版本簇</h3><p>严格纯前向同时要求 recordOrigin=PRE_ENTRY、savedAt 存在、dataAsOf=triggerDate，并在同一策略版本与交易模型参数簇内按经济信号去重。扫描数量不属于交易模型参数；页面展示升级不重置策略簇，旧档案缺少策略版本时按 legacy:页面版本隔离。不同策略版本不混合计算绩效；全量跨版本档案只用于审计和导出。</p><h3>高周期压力</h3><p>只使用触发日前已经完成的周线和月线摆动高点，当前未完成周/月不参与。若最近高周期压力位于原第一目标之前，则将第一目标收缩到该压力并重算净赔率；日线是否触发不由高周期压力反向改写。</p><h3>验证边界</h3><p>页面内回放是当前加载池上的探索性研究，不含完整历史股票池、退市样本、滚动样本外、净化隔离和多重试验校正；也未建立组合级并发持仓、资金占用或权益曲线。停牌缺口与逐笔流动性无法由日K完整还原，一字跌停只是保守成交约束，不等于完整市场冲击模型。样本少于30笔显示“样本不足”；达到30笔也不自动等于稳定规律。回放与 v10.2 起新建前向记录覆盖原信号有效期内的回区开盘；旧前向记录仍按原单次口径结算，不混写。</p>
+<h3>双执行模型与当日生命周期</h3><p>开盘研究模型继续按实际开盘价检查，突破1次、超跌2次，用于和既有历史回放保持可比。盘中执行模型独立运行：盘前不生成隔夜挂单；连续竞价时，报价不得超过180秒，突破须在有效期内，超跌还须先测试入场区下沿后收复；至少2次连续区内有效报价，间隔45～600秒且未走弱，同时当日量能节奏达到20日全日节奏基准的0.8倍。上述是 Intraday v1 的待验证初始参数，不是已证明最优规则。开盘窗口耗尽不自动否决盘中模型，结构失效则两者都否决。盘中首次五门通过只记录一次，订单口径仅当日有效，收盘未触发自动作废。</p><h3>成交后研究口径</h3><p>T+1／3／5／10 均指入场后的对应交易日。策略实际固定期限在提前退出后锁定实际净R；反事实路径假设不退出，只用于研究止损后收复与目标后继续上涨。MFE／MAE 由日K高低价估计，同日先后不可知；首次触及日均以T+0为入场日。历史末端不足持有期的TIMEOUT属于右删失，不得当作已完成交易。</p><h3>前向证据与版本簇</h3><p>严格纯前向同时要求 recordOrigin=PRE_ENTRY、savedAt 存在、dataAsOf=triggerDate，并在同一策略版本与交易模型参数簇内按经济信号去重。扫描数量不属于交易模型参数；页面展示升级不重置策略簇，旧档案缺少策略版本时按 legacy:页面版本隔离。不同策略版本不混合计算绩效；全量跨版本档案只用于审计和导出。</p><h3>高周期压力</h3><p>只使用触发日前已经完成的周线和月线摆动高点，当前未完成周/月不参与。若最近高周期压力位于原第一目标之前，则将第一目标收缩到该压力并重算净赔率；日线是否触发不由高周期压力反向改写。</p><h3>验证边界</h3><p>页面内回放是当前加载池上的探索性研究，不含完整历史股票池、退市样本、滚动样本外、净化隔离和多重试验校正；也未建立组合级并发持仓、资金占用或权益曲线。停牌缺口与逐笔流动性无法由日K完整还原，一字跌停只是保守成交约束，不等于完整市场冲击模型。样本少于30笔显示“样本不足”；达到30笔也不自动等于稳定规律。回放与 v10.2 起新建前向记录覆盖原信号有效期内的回区开盘；旧前向记录仍按原单次口径结算，不混写。</p>
 <h3>交易日一致性</h3><p>参考基准先并行核验多源完成日K与报价交易日，采用可佐证的最新完成日；多源冲突无法裁决或市场级陈旧时，整市场停止生成信号。个股最近完成日K必须与该基准一致，不一致时继续降级数据源，仍不一致则列为数据异常。缓存同样接受交易日复核，不以旧基准反向锁死新数据。</p><details class="version-history"><summary><span><b>历史版本与变更审计</b><small>v11.1 及以前，保留完整记录</small></span></summary><div class="version-history-body"><h3>v11.1 正式版 · 2026-10-28</h3><ol><li>未入场旧信号在现价越过冻结目标或击穿止损后自动归档，退出默认信号台；模型已入场记录继续执行风险监控，历史与回放数据保留。</li><li>几何非法或净赔率非正值时统一显示“—”；现价破止损改明示“已破止损”，不再丢失方向或显示无意义0.00∶1。</li><li>开盘与盘中实际入场新增止损距离检查：不足0.5 ATR或超过2.5 ATR均拒绝执行；不移动超跌结构止损，不修改三通道锚点。</li><li>新增整个冻结入场区最优净赔率预筛；先天无法达到1.5∶1的信号默认退出主列表，可在“预筛剔除”中单独核查。</li><li>新增“盘中突破观察·明日候选预告”，以当前报价试算既有突破条件，展示收盘价格、全日量能、收盘位置与下一交易日预估几何；不提前生成信号或前向样本。</li><li>趋势回踩仍为影子通道；未新增压力收复通道，未放宽净赔率、入场区、连续确认或追价限制。</li></ol><h3>v11.0 正式版 · 2026-10-28</h3><ol><li>体系级拆分开盘研究模型与盘中执行模型，消除“窗口耗尽仍提示买入”和“盘中回区永不形成买点”的口径冲突；结构失效仍为共同否决项。</li><li>盘前只形成预案，不生成隔夜挂单；盘中按数据、结构、确认、交易几何、可成交五门执行，预案仅当日有效，未触发收盘作废。</li><li>新增真实报价样本链：报价时间未推进不算新样本；至少2次连续区内确认、报价新鲜度、日内量能节奏、冻结净赔率和涨停可成交性共同把关。</li><li>突破检查持续保持在突破区且未走弱；超跌要求日内测试入场区下沿后收复，避免把下跌过程直接当反弹买点。趋势回踩继续只做影子研究。</li><li>首次五门通过自动保存不可变触发快照，包括公开报价、确认证据、触发Q／E、盘中E、冻结几何、参数指纹与版本；同一经济计划不重复建档。</li><li>新增独立 Intraday v1 前向结算与汇总，按首次触发报价模拟入场并计成本；与开盘前向及历史回放完全分离。没有分钟级历史数据时不伪造盘中历史绩效。</li><li>盘中结算不利用入场日完整日K倒推触发后的退出或MFE／MAE，统一从下一完成日K开始；保留右删失、跌停不可退出与样本不足边界。</li><li>主表新增五门状态、逐项证据、触发留痕和仅当日有效提示；默认筛选与排序可优先查看盘中通过项，新增独立导出和清空功能。</li><li>69项内核自测通过，另有前向口径审计；自测只验证程序不变量，不证明盘中策略收益。</li></ol><h3>v10.6 正式版 · 2026-10-28</h3><ol><li>修复参考基准被首个旧数据源锁死：基准同时核验多源完成日K与报价交易日，选择可佐证的最新完成日；无法裁决或市场级陈旧时停止生成信号。页头拆分有效覆盖与日期新鲜，诊断保留各源日期。</li><li>修复触发日盘后误用当天开盘：只有报价交易日严格晚于触发日才可进入开盘窗口，区内不再误入场、区外不再误失效。</li><li>回放与实时规则对齐：杠杆／反向ETF直接排除；超跌与突破同日新触发记为冲突，不再独立双入场；冲突与排除数量进入回放诊断。</li><li>趋势回踩按本次审计结论降为影子通道：保留历史回放与研究展示，不生成开盘或盘中操作候选；这是明确记录的策略范围调整，不是参数放宽。</li><li>修正超跌持续破低仍显示“阶段②准备”的语义，改为结构未修复、等待重新筑底。</li><li>新增独立盘中执行助手：盘中仅轻量刷新报价，按冻结入场区、止损、目标和现价净赔率给出人工评估提示；止损、目标、日期异常和陈旧报价优先。非盘中不伪装实时，无日线预案不因上涨创造信号。</li><li>盘中提示不回写日线Q、通道触发、模型入场或历史回放；盘中入场路径尚未回测，所有提示均为研究参考，不读取账户、不代表实际持仓。</li><li>60项内核自测通过，新增基准日期仲裁、同日盘后、影子通道、回放排除、盘中状态与报价新鲜度回归。</li></ol><h3>v10.5 正式版 · 2026-10-27</h3><ol><li>Q／E 子项改为纯数字表，删除评分柱状条；净赔率统一显示为“数值∶1”，并补充实际价位说明。</li><li>新增主表与详情双层操作结论：明确等待开盘、区外不追、只观察、放弃及模型已入场非新买点，状态不再代替动作。</li><li>止损、目标与压力同时显示价格、距现价百分比和 ATR 距离；目标不足 1 倍 ATR 仅提示空间偏窄，不自动拉远目标或改变硬门槛。</li><li>手机端保留操作结论、净赔率及止损目标，不再隐藏关键交易信息。</li><li>前向记录冻结触发时 Q／E／S、dataAsOf、模型参数与几何指纹；全部可执行通道均建档并标记主／非主候选，不再只记录主候选。扫描数量与交易模型参数分离。</li><li>模型实际入场后另冻结 E_entry／S_entry；待结算状态细分等待首次开盘、等待下次开盘、开盘数据待确认、模型持仓、触发日K缺失与标的移出研究池，并给出下一检查口径。</li><li>严格前向同时校验 PRE_ENTRY、savedAt 与 dataAsOf=triggerDate，并按版本和交易模型参数簇隔离；补录及证据不足档案只进入观察样本。</li><li>新增 T+1／3／5／10 实际净收益与净R、胜率、平均／中位净R、PF、MFE／MAE、首次触及日、每日实际与反事实路径；完整回放导出包含逐笔路径。</li><li>新增固定期限分通道表、失效原因矩阵、未成交主原因漏斗、退出后反事实观察与按标的聚类Bootstrap区间；这些只形成研究假设，不自动调权或改止损。</li><li>修复历史末端不足持有期被提前结算的问题；右删失与一字跌停退出受限不计入已结算绩效，但保留已可观察的固定期限数据。</li><li>44 项自测通过；三通道、Q/E 权重、目标压力公式与净赔率门槛未改。组合级资金占用、滚动样本外验收和单变量影子实验仍未实施。</li></ol><h3>v10.4 正式版 · 2026-10-27</h3><ol><li>状态机接入真实开盘生命周期：按触发日、完成日K和当日可核验开盘价计算已用／剩余窗口，不再仅凭信号年龄或盘中现价分类。</li><li>撤回v10.3与开盘-only模型冲突的“盘中当前候选”：首次未检查为开盘预案，失败后为等待下次开盘，开盘合格为模型待结算，窗口耗尽或结构失效即退出。</li><li>实时状态与历史回放共用同一开盘门槛；开盘是否合格只使用冻结几何和实际开盘价，现价净赔率不再反向改写已入场或已失效状态。</li><li>页头、筛选和详情同步显示首次预案／等待开盘／模型已入场及每次开盘检查结果；缺少当日开盘价时显式报窗口待确认。</li><li>34项内核自测通过；三通道参数、Q/E权重、净赔率门槛、流动性和回放交易口径未改变，Score v0仍未验证。</li></ol><h3>v10.3 正式版 · 2026-10-27</h3><ol><li>修复状态机把非连续竞价时段一刀切为“次日预案”：价格位置与交易时段独立判定，区外信号始终保持“等待入场”，区内信号按盘中、午间、盘前、盘后分别标注。</li><li>午间区内信号改为“当前候选·午后复核”；盘前与盘后预案分别明确“今日开盘”与“下一交易日”，汇总和筛选统一为“开盘预案”。</li><li>详情展示每个信号自身的执行说明，并修复“暂不可成交”状态被旧状态文案覆盖的问题；三通道、Q/E/S、净赔率、流动性和回放口径均未改变。</li><li>31项内核自测通过，新增午间、盘前、盘后及区内／区外组合回归；自测只验证程序不变量，不证明策略收益。</li></ol><h3>v10.2 正式版 · 2026-10-27</h3><ol><li>新增预期交易日双层门禁：数据源与内核均核对个股和基准末日，陈旧源继续降级，旧缓存不得生成信号；同时修复非强制刷新命中缓存时返回结构嵌套的问题。</li><li>历史回放与新建前向记录按原有效期尝试入场：突破1次、超跌／回踩最多2次；等待期收盘破位取消。旧前向快照不改写，仍按原单次口径。</li><li>主表补充拒绝／降级原因，市场宽度增加近5日分布，加载增加预计剩余时间，诊断增加基准日期、缓存年龄与降级记录。</li><li>27项内核自测通过；三通道参数、Q/E权重、净赔率、流动性与入场区门槛均未放宽，Score v0仍未验证。</li></ol><h3>v10.1 正式版 · 2026-10-27</h3><ol><li>吸纳v10.0-rc.1至rc.4的三通道、固定交易几何、高周期压力、条件预案、数据诊断与回放修复；23项内核自测通过。</li><li>明确验证边界：实时条件预案可在信号有效期内等待回区；历史回放与前向观察只对首次触发后的下一交易日开盘尝试一次，不代表后续回区预案的绩效。</li><li>继续显式保留复权口径与公开数据源警告，不以静默降级或隐藏失败换取表面覆盖率；Score v0仍未验证，不构成收益承诺。</li></ol><h3>v10.0-rc.4 候选版本记录 · 2026-10-27</h3><ol><li>修复非交易时段状态分类：通过硬门槛的区外信号进入“次日预案·等回踩／等收回”，不再被误排除出次日预案；盘中区外仍等待。</li><li>状态修复不放宽三通道、净赔率、流动性、结构失效或入场区约束；次日开盘区外仍不成交。</li><li>修复回放只在信号日检查赔率的问题：次日区内开盘也重算成本后净赔率，不足则跳过；新增3项状态与成交门槛自测。</li></ol><h3>v10.0-rc.3 候选版本记录 · 2026-10-27</h3><ol><li>融合复权口径元数据、数据警告、交易所本地时间与Q/E/S分桶诊断；保留后台Worker回放，取消时不输出不完整汇总。</li><li>K线连续性与异常跳变校验前移到各数据源及缓存验收，质量失败继续降级；全A主备列表统一纳入北交所，修复bj研究池持久化。</li><li>新增已完成周线/月线摆动压力：只在触发时约束第一目标并重算成本后净赔率，不改变日线触发条件；回放使用同一口径。</li><li>新增名称搜索、钉住筛选、市场宽度、空闲自动刷新、完整回放导出及本机前向信号快照；均不读取账户或持仓。</li></ol><h3>v10.0-rc.2 版本记录 · 2026-10-27</h3><ol><li>修复回放反复重算历史指标导致的长阻塞：指标序列每只标的只计算一次，回放移至独立工作线程，支持进度显示与取消。</li><li>增加美股参考环境、纳指数据时点与美股市场筛选；A股和美股环境仍只展示、不扣分。</li><li>修复A股16:00后误删当日完成日K；北交所普通股票涨跌幅修正为30%，并允许bj代码加入研究池。</li><li>新增增量特征一致性、A股16点后和北交所规则回归自测；修复不改变三通道参数、Q/E权重与回放交易口径。</li></ol><h3>v10.0-rc.1 版本记录 · 2026-10-26</h3><ol><li>废除通用技术总分，建立超跌、回踩、突破独立状态机与 Q/E 评分。</li><li>修复触发后几何漂移：触发日冻结ATR、锚点、入场区和目标，当前价只更新执行状态。</li><li>修复A股午休误用未完成K线；新增交易时段迁移后自动复核信号。</li><li>超跌评分改用事件日Z值，企稳证据必须在触发日前完成。</li><li>腾讯K线恢复web.ifzq主端点、proxy仅作镜像兜底；美股指数基准适配新浪.IXIC/.INX/.DJI口径；全A列表增加新浪备用源。</li><li>回放纳入流动性、涨停不可成交、Q/E/S和统一持有期；撤除会驻留全部历史特征的缓存，避免浏览器内存崩溃。</li><li>单文件、无后端、无登录、无自动交易；仅研究池与界面设置保存在当前浏览器。</li></ol>
-</div></details><h3>v13.0 正式版 · 2026-10-28</h3><ol><li>交易几何升级分段双目标：第一目标仍为保守兑现位，预筛、执行与结算口径全部维持第一目标不变（既有前向与回放绩效口径不变、OPENING_DAILY_V1 策略簇不重置）；新增第二目标＝结构测量目标（突破为基底高度投影、超跌/回踩为前60日高点或2×ATR），展示参考赔率与空间并提示分段兑现，不再因单一近压力一票卡死。</li><li>新增观察级几何：未触发三通道且数据已加载的标的统一计算最近压力位（价＋距现价%＋ATR倍数）、参考支撑与止损、现价假设参考赔率；主表净赔率列与几何列、结论条、详情页、通道准备度表同步展示，全部标注"非正式·未冻结·不计入Q/E/S与前向样本"，消除"—"与"未形成"的信息空洞。</li><li>新增盘中实时侦察 Intraday v2（独立参数簇）：无日线预案的标的盘中越压时用实时报价＋已完成日K试算，五门通过后生成当日有效盘中预案并独立留痕、独立结算；收盘以正式日K复核，未过线自动作废留档；与 Intraday v1、开盘模型绝不混合。</li><li>超跌反弹入场区口径修订：入场区下沿由"触发价−0.45ATR"上移为"触发K线实体下沿−0.15ATR与触发价−0.45ATR的较高者"，等回踩确认位而非回原点；止损锚点不变。</li><li>通道准备度阶段②新增预警参考：展示现价假设赔率与最近压力空间，临近触发提前提示，但不提前生成正式信号。</li><li>方法边界、盘中执行说明与前向结算说明同步更新；新增7项内核自测（双目标、repricing守恒、观察级几何、侦察口径、模型分组、超跌入场区公式），内核自测86项通过。</li></ol><h3>v12.4 展示修复 · 2026-10-28</h3><ol><li>修复“数据已加载但未形成正式信号”与“无数据”都显示为“—”的语义混淆：主表明确显示未触发、未形成评分、未形成赔率及无冻结几何。</li><li>无正式信号的操作结论明确标注“数据已加载”，页头覆盖率改为“成功加载”，章节说明补充“未触发不等于加载失败”。</li><li>删除主表操作结论后重复出现的状态徽章，保留状态原因、操作结论与盘中说明。</li><li>仅修改展示文案与重复元素，不改数据链、策略版本、三通道、Q/E/S、净赔率、止损、五门或前向结算。</li></ol><h3>v12.3 修复 · 2026-10-28</h3><ol><li>修复美股搜索结果被A股代码过滤器丢弃：支持腾讯 us~ticker.OQ/N/AM 与东财105/106/107市场代码，DRAM、科磊、KLAC可检索；新增本地别名兜底。</li><li>东财美股不再固定按纳斯达克查询，报价与日K会依次核验纳斯达克、纽交所和美国证券交易所；纳斯达克综合指数备用代码由NDX纠正为IXIC，避免切换到纳斯达克100。</li><li>修复腾讯美股成交额被额外乘1万的问题；A股仍按万元换算，美股直接保留美元口径，盘中量能节奏不再被放大。</li><li>新浪美股日K统一只保留最近320根，避免长历史个股占用过多内存并导致会话缓存超限；腾讯日K增加OQ/N/AM交易所后缀回退，并优先使用可跨域镜像端点。</li><li>支持usBRK-B一类带连字符代码规范化为内部点号格式；启动日志改用当前页面版本。</li><li>新增6项数据适配自测；策略版本、三通道、Q/E/S、净赔率、止损、五门和前向结算口径均未改变。</li></ol><h3>v12.2 修复 · 2026-10-28</h3><ol><li>修复 v12.1 引入的赔率门槛短句 TDZ 错误：净赔率行不再在初始化前引用 gate，信号台可正常渲染。</li><li>仅修复该呈现函数，不改策略版本、评分、交易几何或记录口径。</li></ol><h3>v12.1 呈现修订 · 2026-10-28</h3><ol><li>仅调整信息架构与文案，不改三通道、Q/E/S、净赔率、五门、止损、前向记录或结算逻辑；策略仍为 OPENING_DAILY_V1。</li><li>主表新增置顶“交易翻译”：结论加粗前置，原始赔率、入场区偏离、止损目标与信号窗口压缩为短句；移除逐股重复的“”提示。</li><li>Q/E/S 只保留小字排序徽章；E 子项与 Q 子项不再默认展开，进度条与说明性文字从个股页撤出，评分口径保留在方法与版本。</li><li>流动性通过时不再展示，仅硬门槛失败时在状态原因中出现；触发新鲜度合并为一行信号窗口。</li><li>装饰性品牌点阵移除；新增结论条、执行短句与排序徽章样式，整体更接近极简文本界面。</li></ol><h3>v12.0 正式版 · 2026-10-28</h3><ol><li>页面版本与策略模型版本拆分：当前开盘策略为 OPENING_DAILY_V1；纯展示升级不重置前向策略簇，旧档案缺少策略版本时按 legacy:页面版本隔离。</li><li>当前经济信号的身份键改用策略版本，避免同一信号因页面升级重复建档；原始跨版本档案继续保留，不合并、不删除。</li><li>全部观察样本默认按“标的＋通道＋触发日”折叠成一组，展开可审计各版本 Q/E/S、保存时间和登记证据；500条一般档案上限不再裁掉未结算或严格前向记录。</li><li>新增当前队列前向捕获链：可登记、已登记、严格事前、补录与未登记分列，并显示严格样本到入场、未成交、结算的状态链。</li><li>回放新增分通道聚类 Bootstrap 区间、T+10−T+5同信号配对差、Top1／Top5盈利贡献及剔除后平均R；不把单调性或点估计当作稳定性证明。</li><li>未成交漏斗默认展开并在标题显示总数；总数与明细不一致时显式报警，不用空白暗示原因。</li><li>趋势回踩仍为影子通道；三通道、Q/E/S、净赔率、进出场参数、盘中五门和结算规则均未修改。</li></ol><h3>v11.2 正式版 · 2026-10-28</h3><ol><li>首屏改为“交易环境 → 盘中状态 → 执行候选”，主信号表前移；明日候选与通道观察合并到次级展开区。</li><li>五个顶层页签合并为三个：信号台、研究与诊断、方法与版本；回放、双模型前向记录和数据诊断分层保留。</li><li>市场状态压缩为四格，摘要合并为四项；日期新鲜度并入数据状态，不再单独重复占格。</li><li>主表把状态与操作结论合并，Q／E 合并，入场区与止损目标合并；展开详情不再重复操作结论，五门证据保留。</li><li>自动刷新并入模型设置，全A深扫并入研究池；历史版本默认折叠，版本审计记录不删除。</li><li>移动端卡片布局只作用于信号与预告列表，回放和前向研究表保留表头与表格结构。</li><li>仅调整信息架构与展示，不修改三通道、Q／E／S、五门、净赔率、止损、前向记录或结算逻辑。</li></ol></section>
-<footer class="footer"><span>Quant v13.0 · Score v0 / Opening Daily v1 / Intraday v1·v2 · 数据与结论均需在决策前复核</span><span>公开行情研究工具，不构成收益承诺</span></footer>
+</div></details><h3>v12.4 展示修复 · 2026-10-28</h3><ol><li>修复“数据已加载但未形成正式信号”与“无数据”都显示为“—”的语义混淆：主表明确显示未触发、未形成评分、未形成赔率及无冻结几何。</li><li>无正式信号的操作结论明确标注“数据已加载”，页头覆盖率改为“成功加载”，章节说明补充“未触发不等于加载失败”。</li><li>删除主表操作结论后重复出现的状态徽章，保留状态原因、操作结论与盘中说明。</li><li>仅修改展示文案与重复元素，不改数据链、策略版本、三通道、Q/E/S、净赔率、止损、五门或前向结算。</li></ol><h3>v12.3 修复 · 2026-10-28</h3><ol><li>修复美股搜索结果被A股代码过滤器丢弃：支持腾讯 us~ticker.OQ/N/AM 与东财105/106/107市场代码，DRAM、科磊、KLAC可检索；新增本地别名兜底。</li><li>东财美股不再固定按纳斯达克查询，报价与日K会依次核验纳斯达克、纽交所和美国证券交易所；纳斯达克综合指数备用代码由NDX纠正为IXIC，避免切换到纳斯达克100。</li><li>修复腾讯美股成交额被额外乘1万的问题；A股仍按万元换算，美股直接保留美元口径，盘中量能节奏不再被放大。</li><li>新浪美股日K统一只保留最近320根，避免长历史个股占用过多内存并导致会话缓存超限；腾讯日K增加OQ/N/AM交易所后缀回退，并优先使用可跨域镜像端点。</li><li>支持usBRK-B一类带连字符代码规范化为内部点号格式；启动日志改用当前页面版本。</li><li>新增6项数据适配自测；策略版本、三通道、Q/E/S、净赔率、止损、五门和前向结算口径均未改变。</li></ol><h3>v12.2 修复 · 2026-10-28</h3><ol><li>修复 v12.1 引入的赔率门槛短句 TDZ 错误：净赔率行不再在初始化前引用 gate，信号台可正常渲染。</li><li>仅修复该呈现函数，不改策略版本、评分、交易几何或记录口径。</li></ol><h3>v12.1 呈现修订 · 2026-10-28</h3><ol><li>仅调整信息架构与文案，不改三通道、Q/E/S、净赔率、五门、止损、前向记录或结算逻辑；策略仍为 OPENING_DAILY_V1。</li><li>主表新增置顶“交易翻译”：结论加粗前置，原始赔率、入场区偏离、止损目标与信号窗口压缩为短句；移除逐股重复的“”提示。</li><li>Q/E/S 只保留小字排序徽章；E 子项与 Q 子项不再默认展开，进度条与说明性文字从个股页撤出，评分口径保留在方法与版本。</li><li>流动性通过时不再展示，仅硬门槛失败时在状态原因中出现；触发新鲜度合并为一行信号窗口。</li><li>装饰性品牌点阵移除；新增结论条、执行短句与排序徽章样式，整体更接近极简文本界面。</li></ol><h3>v12.0 正式版 · 2026-10-28</h3><ol><li>页面版本与策略模型版本拆分：当前开盘策略为 OPENING_DAILY_V1；纯展示升级不重置前向策略簇，旧档案缺少策略版本时按 legacy:页面版本隔离。</li><li>当前经济信号的身份键改用策略版本，避免同一信号因页面升级重复建档；原始跨版本档案继续保留，不合并、不删除。</li><li>全部观察样本默认按“标的＋通道＋触发日”折叠成一组，展开可审计各版本 Q/E/S、保存时间和登记证据；500条一般档案上限不再裁掉未结算或严格前向记录。</li><li>新增当前队列前向捕获链：可登记、已登记、严格事前、补录与未登记分列，并显示严格样本到入场、未成交、结算的状态链。</li><li>回放新增分通道聚类 Bootstrap 区间、T+10−T+5同信号配对差、Top1／Top5盈利贡献及剔除后平均R；不把单调性或点估计当作稳定性证明。</li><li>未成交漏斗默认展开并在标题显示总数；总数与明细不一致时显式报警，不用空白暗示原因。</li><li>趋势回踩仍为影子通道；三通道、Q/E/S、净赔率、进出场参数、盘中五门和结算规则均未修改。</li></ol><h3>v11.2 正式版 · 2026-10-28</h3><ol><li>首屏改为“交易环境 → 盘中状态 → 执行候选”，主信号表前移；明日候选与通道观察合并到次级展开区。</li><li>五个顶层页签合并为三个：信号台、研究与诊断、方法与版本；回放、双模型前向记录和数据诊断分层保留。</li><li>市场状态压缩为四格，摘要合并为四项；日期新鲜度并入数据状态，不再单独重复占格。</li><li>主表把状态与操作结论合并，Q／E 合并，入场区与止损目标合并；展开详情不再重复操作结论，五门证据保留。</li><li>自动刷新并入模型设置，全A深扫并入研究池；历史版本默认折叠，版本审计记录不删除。</li><li>移动端卡片布局只作用于信号与预告列表，回放和前向研究表保留表头与表格结构。</li><li>仅调整信息架构与展示，不修改三通道、Q／E／S、五门、净赔率、止损、前向记录或结算逻辑。</li></ol></section>
+<footer class="footer"><span>Quant v12.4 · Score v0 / Opening Daily v1 / Intraday v1 · 数据与结论均需在决策前复核</span><span>公开行情研究工具，不构成收益承诺</span></footer>
 </main>
 <dialog id="watchDialog" aria-labelledby="watchTitle"><div class="dialog-head"><h2 id="watchTitle">研究池与扫描</h2><button class="ghost" data-close="watchDialog" type="button">关闭</button></div><div class="dialog-body"><div class="pool-scan"><p>全A深扫会替换当前结果集；研究池清单不变。扫描数量上限在模型设置中调整。</p><button class="ghost" id="scanBtn" type="button">全A初筛深扫</button></div><div class="add-grid"><input id="addSymbol" type="search" placeholder="名称 / 代码：茅台、600519、DRAM、科磊、KLAC、usNVDA" aria-label="添加代码"><button class="primary" id="addBtn" type="button">校验并添加</button></div><div id="searchResults" class="search-results"></div><p class="small muted" style="margin:12px 0">研究池仅保存在此浏览器；清除浏览器数据会丢失。默认池用于跨行业参考，与任何账户持仓无关。</p><div id="watchList"></div></div><div class="dialog-actions"><button class="ghost" id="settingsBtn" type="button">模型设置</button><button class="ghost" id="exportBtn" type="button">导出研究池</button><button class="ghost" id="importBtn" type="button">导入</button><input id="importFile" class="hidden" type="file" accept="application/json,.json"><button class="ghost danger" id="resetBtn" type="button">恢复默认</button></div></dialog>
 <dialog id="settingsDialog" aria-labelledby="settingsTitle"><div class="dialog-head"><h2 id="settingsTitle">客观模型设置</h2><button class="ghost" data-close="settingsDialog" type="button">关闭</button></div><div class="dialog-body"><div class="settings-grid"><div class="field"><label for="setMinRR">正常候选最低净赔率</label><input id="setMinRR" type="number" min="1" max="5" step="0.1" value="1.5"></div><div class="field"><label for="setDeepLimit">全A深扫数量上限</label><select id="setDeepLimit"><option>30</option><option selected>60</option><option>120</option></select></div><div class="field"><label for="setMinAmountA">A股20日均成交额门槛（万元）</label><input id="setMinAmountA" type="number" min="0" step="1000" value="5000"></div><div class="field"><label for="setMinAmountUS">美股20日均成交额门槛（万美元）</label><input id="setMinAmountUS" type="number" min="0" step="100" value="500"></div></div><div class="auto-setting"><div class="field"><label for="setAutoMinutes">自动刷新间隔</label><select id="setAutoMinutes"><option value="1">1分钟</option><option value="5" selected>5分钟</option><option value="10">10分钟</option></select></div><button class="ghost" id="autoBtn" type="button" aria-pressed="false">自动：关</button></div><p class="small muted" style="margin-top:14px">设置只改变客观研究口径，不代表任何账户纪律。自动刷新只在页面可见且空闲时运行；回放期间跳过。修改后重新刷新信号。</p></div><div class="dialog-actions"><button class="primary" id="saveSettings" type="button">保存设置</button></div></dialog>
@@ -94,9 +94,8 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 /* Quant v12.4 objective signal and intraday execution core. No DOM, storage, network or account rules. */
 const QuantCore = (() => {
   "use strict";
-  const VERSION = "v13.0",
-      STRATEGY_VERSION = "OPENING_DAILY_V1",
-      INTRADAY_SCOUT_MODEL = "INTRADAY_V2";
+  const VERSION = "v12.4",
+      STRATEGY_VERSION = "OPENING_DAILY_V1";
   const DEFAULTS = Object.freeze({
     minBars: 80,
     minAmountA: 5e7,
@@ -758,11 +757,10 @@ const QuantCore = (() => {
   function netGeometry(channel, f, setup, price, cfg, triggerPrice = f.close) {
     const atr = f.atr,
       a = setup.anchors;
-    let stop, target, target2, zoneLo, zoneHi, anchorLabel;
+    let stop, target, zoneLo, zoneHi, anchorLabel;
     if (channel === "oversold") {
       stop = a.eventLow - atr * 0.8;
-      const triggerBar = f.bars[f.n - 1] || { open: triggerPrice, close: triggerPrice };
-      zoneLo = Math.max(triggerPrice - atr * 0.45, Math.min(triggerBar.open, triggerBar.close) - atr * 0.15);
+      zoneLo = triggerPrice - atr * 0.45;
       zoneHi = triggerPrice + atr * 0.25;
       target =
         f.prevHigh20 > triggerPrice
@@ -770,7 +768,6 @@ const QuantCore = (() => {
           : f.ma20[f.n - 1] > triggerPrice
             ? f.ma20[f.n - 1]
             : triggerPrice + 2 * atr;
-      target2 = f.prevHigh60 > triggerPrice ? f.prevHigh60 : triggerPrice + 2 * atr;
       anchorLabel = "超跌低点";
     } else if (channel === "pullback") {
       stop = a.support - atr * 0.8;
@@ -778,14 +775,12 @@ const QuantCore = (() => {
       zoneHi = a.support + atr * 0.35;
       target =
         f.prevHigh20 > triggerPrice ? f.prevHigh20 : triggerPrice + 2 * atr;
-      target2 = f.prevHigh60 > triggerPrice ? f.prevHigh60 : triggerPrice + 2 * atr;
       anchorLabel = a.supportSource;
     } else {
       stop = a.pressure - atr * 0.75;
       zoneLo = a.pressure;
       zoneHi = a.pressure + atr * 0.35;
       target = a.pressure + Math.max(a.baseRange, 2 * atr);
-      target2 = target;
       anchorLabel = "突破压力";
     }
     const rawTarget = target,
@@ -800,11 +795,9 @@ const QuantCore = (() => {
       risk = entry - stopExit,
       reward = targetExit - entry,
       rr = risk > 0 ? reward / risk : null;
-    const rr2 = risk > 0 && target2 > price ? (target2 * (1 - slip - fee) - entry) / risk : null;
     return {
       stop,
       target,
-      target2,
       rawTarget,
       higherPressure,
       higherPressures,
@@ -812,9 +805,6 @@ const QuantCore = (() => {
       zoneHi,
       anchorLabel,
       netRR: rr,
-      netRR2: rr2,
-      target2Atr: atr > 0 && target2 > price ? (target2 - price) / atr : null,
-      grossUp2: target2 > price ? (target2 / price - 1) * 100 : null,
       atrValue: atr,
       targetAtr: atr > 0 ? (target - price) / atr : null,
       stopAtr: atr > 0 ? (price - stop) / atr : null,
@@ -827,151 +817,6 @@ const QuantCore = (() => {
         zoneHi >= zoneLo &&
         rr > 0,
     };
-  }
-  function observationGeometry(f, cfg) {
-    const c = { ...DEFAULTS, ...(cfg || {}) };
-    if (!f || f.n < c.minBars || !finite(f.atr) || f.atr <= 0) return null;
-    const atr = f.atr,
-      price = f.close,
-      candidates = [f.prevHigh20, f.prevHigh60].filter((x) => finite(x) && x > price);
-    let resistance = candidates.length ? Math.min(...candidates) : null;
-    if (!finite(resistance))
-      resistance = finite(f.prevHigh20) ? Math.max(f.prevHigh20, price + 0.5 * atr) : price + atr;
-    const swing = f.swings && f.swings.length ? f.swings[f.swings.length - 1].price : null;
-    let support = null;
-    if (finite(swing) && swing < price) support = swing;
-    else if (finite(f.ma20[f.n - 1]) && f.ma20[f.n - 1] < price) support = f.ma20[f.n - 1];
-    else if (finite(f.prevLow20) && f.prevLow20 < price) support = f.prevLow20;
-    if (!finite(support))
-      support = Math.max(finite(f.prevLow20) ? f.prevLow20 : price - atr, price - 2 * atr);
-    const stop = support - atr * 0.8,
-      slip = c.slippageBps / 10000,
-      fee = c.feeBps / 20000,
-      entry = price * (1 + slip + fee),
-      stopExit = stop * (1 - slip - fee),
-      risk = entry - stopExit;
-    const refRR = risk > 0 && resistance > price ? (resistance * (1 - slip - fee) - entry) / risk : null;
-    return {
-      resistance,
-      resistancePct: finite(resistance) ? (resistance / price - 1) * 100 : null,
-      support,
-      stop,
-      refRR,
-      atrValue: atr,
-      toResistanceAtr: finite(resistance) ? (resistance - price) / atr : null,
-      formal: false,
-      note: "观察级几何：基于最近完成日K与现价，未触发三通道、未冻结、不计入Q/E/S与前向样本",
-    };
-  }
-  function intradayScout(o) {
-    const cfg = { ...DEFAULTS, ...(o.config || {}) },
-      now = o.now || new Date(),
-      market = o.market || "A",
-      zone = market === "A" ? "Asia/Shanghai" : "America/New_York",
-      session = marketSession(market, now),
-      z = tzInfo(now, zone),
-      quote = o.quote || {},
-      validPositive = (x) => x !== null && x !== undefined && x !== "" && finite(x) && +x > 0,
-      price = validPositive(quote.price) ? +quote.price : null,
-      quoteDay = quote.qtime ? tzInfo(new Date(quote.qtime), zone).day : null,
-      checks = [],
-      check = (key, label, pass, detail) => {
-        checks.push({ key, label, pass: pass === true, detail });
-      },
-      out = (state, title, detail, tone = "neutral", extra = {}) => ({
-        state, title, detail, tone, live: session.state === "REGULAR", actionable: false,
-        quoteDay, planKey: ["scout", o.code || "unknown", "breakout", quoteDay || "none"].join("|"),
-        executionModel: "INTRADAY_V2", checks: checks.slice(), ...extra,
-      });
-    if (DAILY_EXCLUDED.has(o.code))
-      return out("UNSUPPORTED", "不适用｜杠杆/反向ETF不侦察", "", "neutral");
-    if (!price || price <= 0)
-      return out("DATA_ERROR", "侦察暂停｜缺少有效报价", "", "danger");
-    if (!quote.qtime)
-      return out("DATA_ERROR", "侦察暂停｜报价时间缺失", "", "danger");
-    const age = now.getTime() - Number(quote.qtime);
-    if (quoteDay !== z.day || age < -5 * 60e3)
-      return out("DATA_ERROR", "侦察暂停｜报价日期异常", `行情日 ${quoteDay || "—"} 与本地交易日 ${z.day} 不一致`, "danger");
-    if (age > cfg.intradayQuoteMaxAgeSec * 1000)
-      return out("STALE", "侦察暂停｜报价已陈旧", `超过 ${cfg.intradayQuoteMaxAgeSec} 秒执行阈值`, "danger");
-    if (session.state !== "REGULAR")
-      return out("NON_SESSION", "非盘中｜侦察暂停", "连续竞价时自动恢复", "neutral");
-    const bars = completedBars(o.bars || [], market, now);
-    if (bars.length < cfg.minBars)
-      return out("DATA_ERROR", "侦察暂停｜完成日K不足", `仅 ${bars.length} 根`, "danger");
-    const virtual = bars.concat([
-        {
-          date: quoteDay,
-          open: validPositive(quote.open) ? +quote.open : price,
-          high: validPositive(quote.high) ? +quote.high : price,
-          low: validPositive(quote.low) ? +quote.low : price,
-          close: price,
-          volume: validPositive(quote.volume) ? +quote.volume : 0,
-          amount: validPositive(quote.amount) ? +quote.amount : null,
-        },
-      ]),
-      f = features(virtual);
-    if (!f || !finite(f.atr) || f.atr <= 0)
-      return out("DATA_ERROR", "侦察暂停｜盘中特征不足", "", "danger");
-    const required = f.baseHigh + f.atr * 0.05;
-    check("break", "收盘越压（盘中试算）", price > required, `现价 ${round(price, 4)} vs 越压线 ${round(required, 4)}`);
-    if (price <= required)
-      return out("WAIT", "盘中侦察｜未越压", `现价未越过前20日压力试算线 ${round(required, 4)}；不生成盘中预案`, "neutral");
-    const setup = { anchors: { pressure: f.baseHigh, baseLow: f.baseLow, baseRange: f.baseRange } },
-      g = netGeometry("breakout", f, setup, price, cfg, price);
-    if (!g.valid)
-      return out("INVALID", "侦察几何非法", "", "danger");
-    const inZone = price >= g.zoneLo && price <= g.zoneHi,
-      structurePass = price > g.stop && !(validPositive(quote.low) && +quote.low <= g.stop),
-      riskCheck = executionRiskCheck(g, price, cfg),
-      current = repriceGeometry(g, price, cfg),
-      rrPass = Number.isFinite(current.netRR) && current.netRR >= cfg.minRR;
-    check("structure", "结构有效", structurePass, structurePass ? "现价与日内低点未触及侦察止损" : "日内已触及侦察失效锚点");
-    check("zone", "价格在盘中入场区", inZone, `${round(price, 4)} / ${round(g.zoneLo, 4)}～${round(g.zoneHi, 4)}`);
-    check("rr", "成本后净赔率", rrPass, `${Number.isFinite(current.netRR) ? round(current.netRR, 2) : "—"}∶1 / 门槛 ${round(cfg.minRR, 1)}∶1`);
-    check("riskDistance", "止损距离", riskCheck.pass, riskCheck.reason || (riskCheck.unavailable ? "缺少ATR" : `${round(riskCheck.stopAtr, 2)} ATR`));
-    const elapsed = sessionElapsedMinutes(market, z),
-      totalMinutes = market === "A" ? 240 : 390,
-      averageAmount20 = validPositive(o.averageAmount20) ? +o.averageAmount20 : null,
-      volumePace = averageAmount20 && finite(quote.amount) && quote.amount !== null && quote.amount !== undefined && elapsed > 0
-        ? (+quote.amount / Math.max(5, elapsed)) / (averageAmount20 / totalMinutes) : null,
-      volumePass = Number.isFinite(volumePace) && volumePace >= cfg.intradayMinVolumePace;
-    check("volume", "当日量能节奏", volumePass, Number.isFinite(volumePace) ? `${round(volumePace, 2)}× / 门槛 ${round(cfg.intradayMinVolumePace, 2)}×` : "缺少成交额或20日基准");
-    const limitPct = market === "A" ? priceLimit(o.code || "", o.name || "") : null,
-      prevClose = validPositive(quote.prevClose) ? +quote.prevClose : null,
-      nearLimitUp = market === "A" && limitPct && prevClose > 0 &&
-        price / prevClose - 1 >= (limitPct - 0.2) / 100 && validPositive(quote.high) && price >= +quote.high,
-      tradablePass = !nearLimitUp && (quote.amount === null || quote.amount === undefined || (finite(quote.amount) && +quote.amount > 0));
-    check("tradable", "可成交性", tradablePass, nearLimitUp ? "接近涨停且位于日内高价" : "未发现当前报价级成交拦截");
-    const rawSamples = Array.isArray(o.samples) ? o.samples.slice() : [],
-      samples = rawSamples.filter((x) => x && finite(x.price) && +x.price > 0 && finite(x.qtime) &&
-        tzInfo(new Date(+x.qtime), zone).day === quoteDay && +x.qtime <= now.getTime() + 5 * 60e3)
-        .sort((a, b) => +a.qtime - +b.qtime),
-      requiredN = Math.max(2, Math.round(cfg.intradayConfirmSamples)),
-      tail = samples.slice(-requiredN),
-      spaced = tail.length === requiredN && tail[tail.length - 1].qtime - tail[0].qtime >= cfg.intradayMinSampleGapSec * 1000 &&
-        tail[tail.length - 1].qtime - tail[0].qtime <= cfg.intradayConfirmWindowSec * 1000,
-      heldZone = tail.length === requiredN && tail.every((x) => +x.price >= g.zoneLo && +x.price <= g.zoneHi && +x.price > g.stop),
-      notWeakening = tail.length === requiredN && +tail[tail.length - 1].price >= +tail[0].price,
-      confirmPass = spaced && heldZone && notWeakening;
-    check("confirmation", "盘中连续确认", confirmPass, `${Math.min(tail.length, requiredN)}/${requiredN} 次连续区内报价；间隔 ${cfg.intradayMinSampleGapSec}～${cfg.intradayConfirmWindowSec} 秒且未走弱`);
-    const common = {
-      netRR: current.netRR, stop: g.stop, target: g.target, target2: g.target2,
-      zoneLo: g.zoneLo, zoneHi: g.zoneHi, volumePace,
-      geometry: { ...g },
-      confirmation: { count: Math.min(tail.length, requiredN), required: requiredN, spaced, heldZone, notWeakening },
-      validOnlyToday: true, scout: true,
-    };
-    if (!structurePass) return out("INVALIDATED", "结构风险｜放弃盘中侦察", "", "danger", common);
-    if (!inZone) return out("WAIT_ZONE", "盘中｜价格离开侦察区", `现价 ${round(price, 4)} 不在 ${round(g.zoneLo, 4)}～${round(g.zoneHi, 4)}`, "warn", common);
-    if (!riskCheck.pass) return out("RISK_DISTANCE", "止损距离不合格｜不开仓", riskCheck.reason, "warn", common);
-    if (!rrPass) return out("WAIT_RR", "净赔率不足｜不开仓", `按现价重算 ${Number.isFinite(current.netRR) ? round(current.netRR, 2) : "—"}∶1，低于 ${round(cfg.minRR, 1)}∶1`, "warn", common);
-    if (!tradablePass) return out("UNTRADABLE", "可成交性不足｜不下单", nearLimitUp ? "接近涨停且处于日内高位" : "成交额无效", "warn", common);
-    if (!volumePass) return out("WAIT_VOLUME", "量能节奏未确认｜继续等待", Number.isFinite(volumePace) ? `当前 ${round(volumePace, 2)}×，低于 ${round(cfg.intradayMinVolumePace, 2)}×` : "缺少可核验成交额", "warn", common);
-    if (!confirmPass) return out("CONFIRMING", "侦察确认中｜等待连续报价", `已有 ${Math.min(tail.length, requiredN)}/${requiredN} 次区内样本；重复刷新且报价时间未推进不算新样本`, "neutral", common);
-    return out("ACTIONABLE", "盘中侦察通过｜人工限价评估（Intraday v2）",
-      `现价 ${round(price, 4)}；区 ${round(g.zoneLo, 4)}～${round(g.zoneHi, 4)}；止损 ${round(g.stop, 4)}；T1 ${round(g.target, 4)}（${round(current.netRR, 2)}∶1）／T2 ${round(g.target2, 4)}；仅当日有效，收盘复核转正或作废`,
-      "ok", { ...common, actionable: true });
   }
   function zoneBestRR(g, cfg) {
     if (!g || !finite(g.zoneLo) || +g.zoneLo <= 0) return null;
@@ -1033,13 +878,8 @@ const QuantCore = (() => {
       risk = entry - stopExit,
       reward = targetExit - entry,
       rr = risk > 0 ? reward / risk : null;
-    const rr2 = risk > 0 && g.target2 > price ? (g.target2 * (1 - slip - fee) - entry) / risk : null;
     return {
       ...g,
-      target2: g.target2,
-      netRR2: rr2,
-      target2Atr: g.atrValue > 0 && g.target2 > price ? (g.target2 - price) / g.atrValue : null,
-      grossUp2: g.target2 > price ? (g.target2 / price - 1) * 100 : null,
       netRR: rr,
       targetAtr: g.atrValue > 0 ? (g.target - price) / g.atrValue : null,
       stopAtr: g.atrValue > 0 ? (price - g.stop) / g.atrValue : null,
@@ -1177,7 +1017,7 @@ const QuantCore = (() => {
     if (!price || price <= 0)
       return out("DATA_ERROR", "不操作｜缺少有效报价", "报价为空或非法，不能用旧价推断盘中动作", "danger");
     if (!p || p.stage !== 3)
-      return out("NO_PLAN", "无日线预案｜转盘中侦察（v2）", "盘中不反向创造日线 Q；若价格盘中越压且五门通过，可按 Intraday v2 盘中口径独立评估", "neutral");
+      return out("NO_PLAN", "无日线预案｜不因上涨追入", "盘中价格只执行已有预案，不会反向创造日线 Q 或通道触发", "neutral");
     const g = p.triggerGeometry || p.geometry;
     if (!g || !g.valid)
       return out("INVALID", "不操作｜冻结几何非法", "入场区、止损或目标缺失，盘中不得临时补造", "danger");
@@ -2346,26 +2186,15 @@ const QuantCore = (() => {
       closed = rows.filter((e) => e.done && e.result && e.result.status === "CLOSED" && e.result.settled !== false && Number.isFinite(e.result.R)),
       skipped = rows.filter((e) => e.done && (!e.result || e.result.status !== "CLOSED")),
       stats = rStats(closed.map((e) => e.result.R)),
-      byModel = {};
-    for (const e of rows) {
-      const m = e.executionModel || "INTRADAY_V1";
-      if (!byModel[m]) byModel[m] = { model: m, total: 0, closed: 0, pending: 0, skipped: 0, rs: [] };
-      const g = byModel[m];
-      g.total++;
-      if (e.done && e.result && e.result.status === "CLOSED" && e.result.settled !== false && Number.isFinite(e.result.R)) {
-        g.closed++;
-        g.rs.push(e.result.R);
-      } else if (e.done) g.skipped++;
-      else g.pending++;
-    }
-    for (const g of Object.values(byModel)) {
-      g.avgR = g.rs.length ? mean(g.rs) : null;
-      delete g.rs;
+      by = {};
+    for (const channel of ["oversold", "breakout"]) {
+      const group = closed.filter((e) => e.channel === channel), gs = rStats(group.map((e) => e.result.R));
+      by[channel] = { channel, ...gs, pending: rows.filter((e) => !e.done && e.channel === channel).length };
     }
     return {
       executionModel: "INTRADAY_V1", total: rows.length, closed: closed.length, skipped: skipped.length,
       pending: rows.length - closed.length - skipped.length, ...stats,
-      byModel: Object.values(byModel), status: closed.length < 30 ? "样本不足·仅前向诊断" : "探索性样本≥30·仍非有效性证明",
+      channels: Object.values(by), status: closed.length < 30 ? "样本不足·仅前向诊断" : "探索性样本≥30·仍非有效性证明",
     };
   }
   function makeSynthetic(n = 140) {
@@ -2898,59 +2727,6 @@ const QuantCore = (() => {
         candidates: [{ source: "新浪", date: "2026-10-26" }, { source: "腾讯", date: "2026-10-27" }] });
       return !!v.error && v.error.includes("无法独立裁决");
     });
-    test("v13 双目标：突破第二目标为测量目标且赔率不小于第一目标", () => {
-      const b = makeBreakoutSynthetic(),
-        f = features(b),
-        setup = { anchors: { pressure: f.baseHigh, baseLow: f.baseLow, baseRange: f.baseRange } },
-        g = netGeometry("breakout", f, setup, f.close, DEFAULTS);
-      return g.target2 >= g.target && g.target2 === g.rawTarget && Number.isFinite(g.netRR2) && g.netRR2 >= g.netRR;
-    });
-    test("v13 双目标repricing守恒：reprice后T2与ATR距离一致", () => {
-      const b = makeBreakoutSynthetic(),
-        f = features(b),
-        setup = { anchors: { pressure: f.baseHigh, baseLow: f.baseLow, baseRange: f.baseRange } },
-        g = netGeometry("breakout", f, setup, f.close, DEFAULTS),
-        p = repriceGeometry(g, f.close * 1.01, DEFAULTS);
-      return p.target2 === g.target2 && Number.isFinite(p.netRR2) &&
-        Math.abs(p.target2Atr - (g.target2 - f.close * 1.01) / g.atrValue) < 1e-9;
-    });
-    test("v13 观察级几何：压力位在现价上方、参考止损在下方", () => {
-      const f = features(makeSynthetic(160)),
-        o = observationGeometry(f, DEFAULTS);
-      return o && o.resistance > f.close && o.stop < f.close && o.formal === false && Number.isFinite(o.refRR);
-    });
-    test("v13 观察级几何在数据不足时返回null", () =>
-      observationGeometry(features(makeSynthetic(30)), DEFAULTS) === null);
-    test("v13 盘中侦察：越压给出盘中几何且未越压不生成", () => {
-      const b = makeBreakoutSynthetic(),
-        f0 = features(b),
-        now = new Date("2026-10-27T14:00:00Z"),
-        q = { price: f0.baseHigh + f0.atr * 0.2, open: f0.baseHigh, high: f0.baseHigh + f0.atr * 0.3, low: f0.baseHigh, prevClose: f0.close, amount: 1e8, volume: 1e6, qtime: now.getTime() },
-        hit = intradayScout({ code: "usTEST", name: "测试", market: "US", bars: b, quote: q, averageAmount20: 5e6, samples: [], now, config: DEFAULTS }),
-        miss = intradayScout({ code: "usTEST", name: "测试", market: "US", bars: b, quote: { ...q, price: f0.baseHigh - f0.atr }, now, config: DEFAULTS });
-      return hit.geometry && hit.geometry.zoneLo >= f0.baseHigh && hit.geometry.valid && hit.state === "CONFIRMING" && miss.state === "WAIT";
-    });
-    test("v13 盘中侦察：杠杆反向ETF被排除", () =>
-      intradayScout({ code: "usSOXS", market: "US", bars: makeSynthetic(100), quote: { price: 10 }, now: new Date(), config: DEFAULTS }).state === "UNSUPPORTED");
-    test("v13 盘中汇总按执行模型分组且互不混合", () => {
-      const s = summarizeIntraday([
-        { channel: "breakout", executionModel: "INTRADAY_V2", done: true, result: { status: "CLOSED", settled: true, R: 1 } },
-        { channel: "breakout", done: true, result: { status: "CLOSED", settled: true, R: -0.5 } },
-        { channel: "breakout", executionModel: "INTRADAY_V2", done: false },
-      ]);
-      const v2 = s.byModel.find((x) => x.model === "INTRADAY_V2"), v1 = s.byModel.find((x) => x.model === "INTRADAY_V1");
-      return s.total === 3 && v2.closed === 1 && v2.pending === 1 && v1.closed === 1 && s.closed === 2;
-    });
-    test("v13 超跌入场区上移公式与止损锚点不变", () => {
-      const b = makeSynthetic(100),
-        f = features(b),
-        setup = { anchors: { eventLow: f.close - 3 } },
-        g = netGeometry("oversold", f, setup, f.close, DEFAULTS),
-        lastBar = f.bars[f.n - 1],
-        deep = f.close - f.atr * 0.45,
-        body = Math.min(lastBar.open, lastBar.close) - f.atr * 0.15;
-      return g.zoneLo === Math.max(deep, body) && g.zoneLo > deep && g.stop === setup.anchors.eventLow - f.atr * 0.8;
-    });
     const intraBase = () => ({
       code: "sh600000", name: "测试", market: "A", now: new Date("2026-10-27T02:00:00Z"), status: "NEXT_SESSION_PLAN",
       primary: { stage: 3, channel: "breakout", age: 0, triggerDate: "2026-10-26", liquidity: { pass: true },
@@ -3149,8 +2925,6 @@ const QuantCore = (() => {
     summarizeIntraday,
     sessionElapsedMinutes,
     intradayPlanKey,
-    observationGeometry,
-    intradayScout,
     completedBars,
     latestCompletedDate,
     marketSession,
@@ -3975,7 +3749,7 @@ function signedPct(v, d = 1) {
       a = actionGuidance(r);
     let title = a.title, detail = a.detail;
     if (!p && !["DATA_ERROR", "UNSUPPORTED", "UNTRADABLE"].includes(r.status))
-      detail = "数据已加载；未形成正式信号，不生成评分、净赔率与冻结交易几何。" + (r.observation && Number.isFinite(r.observation.refRR) ? ` 观察级参考（非正式）：最近压力 ${fmt(r.observation.resistance)}（${pctText(r.observation.resistancePct)}），参考止损 ${fmt(r.observation.stop)}，参考赔率 ${fmt(r.observation.refRR)}∶1（按最近完成日收盘）。` : "");
+      detail = "数据已加载；未形成正式信号，不生成评分、净赔率与冻结交易几何。";
     if (p && g) {
       const rr = rrLineText(g),
         entry = entryLineText(g, r.price),
@@ -4022,19 +3796,7 @@ function signedPct(v, d = 1) {
         primary: r.primary, quote, averageAmount20: r.averageAmount20,
         samples: state.intradaySamples[key] || [], now: new Date(), config: state.config,
       });
-    if (r.status === "OBSERVING") {
-      const sKey = r.code + "|breakout|scout|" + quoteDay,
-        s = C.intradayScout({
-          code: r.code, name: r.name, market: r.market,
-          bars: state.bars.get(r.code) || [], quote,
-          averageAmount20: r.averageAmount20,
-          samples: (quoteDay && state.intradaySamples[sKey]) || [],
-          now: new Date(), config: state.config,
-        });
-      r.scout = s;
-      if (s && !["WAIT", "NON_SESSION", "UNSUPPORTED"].includes(s.state)) a = s;
-    } else r.scout = null;
-    const record = state.intradayRecords.find((e) => e.planKey === a.planKey && e.version === C.VERSION && e.geometryHash === ((a.geometry && stableHash(a.geometry)) || (r.primary && r.primary.triggerGeometry ? stableHash(r.primary.triggerGeometry) : null)));
+    const record = state.intradayRecords.find((e) => e.planKey === a.planKey && e.version === C.VERSION && e.geometryHash === (r.primary && r.primary.triggerGeometry ? stableHash(r.primary.triggerGeometry) : null));
     a.triggerLogged = !!record;
     a.recordId = record && record.id;
     if (a.actionable && record) a.title = "五门通过｜已留痕·人工限价评估";
@@ -4044,26 +3806,19 @@ function signedPct(v, d = 1) {
     try { localStorage.setItem("quant_v11_intraday_samples_v1", JSON.stringify(state.intradaySamples)); } catch (e) {}
   }
   function captureIntradaySample(r) {
-    if (isIndex(r.code)) return false;
+    if (!r.primary || r.primary.stage !== 3 || isIndex(r.code)) return false;
     const q = currentQuote(r);
     if (!q.qtime || !Number.isFinite(q.price) || q.price <= 0 || C.marketSession(r.market, new Date()).state !== "REGULAR") return false;
     const zone = r.market === "A" ? "Asia/Shanghai" : "America/New_York",
       quoteDay = C.tzInfo(new Date(q.qtime), zone).day,
       today = C.tzInfo(new Date(), zone).day;
     if (quoteDay !== today) return false;
-    const pushSample = (key) => {
-      const rows = Array.isArray(state.intradaySamples[key]) ? state.intradaySamples[key] : [],
-        previous = rows[rows.length - 1];
-      if (previous && previous.qtime === q.qtime && previous.price === q.price) return false;
-      rows.push({ qtime: q.qtime, price: q.price, low: q.low, high: q.high, amount: q.amount, source: q.source || r.source });
-      state.intradaySamples[key] = rows.slice(-16);
-      return true;
-    };
-    let changed = false;
-    if (r.primary && r.primary.stage === 3) changed = pushSample(currentIntradayKey(r, quoteDay)) || changed;
-    if (r.status === "OBSERVING" && r.scout && !["WAIT", "NON_SESSION", "UNSUPPORTED"].includes(r.scout.state))
-      changed = pushSample(r.code + "|breakout|scout|" + quoteDay) || changed;
-    return changed;
+    const key = currentIntradayKey(r, quoteDay), rows = Array.isArray(state.intradaySamples[key]) ? state.intradaySamples[key] : [],
+      previous = rows[rows.length - 1];
+    if (previous && previous.qtime === q.qtime && previous.price === q.price) return false;
+    rows.push({ qtime: q.qtime, price: q.price, low: q.low, high: q.high, amount: q.amount, source: q.source || r.source });
+    state.intradaySamples[key] = rows.slice(-16);
+    return true;
   }
   function captureAllIntradaySamples() {
     let changed = false;
@@ -4097,15 +3852,14 @@ function signedPct(v, d = 1) {
       advice = regular.map((r) => currentIntraday(r)),
       actionable = advice.filter((a) => a.actionable).length,
       confirming = advice.filter((a) => ["CONFIRMING", "WAIT_VOLUME", "WAIT_ZONE", "WAIT_RR"].includes(a.state)).length,
-      risk = advice.filter((a) => a.tone === "danger").length,
-      scouts = regular.filter((r) => r.scout && !["WAIT", "NON_SESSION", "UNSUPPORTED"].includes(r.scout.state)).length;
+      risk = advice.filter((a) => a.tone === "danger").length;
     $("countIntraday").textContent = actionable;
     $("intradayStatus").textContent = state.loading || state.scanning
       ? "等待日线信号与冻结几何加载"
       : !rows.length
         ? "暂无监控标的"
         : regular.length
-          ? `盘中监控 ${regular.length} 只｜五门通过 ${actionable}｜等待／确认 ${confirming}｜侦察 ${scouts}｜风险拦截 ${risk}`
+          ? `盘中监控 ${regular.length} 只｜五门通过 ${actionable}｜等待／确认 ${confirming}｜风险拦截 ${risk}`
           : "非盘中｜只保留预案，不生成隔夜挂单";
     $("intradaySummary").textContent = regular.length
       ? "数据→结构→盘中确认→交易几何→可成交五门独立核验；首次通过自动留痕，仅当日有效，不改写日线Q。"
@@ -4140,7 +3894,7 @@ function signedPct(v, d = 1) {
       const p = r.primary && r.primary.stage === 3 ? r.primary : null,
         g = p && p.geometry,
         open = state.expanded.has(r.code);
-      return `<tr class="signal-row" data-code="${esc(r.code)}" tabindex="0" aria-expanded="${open}"><td data-label="标的" class="col-stock"><div class="stock-heading"><button class="ghost pin-toggle" data-pin="${esc(r.code)}" type="button" aria-pressed="${state.pins.has(r.code)}" aria-label="${state.pins.has(r.code) ? "取消钉住" : "钉住"}${esc(r.name)}">${state.pins.has(r.code) ? "已钉" : "钉"}</button><div><div class="stock-name">${esc(r.name)}</div><div class="stock-code">${esc(r.code)}</div></div></div></td><td data-label="现价" class="price col-price"><span class="${r.pct > 0 ? "up" : r.pct < 0 ? "down" : ""}">${fmt(r.price)}</span><br><span class="small ${r.pct > 0 ? "up" : r.pct < 0 ? "down" : "muted"}">${r.pct === null ? "—" : (r.pct > 0 ? "+" : "") + fmt(r.pct) + "%"}</span></td><td data-label="状态与操作" class="col-action"><div class="row-status"><span class="badge ${statusClass(r.status)}">${esc(r.statusText || C.statusLabel(r.status))}</span>${g && g.higherPressure ? `<div class="small warn">${esc(g.higherPressure.period)}压力限制目标</div>` : ""}</div>${conclusionHTML(r)}${intradayHTML(r)}</td><td data-label="主通道" class="col-channel"><span class="channel-name">${p ? esc(p.name) : r.status === "DATA_ERROR" ? "数据异常" : "未触发"}</span>${r.alternates && r.alternates.length ? `<div class="small muted">另有 ${r.alternates.length} 通道</div>` : ""}</td><td data-label="形态 / 执行 / 排序" class="metric col-qe">${scoreBadgeHTML(p)}</td><td data-label="净赔率" class="metric col-rr"><span class="score ${g ? "" : "na"}">${g ? rrText(g) : r.status === "DATA_ERROR" ? "数据异常" : r.observation && Number.isFinite(r.observation.refRR) ? "观察 " + fmt(r.observation.refRR) + "∶1" : "未形成"}</span></td><td data-label="交易几何" class="metric col-geometry">${g ? `<div class="geometry-lines"><span><small>入场</small>${fmt(g.zoneLo)}～${fmt(g.zoneHi)}</span><span class="geometry-risk"><small>止损</small>${fmt(g.stop)}（${stopDistanceText(g, r.price)}）</span><span class="geometry-risk"><small>目标</small>${fmt(g.target)}（${targetDistanceText(g, r.price)}）</span></div>` : r.status === "DATA_ERROR" ? "数据异常" : r.observation ? `<div class="geometry-lines"><span><small>压力</small>${fmt(r.observation.resistance)}（${pctText(r.observation.resistancePct)}）</span><span class="geometry-risk"><small>性质</small>观察级·未冻结</span><span class="geometry-risk"><small>参考止损</small>${fmt(r.observation.stop)}</span></div>` : "未触发·无冻结几何"}</td><td data-label="数据" class="col-data"><span class="small num">${shortDate(r.barsDate)}</span><br><span class="small muted">${esc(r.source)}</span></td></tr>${open ? `<tr class="detail-row open" data-detail="${esc(r.code)}"><td colspan="8">${detailHTML(r)}</td></tr>` : ""}`;
+      return `<tr class="signal-row" data-code="${esc(r.code)}" tabindex="0" aria-expanded="${open}"><td data-label="标的" class="col-stock"><div class="stock-heading"><button class="ghost pin-toggle" data-pin="${esc(r.code)}" type="button" aria-pressed="${state.pins.has(r.code)}" aria-label="${state.pins.has(r.code) ? "取消钉住" : "钉住"}${esc(r.name)}">${state.pins.has(r.code) ? "已钉" : "钉"}</button><div><div class="stock-name">${esc(r.name)}</div><div class="stock-code">${esc(r.code)}</div></div></div></td><td data-label="现价" class="price col-price"><span class="${r.pct > 0 ? "up" : r.pct < 0 ? "down" : ""}">${fmt(r.price)}</span><br><span class="small ${r.pct > 0 ? "up" : r.pct < 0 ? "down" : "muted"}">${r.pct === null ? "—" : (r.pct > 0 ? "+" : "") + fmt(r.pct) + "%"}</span></td><td data-label="状态与操作" class="col-action"><div class="row-status"><span class="badge ${statusClass(r.status)}">${esc(r.statusText || C.statusLabel(r.status))}</span>${g && g.higherPressure ? `<div class="small warn">${esc(g.higherPressure.period)}压力限制目标</div>` : ""}</div>${conclusionHTML(r)}${intradayHTML(r)}</td><td data-label="主通道" class="col-channel"><span class="channel-name">${p ? esc(p.name) : r.status === "DATA_ERROR" ? "数据异常" : "未触发"}</span>${r.alternates && r.alternates.length ? `<div class="small muted">另有 ${r.alternates.length} 通道</div>` : ""}</td><td data-label="形态 / 执行 / 排序" class="metric col-qe">${scoreBadgeHTML(p)}</td><td data-label="净赔率" class="metric col-rr"><span class="score ${g ? "" : "na"}">${g ? rrText(g) : r.status === "DATA_ERROR" ? "数据异常" : "未形成"}</span></td><td data-label="交易几何" class="metric col-geometry">${g ? `<div class="geometry-lines"><span><small>入场</small>${fmt(g.zoneLo)}～${fmt(g.zoneHi)}</span><span class="geometry-risk"><small>止损</small>${fmt(g.stop)}（${stopDistanceText(g, r.price)}）</span><span class="geometry-risk"><small>目标</small>${fmt(g.target)}（${targetDistanceText(g, r.price)}）</span></div>` : r.status === "DATA_ERROR" ? "数据异常" : "未触发·无冻结几何"}</td><td data-label="数据" class="col-data"><span class="small num">${shortDate(r.barsDate)}</span><br><span class="small muted">${esc(r.source)}</span></td></tr>${open ? `<tr class="detail-row open" data-detail="${esc(r.code)}"><td colspan="8">${detailHTML(r)}</td></tr>` : ""}`;
     }).join("");
     $("signalEmpty").classList.toggle("hidden", rows.length > 0 || state.loading || state.scanning);
     if (!rows.length && !state.loading && !state.scanning)
@@ -4160,17 +3914,12 @@ function signedPct(v, d = 1) {
   function dimHTML(title, obj, notes = {}) {
     return `<h4>${esc(title)}</h4><div class="score-table">${Object.entries(obj || {}).map(([k, v]) => `<div class="score-row"><span>${esc(k)}${notes[k] ? `<small>${esc(notes[k])}</small>` : ""}</span><span>${v === null ? "—" : fmt(v, 1)}</span></div>`).join("")}</div>`;
   }
-  function obsDetailHTML(r) {
-    const o = r.observation;
-    if (!o) return '<p class="small muted">数据不足，无法计算观察级几何。</p>';
-    return `<div class="geometry-grid"><div><span>最近压力位</span><b class="num">${fmt(o.resistance)}（${pctText(o.resistancePct)}）</b><small>${fmt(o.toResistanceAtr, 2)} 倍 ATR</small></div><div><span>参考支撑</span><b class="num">${fmt(o.support)}</b></div><div><span>参考止损</span><b class="num">${fmt(o.stop)}</b></div><div><span>参考赔率（按最近完成日收盘）</span><b class="num">${Number.isFinite(o.refRR) ? fmt(o.refRR, 2) + "∶1" : "—"}</b></div></div><p class="small muted" style="margin-top:6px">观察级几何只基于最近完成日K与现价；未触发三通道、未冻结、不计入Q/E/S与前向样本；压力取前20/60日高点中最近的上方位置。</p>`;
-  }
   function detailHTML(r) {
     const p = r.primary && r.primary.stage === 3 ? r.primary : null,
       dataLine = `完成日K ${esc(r.barsDate)}；报价 ${esc(r.source)}；K线源 ${esc(r.kSource || "—")}；${esc(r.kAdjustment || "复权口径未确认")}`,
       warnings = (r.quality && r.quality.warnings) || [];
     if (!p)
-      return `<div class="detail"><div class="detail-checks"><h3>盘中五门核验</h3>${intradayChecksHTML(r)}</div><div><h3>观察级参考（非正式·仅供盯盘）</h3>${obsDetailHTML(r)}</div><div><h3>观察原因</h3><p>${esc(r.statusText)}</p><p class="small muted">${esc(freshLineText(null))}；排序分 ${scoreBadgeHTML(null)}</p></div><div><h3>数据时点</h3><p>${dataLine}</p></div><div><h3>质量诊断</h3><p>${esc([...((r.quality && r.quality.errors) || []), ...warnings].join("；") || "未形成三通道候选")}</p></div></div>`;
+      return `<div class="detail"><div class="detail-checks"><h3>盘中五门核验</h3>${intradayChecksHTML(r)}</div><div><h3>观察原因</h3><p>${esc(r.statusText)}</p><p class="small muted">${esc(freshLineText(null))}；排序分 ${scoreBadgeHTML(null)}</p></div><div><h3>数据时点</h3><p>${dataLine}</p></div><div><h3>质量诊断</h3><p>${esc([...((r.quality && r.quality.errors) || []), ...warnings].join("；") || "未形成三通道候选")}</p></div></div>`;
     const g = p.geometry, alt = r.alternates || [], a = actionGuidance(r),
       pressurePct = g.higherPressure && r.price > 0 ? (g.higherPressure.price / r.price - 1) * 100 : null,
       rawTargetPct = r.price > 0 ? (g.rawTarget / r.price - 1) * 100 : null,
@@ -4181,7 +3930,7 @@ function signedPct(v, d = 1) {
       attemptLine = (p.attempts || []).map((x) => `${x.date} ${x.status === "ENTER" ? "条件满足" : "未入场"}：${x.reason}`).join("；") || "尚未进行开盘检查",
       windowLine = `开盘窗口：已检查 ${p.usedAttempts ?? 0} / ${p.maxAttempts ?? "—"} 次；剩余 ${p.remainingAttempts ?? "—"} 次；${attemptLine}`,
       narrow = Number.isFinite(g.targetAtr) && g.targetAtr < 1;
-    return `<div class="detail"><div class="detail-checks"><h3>盘中五门核验</h3>${intradayChecksHTML(r)}</div><div><h3>交易翻译</h3><p><b>${esc(a.title)}</b> ${esc(a.detail)}</p><div class="exec-lines"><span class="exec-line">${esc(rrLineText(g))}</span><span class="exec-line">${esc(entryLineText(g, r.price))}</span><span class="exec-line">${esc(`止损 ${fmt(g.stop)}（${stopDistanceText(g, r.price)}）；目标 ${fmt(g.target)}（${targetDistanceText(g, r.price)}）；结构锚点 ${g.anchorLabel}`)}</span><span class="exec-line">${esc(freshLineText(p))}｜${esc(p.name)}｜排序分 ${esc(`Q ${fmt(p.Q.value, 1)} · E ${fmt(p.E.value, 1)} · S ${fmt(p.S, 1)}`)}</span></div><h4>信号依据</h4><ul class="reason-list">${(p.evidence || []).map((x) => `<li>${esc(x)}</li>`).join("")}<li>首次有效触发：${esc(p.triggerDate)}；信号年龄 ${p.age} 个完成交易日</li><li>${esc(windowLine)}</li>${(p.reasons || []).map((x) => `<li class="warn">${esc(x)}</li>`).join("")}</ul><h4>其他合格通道</h4><p>${alt.length ? alt.map((x) => esc(x.name) + " / " + esc(x.statusText)).join("；") : "无"}</p></div><div><h3>交易空间与价位</h3><div class="geometry-grid"><div><span>入场区</span><b class="num">${fmt(g.zoneLo)}～${fmt(g.zoneHi)}</b></div><div><span>现价净赔率</span><b class="num rr-now">${rrText(g)}</b></div><div><span>止损</span><b class="num">${fmt(g.stop)}（${stopDistanceText(g, r.price)}）</b><small>${fmt(g.stopAtr, 2)} 倍 ATR</small></div><div><span>第一目标</span><b class="num">${fmt(g.target)}（${targetDistanceText(g, r.price)}）</b><small>${fmt(g.targetAtr, 2)} 倍 ATR</small></div><div><span>第二目标（测量）</span><b class="num">${g.target2 && g.target2 > g.target ? fmt(g.target2) + "（" + pctText((g.target2 / r.price - 1) * 100) + "）" : "—"}</b><small>${g.target2 && Number.isFinite(g.netRR2) ? "参考赔率 " + fmt(g.netRR2, 2) + "∶1；突破后分段兑现" : "未形成"}</small></div>${pressure}<div><span>结构锚点</span><b>${esc(g.anchorLabel)}</b></div></div>${narrow ? `<p class="small warn space-warning">空间偏窄：第一目标距现价不足 1 倍 ATR，可能处于日常波动范围内；这只是提示，不自动改写候选或拉远目标。</p>` : ""}<p class="small muted" style="margin-top:8px">百分比按现价计算；ATR 距离用于判断空间是否被日常波动主导，不是新硬门槛。上方压力：${pressureList}。费用 ${state.config.feeBps} bps（往返）＋滑点 ${state.config.slippageBps} bps（单边）。止损不保证成交。</p></div><div><h3>数据时点</h3><p>${dataLine}；${r.session.state === "REGULAR" ? "常规交易时段" : "非盘中，盘中未完成K线未计入Q"}</p>${warnings.length ? `<p class="small warn">${esc(warnings.join("；"))}</p>` : ""}<h4>质量诊断</h4><p>${esc([...((r.quality && r.quality.errors) || []), ...warnings].join("；") || "通过")}</p></div></div>`;
+    return `<div class="detail"><div class="detail-checks"><h3>盘中五门核验</h3>${intradayChecksHTML(r)}</div><div><h3>交易翻译</h3><p><b>${esc(a.title)}</b> ${esc(a.detail)}</p><div class="exec-lines"><span class="exec-line">${esc(rrLineText(g))}</span><span class="exec-line">${esc(entryLineText(g, r.price))}</span><span class="exec-line">${esc(`止损 ${fmt(g.stop)}（${stopDistanceText(g, r.price)}）；目标 ${fmt(g.target)}（${targetDistanceText(g, r.price)}）；结构锚点 ${g.anchorLabel}`)}</span><span class="exec-line">${esc(freshLineText(p))}｜${esc(p.name)}｜排序分 ${esc(`Q ${fmt(p.Q.value, 1)} · E ${fmt(p.E.value, 1)} · S ${fmt(p.S, 1)}`)}</span></div><h4>信号依据</h4><ul class="reason-list">${(p.evidence || []).map((x) => `<li>${esc(x)}</li>`).join("")}<li>首次有效触发：${esc(p.triggerDate)}；信号年龄 ${p.age} 个完成交易日</li><li>${esc(windowLine)}</li>${(p.reasons || []).map((x) => `<li class="warn">${esc(x)}</li>`).join("")}</ul><h4>其他合格通道</h4><p>${alt.length ? alt.map((x) => esc(x.name) + " / " + esc(x.statusText)).join("；") : "无"}</p></div><div><h3>交易空间与价位</h3><div class="geometry-grid"><div><span>入场区</span><b class="num">${fmt(g.zoneLo)}～${fmt(g.zoneHi)}</b></div><div><span>现价净赔率</span><b class="num rr-now">${rrText(g)}</b></div><div><span>止损</span><b class="num">${fmt(g.stop)}（${stopDistanceText(g, r.price)}）</b><small>${fmt(g.stopAtr, 2)} 倍 ATR</small></div><div><span>第一目标</span><b class="num">${fmt(g.target)}（${targetDistanceText(g, r.price)}）</b><small>${fmt(g.targetAtr, 2)} 倍 ATR</small></div>${pressure}<div><span>结构锚点</span><b>${esc(g.anchorLabel)}</b></div></div>${narrow ? `<p class="small warn space-warning">空间偏窄：第一目标距现价不足 1 倍 ATR，可能处于日常波动范围内；这只是提示，不自动改写候选或拉远目标。</p>` : ""}<p class="small muted" style="margin-top:8px">百分比按现价计算；ATR 距离用于判断空间是否被日常波动主导，不是新硬门槛。上方压力：${pressureList}。费用 ${state.config.feeBps} bps（往返）＋滑点 ${state.config.slippageBps} bps（单边）。止损不保证成交。</p></div><div><h3>数据时点</h3><p>${dataLine}；${r.session.state === "REGULAR" ? "常规交易时段" : "非盘中，盘中未完成K线未计入Q"}</p>${warnings.length ? `<p class="small warn">${esc(warnings.join("；"))}</p>` : ""}<h4>质量诊断</h4><p>${esc([...((r.quality && r.quality.errors) || []), ...warnings].join("；") || "通过")}</p></div></div>`;
   }
 
   function previewVolume(v, market) {
@@ -4234,7 +3983,7 @@ function signedPct(v, d = 1) {
     $("observeRows").innerHTML = rows
       .map(
         ({ r, s }) =>
-          `<tr><td><div class="stock-name">${esc(r.name)}</div><div class="stock-code">${esc(r.code)}</div></td><td>${esc(s.name)}</td><td><span class="badge wait">阶段 ${s.stage === 2 ? "② 准备" : "① 观察"}</span></td><td>${esc((s.missing || []).join("；") || "等待条件确认")}</td><td>${esc((s.evidence || []).join("；") || "—")}${r.observation && Number.isFinite(r.observation.refRR) ? `<div class="small muted">预警参考：收盘假设 ${fmt(r.observation.refRR)}∶1，压力 ${fmt(r.observation.resistance)}（${pctText(r.observation.resistancePct)}）</div>` : ""}</td><td class="num">${esc(r.barsDate)}</td></tr>`,
+          `<tr><td><div class="stock-name">${esc(r.name)}</div><div class="stock-code">${esc(r.code)}</div></td><td>${esc(s.name)}</td><td><span class="badge wait">阶段 ${s.stage === 2 ? "② 准备" : "① 观察"}</span></td><td>${esc((s.missing || []).join("；") || "等待条件确认")}</td><td>${esc((s.evidence || []).join("；") || "—")}</td><td class="num">${esc(r.barsDate)}</td></tr>`,
       )
       .join("");
     $("observeEmpty").classList.toggle("hidden", rows.length > 0);
@@ -4521,9 +4270,6 @@ function signedPct(v, d = 1) {
             config: state.config,
           });
           applyKlineMeta(r, k, quote);
-          try {
-            r.observation = C.observationGeometry(C.features(C.completedBars(k.bars, isUS(code) ? "US" : "A", new Date())), state.config);
-          } catch (e) { r.observation = null; }
           state.rows.set(code, r);
         } catch (e) {
           state.rows.set(code, {
@@ -4736,9 +4482,6 @@ function signedPct(v, d = 1) {
             config: state.config,
           });
           applyKlineMeta(r, k, quote);
-          try {
-            r.observation = C.observationGeometry(C.features(C.completedBars(k.bars, isUS(code) ? "US" : "A", new Date())), state.config);
-          } catch (e) { r.observation = null; }
           state.rows.set(code, r);
         } catch (e) {
           if (token !== state.scanToken) return;
@@ -5027,31 +4770,6 @@ function signedPct(v, d = 1) {
       ids.add(id); added++;
       log(`盘中五门通过并留痕：${r.name} ${p.channel} @ ${fmt(r.price)}；仅模型快照，非实际成交`);
     }
-    for (const r of state.rows.values()) {
-      const s = r.scout;
-      if (!s || !s.actionable || !s.geometry) continue;
-      const geometryHash = stableHash(s.geometry),
-        id = [C.VERSION, s.planKey, geometryHash].join("|");
-      if (ids.has(id)) continue;
-      const cfg = { ...state.config }, q = currentQuote(r), nowIso = new Date().toISOString();
-      entries.unshift({
-        id, planKey: s.planKey, version: C.VERSION, executionModel: "INTRADAY_V2",
-        savedAt: nowIso, firstTriggeredAt: new Date(q.qtime).toISOString(), dataAsOf: r.barsDate || null,
-        recordOrigin: "PRE_ENTRY", done: false, pendingStage: "等待入场日日K完成",
-        pendingDetail: "盘中侦察 v2 按首次五门通过报价建档；收盘后以正式日K复核，未过线自动作废；不代表用户实际成交",
-        nextCheckDate: "入场日完成日K入库后", lastCheckedAt: nowIso, lastDataAsOf: r.barsDate || null,
-        modelParamsHash: stableHash({ config: canonicalIntradayConfig(cfg), scout: true }), geometryHash,
-        code: r.code, name: r.name, market: r.market, channel: "breakout", triggerDate: s.quoteDay || null,
-        executionDate: s.quoteDay, entryPrice: r.price, netRR: s.netRR, volumePace: s.volumePace,
-        Q: null, E: null, S: null, E_intraday: null, S_intraday: null,
-        checks: s.checks, confirmation: s.confirmation,
-        quote: { price: q.price, qtime: q.qtime, amount: q.amount, high: q.high, low: q.low, prevClose: q.prevClose, source: q.source || r.source },
-        config: cfg,
-        signal: { geometry: s.geometry, signalClose: r.price, limitPct: r.market === "A" ? C.priceLimit(r.code, r.name) : null, scout: true },
-      });
-      ids.add(id); added++;
-      log(`盘中侦察五门通过并留痕：${r.name} @ ${fmt(r.price)}（Intraday v2，收盘复核）`);
-    }
     if (added) {
       saveIntraday(entries);
       renderIntradayJournal();
@@ -5091,7 +4809,7 @@ function signedPct(v, d = 1) {
     const all = intradayEntries(), s = C.summarizeIntraday(all),
       metric = (label, value) => `<div><span class="small muted">${label}</span><b>${value}</b></div>`,
       dash = (x, d = 2) => Number.isFinite(x) ? fmt(x, d) : "—";
-    $("intradayOutput").innerHTML = `<div class="result-grid">${metric("首次触发快照", s.total)}${metric("已结算 / 待结算", `${s.closed} / ${s.pending}`)}${metric("平均净R", dash(s.avgR, 3))}${metric("Profit factor", Number.isFinite(s.profitFactor) ? pfText(s.profitFactor) : s.profitFactor === Infinity ? "∞" : "—")}</div><div class="notice ${s.closed < 30 ? "" : "info"}">${esc(s.status)}。Intraday v1 执行日线预案、v2 为盘中实时侦察（无日线预案时盘中越压试算），两模型按执行版本独立登记、独立结算，互不相混；均按当时报价模拟入场并计成本，不是用户实际成交，与开盘价前向模型绝不混合。</div>${s.byModel && s.byModel.length ? `<p class="small muted">分模型：${s.byModel.map((x) => `${esc(x.model)} ${x.total}条（结算${x.closed}/待结算${x.pending}/作废${x.skipped}${x.avgR === null ? "" : "，平均净R " + fmt(x.avgR, 3)}）`).join("；")}。</p>` : ""}<p class="small muted">触发保存公开报价、确认样本、Q／E、冻结几何和参数指纹。入场日没有触发后的逐笔路径，因此退出、MFE／MAE只从下一完成日K开始；A股与美股均不利用入场日完整日K倒推当日退出。记录仅保存当前浏览器，最多300条。</p>${all.length ? `<table><thead><tr><th>标的 / 通道</th><th>日线触发 / 盘中触发</th><th>入场 / 净赔率 / 量能</th><th>触发Q/E与盘中E</th><th>状态 / 净R</th><th>确认证据</th></tr></thead><tbody>${all.slice(0, 30).map((e) => `<tr><td>${esc(e.name)}<div class="stock-code">${esc(e.code)}</div></td><td>${esc(C.CHANNELS[e.channel] ? C.CHANNELS[e.channel].name : e.channel)}<div class="small muted">${esc(e.triggerDate)} / ${esc(e.executionDate)}</div><div class="small muted">${esc(e.executionModel || "INTRADAY_V1")}${e.signal && e.signal.scout ? "·侦察" : ""}</div></td><td class="num">${dash(e.entryPrice)}<div class="small muted">${dash(e.netRR)}∶1 / ${dash(e.volumePace)}×</div></td><td class="num">${dash(e.Q, 1)} / ${dash(e.E, 1)}<div class="small muted">E盘中 ${dash(e.E_intraday, 1)}</div></td><td>${e.done ? esc(e.result && e.result.reason || "已结束") : esc(e.pendingStage || "待结算")}<div class="num small">${e.done && e.result && Number.isFinite(e.result.R) ? fmt(e.result.R, 3) : "—"}</div></td><td class="small">${e.confirmation ? `${e.confirmation.required}次报价 · 区内 ${e.confirmation.heldZone ? "是" : "否"} · 未走弱 ${e.confirmation.notWeakening ? "是" : "否"}` : "—"}<div class="muted">${esc(e.quote && e.quote.source || "—")} · ${esc(e.firstTriggeredAt || "—")}</div></td></tr>`).join("")}</tbody></table>` : '<div class="empty"><strong>尚无盘中触发记录</strong>盘前预案和单次报价不会建档；只有五门首次全部通过才生成不可变模型快照。</div>'}`;
+    $("intradayOutput").innerHTML = `<div class="result-grid">${metric("首次触发快照", s.total)}${metric("已结算 / 待结算", `${s.closed} / ${s.pending}`)}${metric("平均净R", dash(s.avgR, 3))}${metric("Profit factor", Number.isFinite(s.profitFactor) ? pfText(s.profitFactor) : s.profitFactor === Infinity ? "∞" : "—")}</div><div class="notice ${s.closed < 30 ? "" : "info"}">${esc(s.status)}。这是独立 Intraday v1 模型：首次五门通过时按当时报价模拟入场并计成本，不是用户实际成交；与开盘价前向模型绝不混合。</div><p class="small muted">触发保存公开报价、确认样本、Q／E、冻结几何和参数指纹。入场日没有触发后的逐笔路径，因此退出、MFE／MAE只从下一完成日K开始；A股与美股均不利用入场日完整日K倒推当日退出。记录仅保存当前浏览器，最多300条。</p>${all.length ? `<table><thead><tr><th>标的 / 通道</th><th>日线触发 / 盘中触发</th><th>入场 / 净赔率 / 量能</th><th>触发Q/E与盘中E</th><th>状态 / 净R</th><th>确认证据</th></tr></thead><tbody>${all.slice(0, 30).map((e) => `<tr><td>${esc(e.name)}<div class="stock-code">${esc(e.code)}</div></td><td>${esc(C.CHANNELS[e.channel].name)}<div class="small muted">${esc(e.triggerDate)} / ${esc(e.executionDate)}</div></td><td class="num">${dash(e.entryPrice)}<div class="small muted">${dash(e.netRR)}∶1 / ${dash(e.volumePace)}×</div></td><td class="num">${dash(e.Q, 1)} / ${dash(e.E, 1)}<div class="small muted">E盘中 ${dash(e.E_intraday, 1)}</div></td><td>${e.done ? esc(e.result && e.result.reason || "已结束") : esc(e.pendingStage || "待结算")}<div class="num small">${e.done && e.result && Number.isFinite(e.result.R) ? fmt(e.result.R, 3) : "—"}</div></td><td class="small">${e.confirmation ? `${e.confirmation.required}次报价 · 区内 ${e.confirmation.heldZone ? "是" : "否"} · 未走弱 ${e.confirmation.notWeakening ? "是" : "否"}` : "—"}<div class="muted">${esc(e.quote && e.quote.source || "—")} · ${esc(e.firstTriggeredAt || "—")}</div></td></tr>`).join("")}</tbody></table>` : '<div class="empty"><strong>尚无盘中触发记录</strong>盘前预案和单次报价不会建档；只有五门首次全部通过才生成不可变模型快照。</div>'}`;
   }
   const FORWARD_KEY = "quant_v10_forward_v1";
   function forwardEntries() {
@@ -5236,16 +4954,6 @@ function signedPct(v, d = 1) {
         continue;
       }
       const bars = state.bars.get(e.code);
-      if (e.signal && e.signal.scout) {
-        const scoutBar = bars && bars.length ? bars.find((b) => b.date === e.executionDate) : null;
-        if (scoutBar && Number.isFinite(scoutBar.close) && scoutBar.close < e.signal.geometry.zoneLo) {
-          e.done = true;
-          e.result = { status: "SKIP", reason: "收盘复核未通过·盘中侦察作废", executionModel: "INTRADAY_V2" };
-          e.settledAt = nowIso;
-          clearPending(e);
-          continue;
-        }
-      }
       if (!bars || !bars.length) {
         const inPool = state.list.some((x) => x[0] === e.code);
         setPending(
