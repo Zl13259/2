@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Quant v11.2 客观信号与盘中执行台：精简信息层级、合并执行状态、优化移动端研究表。">
+<meta name="description" content="Quant v12.0 客观信号与盘中执行台：策略版本独立、前向捕获链、分组审计与稳健性诊断。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%2312141f'/%3E%3Cpath d='M8 21V11h8a5 5 0 0 1 0 10h-3v4H8zm5-7v4h3a2 2 0 0 0 0-4h-3z' fill='%23f6f6f4'/%3E%3C/svg%3E">
-<title>Quant v11.2 · 客观信号与盘中执行台</title>
+<title>Quant v12.0 · 客观信号与盘中执行台</title>
 <style>
 :root{
   --p-navy:oklch(0.21 0.025 265);--p-navy-2:oklch(0.27 0.035 265);--p-paper:oklch(0.982 0.003 95);--p-panel:oklch(0.996 0.002 95);--p-ink:oklch(0.235 0.022 265);--p-muted:oklch(0.47 0.022 265);--p-line:oklch(0.875 0.012 265);--p-soft:oklch(0.95 0.009 265);--p-teal:oklch(0.48 0.09 185);--p-teal-soft:oklch(0.93 0.035 185);--p-red:oklch(0.51 0.18 28);--p-red-soft:oklch(0.94 0.035 28);--p-green:oklch(0.46 0.11 155);--p-amber:oklch(0.49 0.11 75);--p-amber-soft:oklch(0.95 0.04 90);
@@ -17,7 +17,7 @@
 .market-strip{display:grid;grid-template-columns:1.05fr 1fr 1.25fr 1fr;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--panel)}.market-cell{padding:11px 14px;border-right:1px solid var(--line);min-width:0}.market-cell:last-child{border:0}.market-cell b{display:block;font-size:11px;font-weight:650;color:var(--muted);letter-spacing:.3px}.market-cell strong{display:block;font-size:15px;margin-top:2px;line-height:1.4}.market-cell .small{display:block;margin-top:2px}.intraday-panel{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;padding:12px 14px;background:var(--soft);border:1px solid var(--line);border-top:0}.intraday-heading{min-width:0}.intraday-heading>span{display:block;font-size:11px;font-weight:700;color:var(--ok);letter-spacing:.35px}.intraday-heading strong{display:block;font-size:14px;margin-top:2px}.intraday-heading p{font-size:12px;color:var(--muted);margin-top:2px}.intraday-side{display:flex;align-items:center;gap:12px}.intraday-side>span{font-size:11px;color:var(--muted);text-align:right;max-width:330px}.intraday-side button{white-space:nowrap}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:14px 0}.summary-item{background:var(--panel);padding:10px 14px}.summary-item>span{font-size:11px;color:var(--muted)}.summary-item strong{display:block;font:700 24px/1.25 var(--font-mono);margin-top:2px}.summary-item small{display:block;font-size:10px;color:var(--muted);margin-top:1px}.dual-count{display:flex;align-items:baseline;gap:8px}.dual-count i{font-style:normal;font-size:15px;color:var(--muted)}
 .filter-grid{display:grid;grid-template-columns:minmax(180px,1.6fr) repeat(4,minmax(118px,1fr)) auto;gap:8px;margin:10px 0}.filter-grid>*{min-width:0}.filter-grid input,.filter-grid select{width:100%}.coverage{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;padding:7px 0 10px;color:var(--muted);font-size:12px;border-bottom:1px solid var(--line)}.coverage>span{flex:1}.coverage details{max-width:58%;text-align:right}.coverage summary{font-weight:650;color:var(--accent)}.coverage details p,.coverage details div{text-align:left;margin-top:6px}.progress{height:3px;background:var(--soft);margin:8px 0;overflow:hidden}.progress i{display:block;height:100%;background:var(--ok);transition:width .18s ease-out}.table-shell{background:var(--panel);min-width:0;overflow-x:auto}table{width:100%;border-collapse:collapse;table-layout:auto}th{text-align:left;padding:10px 9px;color:var(--muted);font-size:11px;font-weight:650;letter-spacing:.25px;border-bottom:1px solid var(--line);white-space:nowrap}td{padding:11px 9px;border-bottom:1px solid var(--line);vertical-align:top;font-size:13px}tbody tr.signal-row{cursor:pointer;transition:background-color .14s ease-out}tbody tr.signal-row:hover{background:var(--soft)}tbody tr.signal-row[aria-expanded=true]{background:var(--p-teal-soft)}.stock-name{font-weight:700;font-size:14px}.stock-code{font:11px var(--font-mono);color:var(--muted)}.channel-name{font-weight:650}.stock-heading{display:flex;align-items:center;gap:5px}.pin-toggle{min-width:44px;min-height:44px;padding:0 6px;color:var(--muted);font-size:11px}.pin-toggle[aria-pressed=true]{color:var(--ok);font-weight:700}.badge{display:inline-flex;align-items:center;min-height:24px;padding:2px 7px;border-radius:4px;background:var(--soft);font-size:11px;font-weight:700;line-height:1.4;white-space:normal;overflow-wrap:anywhere}.badge.current{background:var(--p-teal-soft);color:var(--p-teal)}.badge.plan{background:var(--accent);color:var(--p-paper)}.badge.wait{background:var(--p-amber-soft);color:var(--p-amber)}.badge.error{background:var(--p-red-soft);color:var(--up)}.badge.research{background:var(--soft);color:var(--muted)}.row-status{margin-bottom:7px}.row-status .small{margin-top:3px}.action-copy{min-width:190px;max-width:300px}.action-title{display:block;font-weight:750;line-height:1.4}.action-detail{display:block;margin-top:2px;color:var(--muted);font-size:11px;line-height:1.45;white-space:normal}.intraday-copy{display:block;margin-top:7px;padding-top:6px;border-top:1px dashed var(--line);max-width:330px}.intraday-copy strong{display:block;font-size:11px}.intraday-copy>span{display:block;font-size:11px;line-height:1.45;color:var(--muted);margin-top:2px}.intraday-copy.tone-ok strong{color:var(--ok)}.intraday-copy.tone-warn strong{color:var(--warn)}.intraday-copy.tone-danger strong{color:var(--up)}.qe-pair{display:flex;gap:10px;font:12px var(--font-mono)}.qe-pair span{color:var(--muted)}.qe-pair b{color:var(--ink);font-size:14px}.geometry-lines{display:grid;gap:3px;white-space:nowrap}.geometry-lines small{display:inline-block;min-width:30px;color:var(--muted);font:10px var(--font-sans)}.geometry-lines .geometry-risk{color:var(--muted);font-size:11px}.rr-now{font-size:16px;font-weight:750}.metric-stack{display:flex;flex-direction:column;gap:1px}.metric-stack small{color:var(--muted);font-size:10px}.detail-row td{padding:0;background:var(--panel)}.detail{display:grid;grid-template-columns:1.15fr 1fr .85fr;gap:22px;padding:18px;border-top:1px solid var(--line)}.detail h3{font-size:14px;margin-bottom:7px}.detail h4{font-size:12px;margin:12px 0 5px}.detail p,.detail li{font-size:12px;line-height:1.65}.detail ul{padding-left:18px}.reason-list li{margin-bottom:4px}.detail-checks{grid-column:1/-1;padding-bottom:12px;border-bottom:1px solid var(--line)}.intraday-checks{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px 12px}.intraday-checks>span{font-size:11px;line-height:1.5}.geometry-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px}.geometry-grid>div{border-bottom:1px solid var(--line);padding-bottom:6px}.geometry-grid span{display:block;font-size:10px;color:var(--muted)}.geometry-grid b{display:block;font-size:12px;margin-top:2px}.geometry-grid small{display:block;color:var(--muted);font-size:10px}.score-table{border-top:1px solid var(--line)}.score-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:5px 0;border-bottom:1px solid var(--line);font-size:11px}.score-row span:last-child{font-family:var(--font-mono);font-variant-numeric:tabular-nums;white-space:nowrap}.score-row small{display:block;color:var(--muted);font-size:10px}.score-note{margin:4px 0 8px!important;color:var(--muted);font-size:11px!important}.space-warning{margin-top:8px!important}.na{opacity:.5}
 .secondary-workspace,.research-block,.version-history{border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:18px;background:var(--panel)}.secondary-workspace>summary,.research-block>summary,.version-history>summary{min-height:54px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:16px;list-style:none}.secondary-workspace>summary::-webkit-details-marker,.research-block>summary::-webkit-details-marker,.version-history>summary::-webkit-details-marker{display:none}.secondary-workspace>summary::after,.research-block>summary::after,.version-history>summary::after{content:"展开";font-size:11px;color:var(--muted);flex:none}.secondary-workspace[open]>summary::after,.research-block[open]>summary::after,.version-history[open]>summary::after{content:"收起"}.secondary-workspace>summary b,.research-block>summary b{font-size:14px}.secondary-workspace>summary small,.research-block>summary small{display:block;font-size:11px;color:var(--muted);font-weight:400;margin-top:2px}.secondary-content,.research-content,.version-history-body{padding:0 14px 16px;border-top:1px solid var(--line)}.secondary-content h3{font-size:15px;margin:16px 0 4px}.secondary-content .subsection{margin-top:22px;padding-top:14px;border-top:1px solid var(--line)}.observe-controls{grid-template-columns:minmax(180px,2fr) minmax(150px,1fr);max-width:560px}.empty{padding:24px 12px;color:var(--muted);font-size:13px;text-align:center}.empty strong{display:block;color:var(--ink);margin-bottom:3px}.notice{padding:10px 12px;background:var(--p-amber-soft);border:1px solid oklch(0.85 0.06 85);font-size:12px;line-height:1.65;margin:10px 0}.notice.info{background:var(--p-teal-soft);border-color:oklch(0.85 0.05 185)}
-.research-controls{display:grid;grid-template-columns:repeat(3,minmax(120px,1fr)) auto auto;gap:8px;align-items:end;margin:12px 0}.research-controls:has(button:only-child){grid-template-columns:auto auto;justify-content:start}.field label{display:block;font-size:11px;color:var(--muted);margin-bottom:4px}.field input,.field select{width:100%}.result-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:12px 0}.result-grid>div{background:var(--panel);padding:10px 12px}.result-grid span{font-size:11px;color:var(--muted)}.result-grid b{display:block;font:700 20px var(--font-mono)}.journal-section{margin-top:14px}.journal-section h3{font-size:14px}.journal-section>p{font-size:12px;color:var(--muted);margin-top:3px}.research-detail{margin:12px 0;padding-top:4px;border-top:1px solid var(--ink)}.research-detail>summary{min-height:44px;display:flex;align-items:center;font-weight:700}.research-detail>p{margin:4px 0 10px}.path-detail{margin-top:8px}.path-detail>summary{min-height:32px;color:var(--accent);font-size:12px}.path-metrics{margin:6px 0}.path-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr) minmax(0,1fr);gap:8px;padding:5px 0;border-bottom:1px solid var(--line);font-size:11px}.path-head{color:var(--muted);font-weight:650}.path-grid>span{min-width:0;overflow-wrap:anywhere}.diag-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}.diag-section{border-top:2px solid var(--ink);padding-top:9px}.diag-section h3{font-size:14px;margin-bottom:8px}.log{max-height:320px;overflow:auto;font:11px/1.65 var(--font-mono);background:var(--ink);color:var(--p-paper);padding:12px;border-radius:4px}.test-line{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding:6px 0;font-size:12px}#replayOutput,#intradayOutput,#forwardOutput,#sourceStats{max-width:100%;overflow-x:auto}
+.research-controls{display:grid;grid-template-columns:repeat(3,minmax(120px,1fr)) auto auto;gap:8px;align-items:end;margin:12px 0}.research-controls:has(button:only-child){grid-template-columns:auto auto;justify-content:start}.field label{display:block;font-size:11px;color:var(--muted);margin-bottom:4px}.field input,.field select{width:100%}.result-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:12px 0}.result-grid>div{background:var(--panel);padding:10px 12px}.result-grid span{font-size:11px;color:var(--muted)}.result-grid b{display:block;font:700 20px var(--font-mono)}.forward-archives{margin-top:6px}.forward-archives>summary{min-height:32px;color:var(--accent);font-size:11px}.forward-archives ol{padding-left:18px;max-height:240px;overflow:auto}.forward-archives li{margin:5px 0;overflow-wrap:anywhere}.journal-section{margin-top:14px}.journal-section h3{font-size:14px}.journal-section>p{font-size:12px;color:var(--muted);margin-top:3px}.research-detail{margin:12px 0;padding-top:4px;border-top:1px solid var(--ink)}.research-detail>summary{min-height:44px;display:flex;align-items:center;font-weight:700}.research-detail>p{margin:4px 0 10px}.path-detail{margin-top:8px}.path-detail>summary{min-height:32px;color:var(--accent);font-size:12px}.path-metrics{margin:6px 0}.path-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr) minmax(0,1fr);gap:8px;padding:5px 0;border-bottom:1px solid var(--line);font-size:11px}.path-head{color:var(--muted);font-weight:650}.path-grid>span{min-width:0;overflow-wrap:anywhere}.diag-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}.diag-section{border-top:2px solid var(--ink);padding-top:9px}.diag-section h3{font-size:14px;margin-bottom:8px}.log{max-height:320px;overflow:auto;font:11px/1.65 var(--font-mono);background:var(--ink);color:var(--p-paper);padding:12px;border-radius:4px}.test-line{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding:6px 0;font-size:12px}#replayOutput,#intradayOutput,#forwardOutput,#sourceStats{max-width:100%;overflow-x:auto}
 .method{max-width:980px}.method h3{font-size:15px;margin:20px 0 7px}.method p,.method li{font-size:13px;line-height:1.75}.method ul,.method ol{padding-left:22px}.formula{font:12px/1.7 var(--font-mono);background:var(--ink);color:var(--p-paper);padding:12px;overflow-wrap:anywhere;margin:8px 0}.method table td,.method table th{white-space:normal}.version-history{margin-top:24px;max-width:none}.version-history-body h3:first-child{margin-top:14px}.footer{margin-top:28px;padding-top:12px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:20px}
 dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);padding:0;width:min(720px,calc(100vw - 32px));max-height:85dvh;box-shadow:0 18px 60px oklch(0.2 0.02 265/.25)}dialog::backdrop{background:oklch(0.18 0.02 265/.5)}.dialog-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--line)}.dialog-head h2{font-size:17px}.dialog-body{padding:16px;overflow:auto;max-height:65dvh}.dialog-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;padding:12px 16px;border-top:1px solid var(--line)}.watch-row{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding:7px 0}.add-grid{display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:12px}.search-results{margin-top:8px}.search-result{width:100%;display:flex;justify-content:space-between;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:10px 4px}.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.auto-setting{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end;margin-top:12px}.pool-scan{padding:10px 0 14px;margin-bottom:12px;border-bottom:1px solid var(--line)}.pool-scan p{font-size:12px;color:var(--muted);margin-bottom:8px}.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,10px);background:var(--ink);color:var(--p-paper);padding:10px 16px;border-radius:6px;z-index:60;opacity:0;pointer-events:none;transition:opacity .18s ease-out,transform .18s ease-out;max-width:calc(100vw - 32px);font-size:13px}.toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-width:1180px){.col-data{display:none}.filter-grid{grid-template-columns:minmax(170px,1.5fr) repeat(3,1fr)}.filter-grid #sortMode,.filter-grid #pinFilterBtn{grid-row:2}.detail{grid-template-columns:1fr 1fr}.detail>div:last-child{grid-column:1/-1}.intraday-checks{grid-template-columns:repeat(3,minmax(0,1fr))}}
@@ -33,7 +33,7 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 <body>
 <header class="mast">
 <div class="mast-main">
-<div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h1>Quant <span class="num">v11.2</span></h1><p>客观信号与盘中执行台</p></div></div>
+<div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><div><h1>Quant <span class="num">v12.0</span></h1><p>客观信号与盘中执行台</p></div></div>
 <div class="mast-actions"><button class="secondary" id="manageBtn" type="button">研究池与设置</button><button class="primary" id="refreshBtn" type="button">刷新信号</button></div>
 </div>
 <nav class="tabs" role="tablist" aria-label="研究视图">
@@ -62,7 +62,7 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 <section class="view" id="view-research" role="tabpanel">
 <div class="section-head"><div><h2>研究记录与诊断</h2><p>历史回放、双模型前向记录与数据诊断分层查看；不同模型的绩效不混合。</p></div></div>
 <details class="research-block" open><summary><span><b>探索性历史回放</b><small>当前加载池研究，不是样本外证明</small></span></summary><div class="research-content"><div class="notice">只使用已加载日K：同根K线止损优先，跳空按开盘可成交价估计，A股一字跌停不假定止损成交；右删失与退出受限不计入已结算绩效。当前池存在选择与幸存者偏差。</div><div class="research-controls"><div class="field"><label for="holdingDays">最大持有交易日</label><input id="holdingDays" type="number" min="3" max="30" value="10"></div><div class="field"><label for="feeBps">往返费用假设（bps）</label><input id="feeBps" type="number" min="0" max="200" value="15"></div><div class="field"><label for="slippageBps">单边滑点假设（bps）</label><input id="slippageBps" type="number" min="0" max="200" value="10"></div><button class="primary" id="replayBtn" type="button">回放已加载标的</button><button class="ghost" id="exportReplayBtn" type="button" disabled>导出完整回放</button></div><div id="replayOutput"><div class="empty"><strong>尚未运行回放</strong>先完成信号加载，再用同一套内核回放。修改成本假设只影响本次研究结果。</div></div></div></details>
-<details class="research-block"><summary><span><b>双模型前向观察</b><small>盘中首次触发与开盘模型分开登记、分开结算</small></span></summary><div class="research-content"><section class="journal-section"><h3>盘中执行 · 独立前向</h3><p>只有首次五门通过才保存公开行情快照；不含账户与实际成交。没有分钟级历史数据时不伪造盘中历史回放。</p><div class="research-controls"><button class="ghost" id="exportIntradayBtn" type="button">导出盘中触发记录</button><button class="ghost danger" id="clearIntradayBtn" type="button">清空盘中记录与样本</button></div><div id="intradayOutput"></div></section><section class="journal-section"><h3>开盘模型 · 上线后前向</h3><p>不可变快照按版本与参数簇隔离；严格纯前向和全部观察样本分列。记录仅存当前浏览器，可导出备份。</p><div class="research-controls"><button class="ghost" id="exportForwardBtn" type="button">导出前向记录</button><button class="ghost danger" id="clearForwardBtn" type="button">清空前向记录</button></div><div id="forwardOutput"></div></section></div></details>
+<details class="research-block"><summary><span><b>双模型前向观察</b><small>盘中首次触发与开盘模型分开登记、分开结算</small></span></summary><div class="research-content"><section class="journal-section"><h3>盘中执行 · 独立前向</h3><p>只有首次五门通过才保存公开行情快照；不含账户与实际成交。没有分钟级历史数据时不伪造盘中历史回放。</p><div class="research-controls"><button class="ghost" id="exportIntradayBtn" type="button">导出盘中触发记录</button><button class="ghost danger" id="clearIntradayBtn" type="button">清空盘中记录与样本</button></div><div id="intradayOutput"></div></section><section class="journal-section"><h3>开盘模型 · 上线后前向</h3><p>不可变快照按策略版本与参数簇隔离；页面展示升级不重置策略簇。严格纯前向和分组观察样本分列，原始跨版本档案保留。记录仅存当前浏览器，可导出备份。</p><div class="research-controls"><button class="ghost" id="exportForwardBtn" type="button">导出前向记录</button><button class="ghost danger" id="clearForwardBtn" type="button">清空前向记录</button></div><div id="forwardOutput"></div></section></div></details>
 <details class="research-block" id="view-diagnostics"><summary><span><b>数据与内核诊断</b><small>来源、日期仲裁、复权、缓存、自测与运行日志</small></span></summary><div class="research-content"><div class="diag-grid"><div><section class="diag-section"><h3>覆盖与来源</h3><div id="sourceStats"></div></section><section class="diag-section" style="margin-top:20px"><h3>内核自测</h3><div id="selfTests"></div></section></div><section class="diag-section"><h3>运行日志</h3><div class="log" id="eventLog" aria-live="polite"></div><p class="small muted" style="margin-top:8px">日志仅保留在当前页面会话，不包含账户、持仓或私人数据。</p></section></div></div></details>
 </section>
 <section class="view method" id="view-method" role="tabpanel">
@@ -73,19 +73,20 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 <h3>交易几何</h3><p>入场区、止损与目标由触发时的结构锚点固定，不随当前价格移动。净赔率计入费用与双边滑点假设；1.5 是研究门槛，不是正期望的数学证明。目标与止损同时展示百分比和 ATR 距离；ATR 空间提示不是新增门槛，压力近时应降级或放弃，而非拉远目标。止损是计划价，不保证跳空或涨跌停时成交。</p>
 <div class="formula">净赔率 = 目标净收益 ÷ 止损净损失<br>S = 0.60 × Q + 0.40 × E（只作同通道启发式基线）</div>
 <h3>硬门槛</h3><p>数据不足或陈旧、通道未成立、结构失效、几何非法、净赔率不足、流动性不合格、疑似涨停不可成交，均不能被高分抵消。实际开盘与盘中入场另检查止损距离：低于0.5 ATR或高于2.5 ATR均拒绝执行，不移动结构止损。价格离开入场区只改变执行状态，不允许追价；环境状态单列，不乘入 Q/E/S。</p>
-<h3>双执行模型与当日生命周期</h3><p>开盘研究模型继续按实际开盘价检查，突破1次、超跌2次，用于和既有历史回放保持可比。盘中执行模型独立运行：盘前不生成隔夜挂单；连续竞价时，报价不得超过180秒，突破须在有效期内，超跌还须先测试入场区下沿后收复；至少2次连续区内有效报价，间隔45～600秒且未走弱，同时当日量能节奏达到20日全日节奏基准的0.8倍。上述是 Intraday v1 的待验证初始参数，不是已证明最优规则。开盘窗口耗尽不自动否决盘中模型，结构失效则两者都否决。盘中首次五门通过只记录一次，订单口径仅当日有效，收盘未触发自动作废。</p><h3>成交后研究口径</h3><p>T+1／3／5／10 均指入场后的对应交易日。策略实际固定期限在提前退出后锁定实际净R；反事实路径假设不退出，只用于研究止损后收复与目标后继续上涨。MFE／MAE 由日K高低价估计，同日先后不可知；首次触及日均以T+0为入场日。历史末端不足持有期的TIMEOUT属于右删失，不得当作已完成交易。</p><h3>前向证据与版本簇</h3><p>严格纯前向同时要求 recordOrigin=PRE_ENTRY、savedAt 存在、dataAsOf=triggerDate，并在同一版本与交易模型参数簇内按经济信号去重。扫描数量不属于交易模型参数。不同版本不混合计算绩效；全量档案只用于审计和导出。</p><h3>高周期压力</h3><p>只使用触发日前已经完成的周线和月线摆动高点，当前未完成周/月不参与。若最近高周期压力位于原第一目标之前，则将第一目标收缩到该压力并重算净赔率；日线是否触发不由高周期压力反向改写。</p><h3>验证边界</h3><p>页面内回放是当前加载池上的探索性研究，不含完整历史股票池、退市样本、滚动样本外、净化隔离和多重试验校正；也未建立组合级并发持仓、资金占用或权益曲线。停牌缺口与逐笔流动性无法由日K完整还原，一字跌停只是保守成交约束，不等于完整市场冲击模型。样本少于30笔显示“样本不足”；达到30笔也不自动等于稳定规律。回放与 v10.2 起新建前向记录覆盖原信号有效期内的回区开盘；旧前向记录仍按原单次口径结算，不混写。</p>
+<h3>双执行模型与当日生命周期</h3><p>开盘研究模型继续按实际开盘价检查，突破1次、超跌2次，用于和既有历史回放保持可比。盘中执行模型独立运行：盘前不生成隔夜挂单；连续竞价时，报价不得超过180秒，突破须在有效期内，超跌还须先测试入场区下沿后收复；至少2次连续区内有效报价，间隔45～600秒且未走弱，同时当日量能节奏达到20日全日节奏基准的0.8倍。上述是 Intraday v1 的待验证初始参数，不是已证明最优规则。开盘窗口耗尽不自动否决盘中模型，结构失效则两者都否决。盘中首次五门通过只记录一次，订单口径仅当日有效，收盘未触发自动作废。</p><h3>成交后研究口径</h3><p>T+1／3／5／10 均指入场后的对应交易日。策略实际固定期限在提前退出后锁定实际净R；反事实路径假设不退出，只用于研究止损后收复与目标后继续上涨。MFE／MAE 由日K高低价估计，同日先后不可知；首次触及日均以T+0为入场日。历史末端不足持有期的TIMEOUT属于右删失，不得当作已完成交易。</p><h3>前向证据与版本簇</h3><p>严格纯前向同时要求 recordOrigin=PRE_ENTRY、savedAt 存在、dataAsOf=triggerDate，并在同一策略版本与交易模型参数簇内按经济信号去重。扫描数量不属于交易模型参数；页面展示升级不重置策略簇，旧档案缺少策略版本时按 legacy:页面版本隔离。不同策略版本不混合计算绩效；全量跨版本档案只用于审计和导出。</p><h3>高周期压力</h3><p>只使用触发日前已经完成的周线和月线摆动高点，当前未完成周/月不参与。若最近高周期压力位于原第一目标之前，则将第一目标收缩到该压力并重算净赔率；日线是否触发不由高周期压力反向改写。</p><h3>验证边界</h3><p>页面内回放是当前加载池上的探索性研究，不含完整历史股票池、退市样本、滚动样本外、净化隔离和多重试验校正；也未建立组合级并发持仓、资金占用或权益曲线。停牌缺口与逐笔流动性无法由日K完整还原，一字跌停只是保守成交约束，不等于完整市场冲击模型。样本少于30笔显示“样本不足”；达到30笔也不自动等于稳定规律。回放与 v10.2 起新建前向记录覆盖原信号有效期内的回区开盘；旧前向记录仍按原单次口径结算，不混写。</p>
 <h3>交易日一致性</h3><p>参考基准先并行核验多源完成日K与报价交易日，采用可佐证的最新完成日；多源冲突无法裁决或市场级陈旧时，整市场停止生成信号。个股最近完成日K必须与该基准一致，不一致时继续降级数据源，仍不一致则列为数据异常。缓存同样接受交易日复核，不以旧基准反向锁死新数据。</p><details class="version-history"><summary><span><b>历史版本与变更审计</b><small>v11.1 及以前，保留完整记录</small></span></summary><div class="version-history-body"><h3>v11.1 正式版 · 2026-10-28</h3><ol><li>未入场旧信号在现价越过冻结目标或击穿止损后自动归档，退出默认信号台；模型已入场记录继续执行风险监控，历史与回放数据保留。</li><li>几何非法或净赔率非正值时统一显示“—”；现价破止损改明示“已破止损”，不再丢失方向或显示无意义0.00∶1。</li><li>开盘与盘中实际入场新增止损距离检查：不足0.5 ATR或超过2.5 ATR均拒绝执行；不移动超跌结构止损，不修改三通道锚点。</li><li>新增整个冻结入场区最优净赔率预筛；先天无法达到1.5∶1的信号默认退出主列表，可在“预筛剔除”中单独核查。</li><li>新增“盘中突破观察·明日候选预告”，以当前报价试算既有突破条件，展示收盘价格、全日量能、收盘位置与下一交易日预估几何；不提前生成信号或前向样本。</li><li>趋势回踩仍为影子通道；未新增压力收复通道，未放宽净赔率、入场区、连续确认或追价限制。</li></ol><h3>v11.0 正式版 · 2026-10-28</h3><ol><li>体系级拆分开盘研究模型与盘中执行模型，消除“窗口耗尽仍提示买入”和“盘中回区永不形成买点”的口径冲突；结构失效仍为共同否决项。</li><li>盘前只形成预案，不生成隔夜挂单；盘中按数据、结构、确认、交易几何、可成交五门执行，预案仅当日有效，未触发收盘作废。</li><li>新增真实报价样本链：报价时间未推进不算新样本；至少2次连续区内确认、报价新鲜度、日内量能节奏、冻结净赔率和涨停可成交性共同把关。</li><li>突破检查持续保持在突破区且未走弱；超跌要求日内测试入场区下沿后收复，避免把下跌过程直接当反弹买点。趋势回踩继续只做影子研究。</li><li>首次五门通过自动保存不可变触发快照，包括公开报价、确认证据、触发Q／E、盘中E、冻结几何、参数指纹与版本；同一经济计划不重复建档。</li><li>新增独立 Intraday v1 前向结算与汇总，按首次触发报价模拟入场并计成本；与开盘前向及历史回放完全分离。没有分钟级历史数据时不伪造盘中历史绩效。</li><li>盘中结算不利用入场日完整日K倒推触发后的退出或MFE／MAE，统一从下一完成日K开始；保留右删失、跌停不可退出与样本不足边界。</li><li>主表新增五门状态、逐项证据、触发留痕和仅当日有效提示；默认筛选与排序可优先查看盘中通过项，新增独立导出和清空功能。</li><li>69项内核自测通过，另有前向口径审计；自测只验证程序不变量，不证明盘中策略收益。</li></ol><h3>v10.6 正式版 · 2026-10-28</h3><ol><li>修复参考基准被首个旧数据源锁死：基准同时核验多源完成日K与报价交易日，选择可佐证的最新完成日；无法裁决或市场级陈旧时停止生成信号。页头拆分有效覆盖与日期新鲜，诊断保留各源日期。</li><li>修复触发日盘后误用当天开盘：只有报价交易日严格晚于触发日才可进入开盘窗口，区内不再误入场、区外不再误失效。</li><li>回放与实时规则对齐：杠杆／反向ETF直接排除；超跌与突破同日新触发记为冲突，不再独立双入场；冲突与排除数量进入回放诊断。</li><li>趋势回踩按本次审计结论降为影子通道：保留历史回放与研究展示，不生成开盘或盘中操作候选；这是明确记录的策略范围调整，不是参数放宽。</li><li>修正超跌持续破低仍显示“阶段②准备”的语义，改为结构未修复、等待重新筑底。</li><li>新增独立盘中执行助手：盘中仅轻量刷新报价，按冻结入场区、止损、目标和现价净赔率给出人工评估提示；止损、目标、日期异常和陈旧报价优先。非盘中不伪装实时，无日线预案不因上涨创造信号。</li><li>盘中提示不回写日线Q、通道触发、模型入场或历史回放；盘中入场路径尚未回测，所有提示均为研究参考，不读取账户、不代表实际持仓。</li><li>60项内核自测通过，新增基准日期仲裁、同日盘后、影子通道、回放排除、盘中状态与报价新鲜度回归。</li></ol><h3>v10.5 正式版 · 2026-10-27</h3><ol><li>Q／E 子项改为纯数字表，删除评分柱状条；净赔率统一显示为“数值∶1”，并补充实际价位说明。</li><li>新增主表与详情双层操作结论：明确等待开盘、区外不追、只观察、放弃及模型已入场非新买点，状态不再代替动作。</li><li>止损、目标与压力同时显示价格、距现价百分比和 ATR 距离；目标不足 1 倍 ATR 仅提示空间偏窄，不自动拉远目标或改变硬门槛。</li><li>手机端保留操作结论、净赔率及止损目标，不再隐藏关键交易信息。</li><li>前向记录冻结触发时 Q／E／S、dataAsOf、模型参数与几何指纹；全部可执行通道均建档并标记主／非主候选，不再只记录主候选。扫描数量与交易模型参数分离。</li><li>模型实际入场后另冻结 E_entry／S_entry；待结算状态细分等待首次开盘、等待下次开盘、开盘数据待确认、模型持仓、触发日K缺失与标的移出研究池，并给出下一检查口径。</li><li>严格前向同时校验 PRE_ENTRY、savedAt 与 dataAsOf=triggerDate，并按版本和交易模型参数簇隔离；补录及证据不足档案只进入观察样本。</li><li>新增 T+1／3／5／10 实际净收益与净R、胜率、平均／中位净R、PF、MFE／MAE、首次触及日、每日实际与反事实路径；完整回放导出包含逐笔路径。</li><li>新增固定期限分通道表、失效原因矩阵、未成交主原因漏斗、退出后反事实观察与按标的聚类Bootstrap区间；这些只形成研究假设，不自动调权或改止损。</li><li>修复历史末端不足持有期被提前结算的问题；右删失与一字跌停退出受限不计入已结算绩效，但保留已可观察的固定期限数据。</li><li>44 项自测通过；三通道、Q/E 权重、目标压力公式与净赔率门槛未改。组合级资金占用、滚动样本外验收和单变量影子实验仍未实施。</li></ol><h3>v10.4 正式版 · 2026-10-27</h3><ol><li>状态机接入真实开盘生命周期：按触发日、完成日K和当日可核验开盘价计算已用／剩余窗口，不再仅凭信号年龄或盘中现价分类。</li><li>撤回v10.3与开盘-only模型冲突的“盘中当前候选”：首次未检查为开盘预案，失败后为等待下次开盘，开盘合格为模型待结算，窗口耗尽或结构失效即退出。</li><li>实时状态与历史回放共用同一开盘门槛；开盘是否合格只使用冻结几何和实际开盘价，现价净赔率不再反向改写已入场或已失效状态。</li><li>页头、筛选和详情同步显示首次预案／等待开盘／模型已入场及每次开盘检查结果；缺少当日开盘价时显式报窗口待确认。</li><li>34项内核自测通过；三通道参数、Q/E权重、净赔率门槛、流动性和回放交易口径未改变，Score v0仍未验证。</li></ol><h3>v10.3 正式版 · 2026-10-27</h3><ol><li>修复状态机把非连续竞价时段一刀切为“次日预案”：价格位置与交易时段独立判定，区外信号始终保持“等待入场”，区内信号按盘中、午间、盘前、盘后分别标注。</li><li>午间区内信号改为“当前候选·午后复核”；盘前与盘后预案分别明确“今日开盘”与“下一交易日”，汇总和筛选统一为“开盘预案”。</li><li>详情展示每个信号自身的执行说明，并修复“暂不可成交”状态被旧状态文案覆盖的问题；三通道、Q/E/S、净赔率、流动性和回放口径均未改变。</li><li>31项内核自测通过，新增午间、盘前、盘后及区内／区外组合回归；自测只验证程序不变量，不证明策略收益。</li></ol><h3>v10.2 正式版 · 2026-10-27</h3><ol><li>新增预期交易日双层门禁：数据源与内核均核对个股和基准末日，陈旧源继续降级，旧缓存不得生成信号；同时修复非强制刷新命中缓存时返回结构嵌套的问题。</li><li>历史回放与新建前向记录按原有效期尝试入场：突破1次、超跌／回踩最多2次；等待期收盘破位取消。旧前向快照不改写，仍按原单次口径。</li><li>主表补充拒绝／降级原因，市场宽度增加近5日分布，加载增加预计剩余时间，诊断增加基准日期、缓存年龄与降级记录。</li><li>27项内核自测通过；三通道参数、Q/E权重、净赔率、流动性与入场区门槛均未放宽，Score v0仍未验证。</li></ol><h3>v10.1 正式版 · 2026-10-27</h3><ol><li>吸纳v10.0-rc.1至rc.4的三通道、固定交易几何、高周期压力、条件预案、数据诊断与回放修复；23项内核自测通过。</li><li>明确验证边界：实时条件预案可在信号有效期内等待回区；历史回放与前向观察只对首次触发后的下一交易日开盘尝试一次，不代表后续回区预案的绩效。</li><li>继续显式保留复权口径与公开数据源警告，不以静默降级或隐藏失败换取表面覆盖率；Score v0仍未验证，不构成收益承诺。</li></ol><h3>v10.0-rc.4 候选版本记录 · 2026-10-27</h3><ol><li>修复非交易时段状态分类：通过硬门槛的区外信号进入“次日预案·等回踩／等收回”，不再被误排除出次日预案；盘中区外仍等待。</li><li>状态修复不放宽三通道、净赔率、流动性、结构失效或入场区约束；次日开盘区外仍不成交。</li><li>修复回放只在信号日检查赔率的问题：次日区内开盘也重算成本后净赔率，不足则跳过；新增3项状态与成交门槛自测。</li></ol><h3>v10.0-rc.3 候选版本记录 · 2026-10-27</h3><ol><li>融合复权口径元数据、数据警告、交易所本地时间与Q/E/S分桶诊断；保留后台Worker回放，取消时不输出不完整汇总。</li><li>K线连续性与异常跳变校验前移到各数据源及缓存验收，质量失败继续降级；全A主备列表统一纳入北交所，修复bj研究池持久化。</li><li>新增已完成周线/月线摆动压力：只在触发时约束第一目标并重算成本后净赔率，不改变日线触发条件；回放使用同一口径。</li><li>新增名称搜索、钉住筛选、市场宽度、空闲自动刷新、完整回放导出及本机前向信号快照；均不读取账户或持仓。</li></ol><h3>v10.0-rc.2 版本记录 · 2026-10-27</h3><ol><li>修复回放反复重算历史指标导致的长阻塞：指标序列每只标的只计算一次，回放移至独立工作线程，支持进度显示与取消。</li><li>增加美股参考环境、纳指数据时点与美股市场筛选；A股和美股环境仍只展示、不扣分。</li><li>修复A股16:00后误删当日完成日K；北交所普通股票涨跌幅修正为30%，并允许bj代码加入研究池。</li><li>新增增量特征一致性、A股16点后和北交所规则回归自测；修复不改变三通道参数、Q/E权重与回放交易口径。</li></ol><h3>v10.0-rc.1 版本记录 · 2026-10-26</h3><ol><li>废除通用技术总分，建立超跌、回踩、突破独立状态机与 Q/E 评分。</li><li>修复触发后几何漂移：触发日冻结ATR、锚点、入场区和目标，当前价只更新执行状态。</li><li>修复A股午休误用未完成K线；新增交易时段迁移后自动复核信号。</li><li>超跌评分改用事件日Z值，企稳证据必须在触发日前完成。</li><li>腾讯K线恢复web.ifzq主端点、proxy仅作镜像兜底；美股指数基准适配新浪.IXIC/.INX/.DJI口径；全A列表增加新浪备用源。</li><li>回放纳入流动性、涨停不可成交、Q/E/S和统一持有期；撤除会驻留全部历史特征的缓存，避免浏览器内存崩溃。</li><li>单文件、无后端、无登录、无自动交易；仅研究池与界面设置保存在当前浏览器。</li></ol>
-</div></details><h3>v11.2 正式版 · 2026-10-28</h3><ol><li>首屏改为“交易环境 → 盘中状态 → 执行候选”，主信号表前移；明日候选与通道观察合并到次级展开区。</li><li>五个顶层页签合并为三个：信号台、研究与诊断、方法与版本；回放、双模型前向记录和数据诊断分层保留。</li><li>市场状态压缩为四格，摘要合并为四项；日期新鲜度并入数据状态，不再单独重复占格。</li><li>主表把状态与操作结论合并，Q／E 合并，入场区与止损目标合并；展开详情不再重复操作结论，五门证据保留。</li><li>自动刷新并入模型设置，全A深扫并入研究池；历史版本默认折叠，版本审计记录不删除。</li><li>移动端卡片布局只作用于信号与预告列表，回放和前向研究表保留表头与表格结构。</li><li>仅调整信息架构与展示，不修改三通道、Q／E／S、五门、净赔率、止损、前向记录或结算逻辑。</li></ol></section>
-<footer class="footer"><span>Quant v11.2 · Score v0 / Intraday v1 · 数据与结论均需在决策前复核</span><span>公开行情研究工具，不构成收益承诺</span></footer>
+</div></details><h3>v12.0 正式版 · 2026-10-28</h3><ol><li>页面版本与策略模型版本拆分：当前开盘策略为 OPENING_DAILY_V1；纯展示升级不重置前向策略簇，旧档案缺少策略版本时按 legacy:页面版本隔离。</li><li>当前经济信号的身份键改用策略版本，避免同一信号因页面升级重复建档；原始跨版本档案继续保留，不合并、不删除。</li><li>全部观察样本默认按“标的＋通道＋触发日”折叠成一组，展开可审计各版本 Q/E/S、保存时间和登记证据；500条一般档案上限不再裁掉未结算或严格前向记录。</li><li>新增当前队列前向捕获链：可登记、已登记、严格事前、补录与未登记分列，并显示严格样本到入场、未成交、结算的状态链。</li><li>回放新增分通道聚类 Bootstrap 区间、T+10−T+5同信号配对差、Top1／Top5盈利贡献及剔除后平均R；不把单调性或点估计当作稳定性证明。</li><li>未成交漏斗默认展开并在标题显示总数；总数与明细不一致时显式报警，不用空白暗示原因。</li><li>趋势回踩仍为影子通道；三通道、Q/E/S、净赔率、进出场参数、盘中五门和结算规则均未修改。</li></ol><h3>v11.2 正式版 · 2026-10-28</h3><ol><li>首屏改为“交易环境 → 盘中状态 → 执行候选”，主信号表前移；明日候选与通道观察合并到次级展开区。</li><li>五个顶层页签合并为三个：信号台、研究与诊断、方法与版本；回放、双模型前向记录和数据诊断分层保留。</li><li>市场状态压缩为四格，摘要合并为四项；日期新鲜度并入数据状态，不再单独重复占格。</li><li>主表把状态与操作结论合并，Q／E 合并，入场区与止损目标合并；展开详情不再重复操作结论，五门证据保留。</li><li>自动刷新并入模型设置，全A深扫并入研究池；历史版本默认折叠，版本审计记录不删除。</li><li>移动端卡片布局只作用于信号与预告列表，回放和前向研究表保留表头与表格结构。</li><li>仅调整信息架构与展示，不修改三通道、Q／E／S、五门、净赔率、止损、前向记录或结算逻辑。</li></ol></section>
+<footer class="footer"><span>Quant v12.0 · Score v0 / Opening Daily v1 / Intraday v1 · 数据与结论均需在决策前复核</span><span>公开行情研究工具，不构成收益承诺</span></footer>
 </main>
 <dialog id="watchDialog" aria-labelledby="watchTitle"><div class="dialog-head"><h2 id="watchTitle">研究池与扫描</h2><button class="ghost" data-close="watchDialog" type="button">关闭</button></div><div class="dialog-body"><div class="pool-scan"><p>全A深扫会替换当前结果集；研究池清单不变。扫描数量上限在模型设置中调整。</p><button class="ghost" id="scanBtn" type="button">全A初筛深扫</button></div><div class="add-grid"><input id="addSymbol" type="search" placeholder="名称 / 代码：茅台、600519、bj920001、usNVDA" aria-label="添加代码"><button class="primary" id="addBtn" type="button">校验并添加</button></div><div id="searchResults" class="search-results"></div><p class="small muted" style="margin:12px 0">研究池仅保存在此浏览器；清除浏览器数据会丢失。默认池用于跨行业参考，与任何账户持仓无关。</p><div id="watchList"></div></div><div class="dialog-actions"><button class="ghost" id="settingsBtn" type="button">模型设置</button><button class="ghost" id="exportBtn" type="button">导出研究池</button><button class="ghost" id="importBtn" type="button">导入</button><input id="importFile" class="hidden" type="file" accept="application/json,.json"><button class="ghost danger" id="resetBtn" type="button">恢复默认</button></div></dialog>
 <dialog id="settingsDialog" aria-labelledby="settingsTitle"><div class="dialog-head"><h2 id="settingsTitle">客观模型设置</h2><button class="ghost" data-close="settingsDialog" type="button">关闭</button></div><div class="dialog-body"><div class="settings-grid"><div class="field"><label for="setMinRR">正常候选最低净赔率</label><input id="setMinRR" type="number" min="1" max="5" step="0.1" value="1.5"></div><div class="field"><label for="setDeepLimit">全A深扫数量上限</label><select id="setDeepLimit"><option>30</option><option selected>60</option><option>120</option></select></div><div class="field"><label for="setMinAmountA">A股20日均成交额门槛（万元）</label><input id="setMinAmountA" type="number" min="0" step="1000" value="5000"></div><div class="field"><label for="setMinAmountUS">美股20日均成交额门槛（万美元）</label><input id="setMinAmountUS" type="number" min="0" step="100" value="500"></div></div><div class="auto-setting"><div class="field"><label for="setAutoMinutes">自动刷新间隔</label><select id="setAutoMinutes"><option value="1">1分钟</option><option value="5" selected>5分钟</option><option value="10">10分钟</option></select></div><button class="ghost" id="autoBtn" type="button" aria-pressed="false">自动：关</button></div><p class="small muted" style="margin-top:14px">设置只改变客观研究口径，不代表任何账户纪律。自动刷新只在页面可见且空闲时运行；回放期间跳过。修改后重新刷新信号。</p></div><div class="dialog-actions"><button class="primary" id="saveSettings" type="button">保存设置</button></div></dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script id="quantCoreSource">
-/* Quant v11.2 objective signal and intraday execution core. No DOM, storage, network or account rules. */
+/* Quant v12.0 objective signal and intraday execution core. No DOM, storage, network or account rules. */
 const QuantCore = (() => {
   "use strict";
-  const VERSION = "v11.2";
+  const VERSION = "v12.0",
+      STRATEGY_VERSION = "OPENING_DAILY_V1";
   const DEFAULTS = Object.freeze({
     minBars: 80,
     minAmountA: 5e7,
@@ -1897,7 +1898,7 @@ const QuantCore = (() => {
       win.push(s.winRate);
       if (Number.isFinite(s.profitFactor)) pf.push(s.profitFactor);
     }
-    const interval = (a) => [percentile(a, 0.025), percentile(a, 0.975)];
+    const interval = (a) => a.length ? [percentile(a, 0.025), percentile(a, 0.975)] : null;
     return {
       clusters: clusters.length,
       iterations,
@@ -2003,6 +2004,69 @@ const QuantCore = (() => {
       pct: totals[x.channel] ? x.count / totals[x.channel] * 100 : null,
     })).sort((a, b) => a.channel.localeCompare(b.channel) || b.count - a.count);
   }
+  function clusterMeanInterval(rows, valueOf, iterations = 400) {
+    const groups = new Map();
+    for (const row of rows) {
+      const value = valueOf(row);
+      if (!Number.isFinite(value)) continue;
+      const key = row.code || row.name || "unknown";
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(value);
+    }
+    const clusters = [...groups.values()];
+    if (!clusters.length) return { clusters: 0, iterations: 0, mean: null };
+    let seed = 0x51f15e;
+    const random = () => {
+        seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+        return seed / 4294967296;
+      },
+      samples = [];
+    for (let i = 0; i < iterations; i++) {
+      const values = [];
+      for (let j = 0; j < clusters.length; j++) {
+        const picked = clusters[Math.floor(random() * clusters.length)];
+        values.push(...picked);
+      }
+      samples.push(mean(values));
+    }
+    return { clusters: clusters.length, iterations, mean: [percentile(samples, 0.025), percentile(samples, 0.975)] };
+  }
+  function tailConcentrationOne(trades) {
+    const closed = trades.filter(settledTrade),
+      ordered = closed.slice().sort((a, b) => b.R - a.R),
+      grossProfit = sum(ordered.filter((t) => t.R > 0).map((t) => t.R)),
+      share = (n) => grossProfit > 0 ? sum(ordered.slice(0, n).filter((t) => t.R > 0).map((t) => t.R)) / grossProfit * 100 : null,
+      without = (n) => ordered.length > n ? mean(ordered.slice(n).map((t) => t.R)) : null;
+    return {
+      count: closed.length,
+      top1Share: share(1),
+      top5Share: share(5),
+      avgRWithoutTop1: without(1),
+      avgRWithoutTop5: without(5),
+    };
+  }
+  function tailConcentrationDiagnostics(trades) {
+    return [{ channel: "all" }, ...Object.keys(CHANNELS).map((channel) => ({ channel }))].map((x) => ({
+      ...x,
+      ...tailConcentrationOne(x.channel === "all" ? trades : trades.filter((t) => t.channel === x.channel)),
+    }));
+  }
+  function pairedHorizonDiagnostics(trades) {
+    return Object.keys(CHANNELS).map((channel) => {
+      const rows = trades.filter((t) => {
+        const a = t.fixedHorizon && t.fixedHorizon[5], b = t.fixedHorizon && t.fixedHorizon[10];
+        return t.channel === channel && a && b && a.available && b.available && Number.isFinite(a.netR) && Number.isFinite(b.netR);
+      }).map((t) => ({ code: t.code, name: t.name, delta: t.fixedHorizon[10].netR - t.fixedHorizon[5].netR }));
+      return {
+        channel,
+        count: rows.length,
+        avgDelta: mean(rows.map((x) => x.delta)),
+        medianDelta: median(rows.map((x) => x.delta)),
+        improvedPct: rows.length ? rows.filter((x) => x.delta > 0).length / rows.length * 100 : null,
+        confidence: clusterMeanInterval(rows, (x) => x.delta),
+      };
+    });
+  }
   function replaySummary(items) {
     const trades = items.flatMap((x) => x.trades || []),
       closedTrades = trades.filter(settledTrade),
@@ -2046,6 +2110,8 @@ const QuantCore = (() => {
       counterfactual: counterfactualDiagnostics(closedTrades),
       failureMatrix: failureMatrix(closedTrades),
       unfilledFunnel: unfilledFunnel(skipped),
+      tailConcentration: tailConcentrationDiagnostics(trades),
+      pairedHorizon: pairedHorizonDiagnostics(trades),
       executionBlocked: trades.filter((t) => t.sawBlockedExit).length,
     };
   }
@@ -2806,10 +2872,27 @@ const QuantCore = (() => {
         current = executionRiskCheck({ stop: 9.9, atrValue: 1 }, 10, DEFAULTS);
       return legacy.pass && legacy.unavailable && !current.pass && current.reason.includes("止损过近");
     });
+    test("期限诊断使用同信号配对且聚类区间可计算", () => {
+      const make = (code, a, b) => ({ code, channel: "oversold", fixedHorizon: {
+        5: { available: true, netR: a }, 10: { available: true, netR: b },
+      } }),
+        rows = pairedHorizonDiagnostics([make("a", 0.1, 0.4), make("b", 0.2, 0.2)])[0];
+      return rows.count === 2 && Math.abs(rows.avgDelta - 0.15) < 1e-9 && rows.confidence.clusters === 2;
+    });
+    test("尾部集中度与剔除最大盈利后平均R", () => {
+      const trades = [5, 1, -1, -1].map((R) => ({ R, status: "CLOSED", settled: true, channel: "oversold" })),
+        all = tailConcentrationDiagnostics(trades)[0];
+      return all.count === 4 && Math.abs(all.top1Share - 500 / 6) < 1e-9 && Math.abs(all.avgRWithoutTop1 + 1 / 3) < 1e-9;
+    });
+    test("PF无有限样本时聚类区间保持不可计算", () => {
+      const ci = clusterConfidence([{ code: "a", R: 1, status: "CLOSED", settled: true }]);
+      return ci.profitFactor === null;
+    });
     return tests;
   }
   return {
     VERSION,
+    STRATEGY_VERSION,
     DEFAULTS,
     CHANNELS,
     clamp,
@@ -4473,9 +4556,21 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
   }
   function scoreDiagnosticsHTML(diags) {
     const cell = (b) => b ? `<b class="num">${fmt(b.avgR, 3)}</b><br><span class="small muted">${b.count}笔 / 胜率${fmt(b.winRate, 1)}%</span><br><span class="small muted">${fmt(b.range[0], 1)}～${fmt(b.range[1], 1)}</span>` : "—";
-    return `<h3 style="margin:20px 0 8px">Q/E/S 分桶单调性（探索性）</h3><p class="small muted">每通道每分数至少30笔才分桶；只检查当前已加载池，不用于调参或证明收益。</p><table><thead><tr><th>通道 / 分数</th><th>低分组</th><th>中分组</th><th>高分组</th><th>高-低平均R</th><th>判定</th></tr></thead><tbody>${diags.map((d) => `<tr><td>${esc(C.CHANNELS[d.channel].name)} / ${d.metric}</td><td>${cell(d.buckets[0])}</td><td>${cell(d.buckets[1])}</td><td>${cell(d.buckets[2])}</td><td class="num">${fmt(d.spread, 3)}</td><td><span class="badge ${d.monotonic ? "current" : d.monotonic === false ? "error" : "wait"}">${esc(d.status)}</span></td></tr>`).join("")}</tbody></table>`;
+    return `<h3 style="margin:20px 0 8px">Q/E/S 分桶单调性（探索性）</h3><p class="small muted">每通道每分数至少30笔才分桶；只检查当前已加载池，不用于调参或证明收益。单调不等于稳定，非单调也不等于无效，须结合高低组差、区间与样本外结果。</p><table><thead><tr><th>通道 / 分数</th><th>低分组</th><th>中分组</th><th>高分组</th><th>高-低平均R</th><th>判定</th></tr></thead><tbody>${diags.map((d) => `<tr><td>${esc(C.CHANNELS[d.channel].name)} / ${d.metric}</td><td>${cell(d.buckets[0])}</td><td>${cell(d.buckets[1])}</td><td>${cell(d.buckets[2])}</td><td class="num">${fmt(d.spread, 3)}</td><td><span class="badge ${d.monotonic ? "current" : d.monotonic === false ? "error" : "wait"}">${esc(d.status)}</span></td></tr>`).join("")}</tbody></table>`;
   }
   const pfText = (x) => x === Infinity ? "∞" : fmt(x, 2);
+  const researchInterval = (a, suffix = "") => a && a.length === 2 && a.every(Number.isFinite) ? `${fmt(a[0], 3)}～${fmt(a[1], 3)}${suffix}` : "—";
+  const researchR = (x) => Number.isFinite(x) ? fmt(x, 3) : "—";
+  function channelConfidenceHTML(rows) {
+    return `<details class="research-detail"><summary>分通道聚类 Bootstrap 区间</summary><p class="small muted">按标的聚类重抽样；只描述当前池的不确定性，不消除选择、幸存者或共同市场 regime 偏差。</p><table><thead><tr><th>通道</th><th>已结算</th><th>平均R 95%区间</th><th>PF 95%区间</th><th>标的簇 / 次数</th></tr></thead><tbody>${rows.map((x) => { const ci = x.confidence || {}; return `<tr><td>${esc(C.CHANNELS[x.channel].name)}</td><td class="num">${x.count}</td><td class="num">${researchInterval(ci.avgR)}</td><td class="num">${researchInterval(ci.profitFactor)}</td><td class="num">${ci.clusters || 0} / ${ci.iterations || 0}</td></tr>`; }).join("")}</tbody></table></details>`;
+  }
+  function pairedHorizonHTML(rows) {
+    return `<details class="research-detail"><summary>T+10 − T+5 · 同信号配对差</summary><p class="small muted">只比较同一笔且两个期限均可观察的交易；提前退出仍锁定实际净R。配对减少样本构成差异，但不构成样本外证明。</p><table><thead><tr><th>通道</th><th>配对样本</th><th>平均ΔR</th><th>中位ΔR</th><th>T+10更优</th><th>平均ΔR 95%区间</th></tr></thead><tbody>${rows.map((x) => `<tr><td>${esc(C.CHANNELS[x.channel].name)}</td><td class="num">${x.count}</td><td class="num">${researchR(x.avgDelta)}</td><td class="num">${researchR(x.medianDelta)}</td><td class="num">${researchPctText(x.improvedPct)}</td><td class="num">${researchInterval(x.confidence && x.confidence.mean)}</td></tr>`).join("")}</tbody></table></details>`;
+  }
+  function tailConcentrationHTML(rows) {
+    const name = (x) => x.channel === "all" ? "全部通道" : C.CHANNELS[x.channel].name;
+    return `<details class="research-detail"><summary>尾部盈利集中度与剔除敏感性</summary><p class="small muted">Top 盈利贡献以总正收益为分母；剔除 Top1／Top5 后重算平均R。用于识别少数大盈利驱动，不是新的交易规则。</p><table><thead><tr><th>通道</th><th>样本</th><th>Top1盈利贡献</th><th>Top5盈利贡献</th><th>去Top1平均R</th><th>去Top5平均R</th></tr></thead><tbody>${rows.map((x) => `<tr><td>${esc(name(x))}</td><td class="num">${x.count}</td><td class="num">${researchPctText(x.top1Share)}</td><td class="num">${researchPctText(x.top5Share)}</td><td class="num">${researchR(x.avgRWithoutTop1)}</td><td class="num">${researchR(x.avgRWithoutTop5)}</td></tr>`).join("")}</tbody></table></details>`;
+  }
   const researchPctText = (x, d = 1) => Number.isFinite(x) ? `${fmt(x, d)}%` : "—";
   function fixedHorizonHTML(rows) {
     return `<details class="research-detail" open><summary>固定期限分通道对比 · 策略实际口径</summary><p class="small muted">T+N 指入场后的第N个交易日，以该日收盘观察；若此前已按策略退出，则锁定实际退出净R，不再假装持仓。平均收益率为成本后口径；N不足显示0，不用最后一根K线冒充到期。</p><table><thead><tr><th>通道 / 期限</th><th>样本N</th><th>胜率</th><th>平均净R</th><th>中位净R</th><th>平均净收益</th><th>PF</th></tr></thead><tbody>${rows.map((x) => `<tr><td>${esc(C.CHANNELS[x.channel].name)} / T+${x.horizon}</td><td class="num">${x.count}</td><td class="num">${researchPctText(x.winRate)}</td><td class="num">${fmt(x.avgR, 3)}</td><td class="num">${fmt(x.medianR, 3)}</td><td class="num">${researchPctText(x.avgReturnPct, 2)}</td><td class="num">${pfText(x.profitFactor)}</td></tr>`).join("")}</tbody></table></details>`;
@@ -4486,8 +4581,9 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
   function failureMatrixHTML(rows) {
     return `<details class="research-detail"><summary>失效原因矩阵 · 研究标签而非因果结论</summary><table><thead><tr><th>标签 / 定义</th><th>合计 / 平均R</th><th>超跌</th><th>回踩</th><th>突破</th></tr></thead><tbody>${rows.map((x) => `<tr><td>${esc(x.label)}<div class="small muted">${esc(x.definition)}</div></td><td class="num">${x.count} / ${fmt(x.avgR, 3)}</td>${Object.keys(C.CHANNELS).map((c) => `<td class="num">${x.channels[c].count} / ${fmt(x.channels[c].avgR, 3)}</td>`).join("")}</tr>`).join("")}</tbody></table></details>`;
   }
-  function unfilledFunnelHTML(rows) {
-    return `<details class="research-detail"><summary>未成交原因漏斗 · 每个信号只记一个主原因</summary><p class="small muted">结构失效优先作为终因；其余取最后一次开盘检查原因。百分比以该通道未成交信号为分母，多次开盘尝试不会重复计数。</p>${rows.length ? `<table><thead><tr><th>通道</th><th>主原因</th><th>信号数</th><th>通道内占比</th></tr></thead><tbody>${rows.map((x) => `<tr><td>${esc(C.CHANNELS[x.channel].name)}</td><td>${esc(x.label)}</td><td class="num">${x.count}</td><td class="num">${researchPctText(x.pct)}</td></tr>`).join("")}</tbody></table>` : '<div class="empty">本次没有已结束的未成交信号。</div>'}</details>`;
+  function unfilledFunnelHTML(rows, skippedCount = 0) {
+    const mismatch = skippedCount > 0 && !rows.length;
+    return `<details class="research-detail" open><summary>未成交原因漏斗 · ${skippedCount} 个信号 · 每个只记一个主原因</summary><p class="small muted">结构失效优先作为终因；其余取最后一次开盘检查原因。百分比以该通道未成交信号为分母，多次开盘尝试不会重复计数。</p>${mismatch ? `<div class="notice">未成交总数为 ${skippedCount}，但归因明细为空；请导出完整回放核查数据链路，不能据此推断原因。</div>` : ""}${rows.length ? `<table><thead><tr><th>通道</th><th>主原因</th><th>信号数</th><th>通道内占比</th></tr></thead><tbody>${rows.map((x) => `<tr><td>${esc(C.CHANNELS[x.channel].name)}</td><td>${esc(x.label)}</td><td class="num">${x.count}</td><td class="num">${researchPctText(x.pct)}</td></tr>`).join("")}</tbody></table>` : '<div class="empty">本次没有已结束的未成交信号。</div>'}</details>`;
   }
   function tradePathHTML(t) {
     const cf = t.counterfactualPath || [],
@@ -4506,7 +4602,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       ci = s.overall.confidence || {},
       interval = (a, suffix = "") => a && a.length ? `${fmt(a[0], 3)}～${fmt(a[1], 3)}${suffix}` : "—";
     $("replayOutput").innerHTML =
-      `<div class="result-grid">${metric("已结算样本", s.overall.count)}${metric("胜率", researchPctText(s.overall.winRate))}${metric("平均净R", fmt(s.overall.avgR, 3))}${metric("Profit factor", pfText(s.overall.profitFactor))}</div><div class="notice ${s.overall.count < 30 ? "" : "info"}">${esc(s.overall.status)}。当前池回放不是样本外验证；右删失／不可退出待结算 ${s.pendingCount || 0} 笔，未成交信号 ${s.skippedCount} 个，最大持有 ${cfg.holdingDays} 根日K。</div><p class="small ${s.diagnostics && s.diagnostics.conflictCount ? "warn" : "muted"}">一致性处理：杠杆／反向ETF排除 ${(s.diagnostics && s.diagnostics.excludedSymbols.length) || 0} 只；超跌／突破同日冲突 ${(s.diagnostics && s.diagnostics.conflictCount) || 0} 次，冲突日不生成独立双入场。趋势回踩仅作影子研究。</p><p class="small muted">按标的聚类Bootstrap（${ci.iterations || 0}次，${ci.clusters || 0}个标的簇）95%区间：平均R ${interval(ci.avgR)}；胜率 ${interval(ci.winRate, "%")}；PF ${interval(ci.profitFactor)}。区间只反映当前簇重抽样，不消除幸存者偏差、选择偏差或多重试验。</p><table><thead><tr><th>通道</th><th>结算 / 待结算 / 跳过</th><th>胜率</th><th>平均R</th><th>中位R</th><th>PF</th><th>目标 / 止损</th></tr></thead><tbody>${s.channels.map((x) => `<tr><td>${esc(C.CHANNELS[x.channel].name)}</td><td class="num">${x.count} / ${x.pending} / ${x.skipped}</td><td class="num">${researchPctText(x.winRate)}</td><td class="num">${fmt(x.avgR, 3)}</td><td class="num">${fmt(x.medianR, 3)}</td><td class="num">${pfText(x.profitFactor)}</td><td class="num">${x.targets} / ${x.stops}</td></tr>`).join("")}</tbody></table>${fixedHorizonHTML(s.fixedHorizon || [])}${counterfactualHTML(s.counterfactual || [])}${failureMatrixHTML(s.failureMatrix || [])}${unfilledFunnelHTML(s.unfilledFunnel || [])}${scoreDiagnosticsHTML(s.scoreDiagnostics || [])}<h3 style="margin:20px 0 8px">最近回放明细（最多20笔，可展开路径）</h3><table><thead><tr><th>标的</th><th>通道</th><th>信号 / 入场 / 退出</th><th>退出原因 / 路径</th><th>净R / T+5</th></tr></thead><tbody>${s.trades.slice(-20).reverse().map((t) => `<tr><td>${esc(t.name)}<div class="stock-code">${esc(t.code)}</div></td><td>${esc(C.CHANNELS[t.channel].name)}</td><td class="num small">${esc(t.signalDate)}<br>${esc(t.entryDate)} → ${esc(t.exitDate)}${t.settled === false ? '<br><span class="warn">待结算·不计总绩效</span>' : ""}</td><td>${esc(t.reason)}${tradePathHTML(t)}</td><td class="num ${t.R > 0 ? "up" : "down"}">${fmt(t.R, 3)}<div class="small muted">T+5 ${t.fixedHorizon && t.fixedHorizon[5] && t.fixedHorizon[5].available ? fmt(t.fixedHorizon[5].netR, 3) : "—"}</div></td></tr>`).join("")}</tbody></table>`;
+      `<div class="result-grid">${metric("已结算样本", s.overall.count)}${metric("胜率", researchPctText(s.overall.winRate))}${metric("平均净R", fmt(s.overall.avgR, 3))}${metric("Profit factor", pfText(s.overall.profitFactor))}</div><div class="notice ${s.overall.count < 30 ? "" : "info"}">${esc(s.overall.status)}。当前池回放不是样本外验证；右删失／不可退出待结算 ${s.pendingCount || 0} 笔，未成交信号 ${s.skippedCount} 个，最大持有 ${cfg.holdingDays} 根日K。</div><p class="small ${s.diagnostics && s.diagnostics.conflictCount ? "warn" : "muted"}">一致性处理：杠杆／反向ETF排除 ${(s.diagnostics && s.diagnostics.excludedSymbols.length) || 0} 只；超跌／突破同日冲突 ${(s.diagnostics && s.diagnostics.conflictCount) || 0} 次，冲突日不生成独立双入场。趋势回踩仅作影子研究。</p><p class="small muted">按标的聚类Bootstrap（${ci.iterations || 0}次，${ci.clusters || 0}个标的簇）95%区间：平均R ${interval(ci.avgR)}；胜率 ${interval(ci.winRate, "%")}；PF ${interval(ci.profitFactor)}。区间只反映当前簇重抽样，不消除幸存者偏差、选择偏差或多重试验。</p><table><thead><tr><th>通道</th><th>结算 / 待结算 / 跳过</th><th>胜率</th><th>平均R</th><th>中位R</th><th>PF</th><th>目标 / 止损</th></tr></thead><tbody>${s.channels.map((x) => `<tr><td>${esc(C.CHANNELS[x.channel].name)}</td><td class="num">${x.count} / ${x.pending} / ${x.skipped}</td><td class="num">${researchPctText(x.winRate)}</td><td class="num">${fmt(x.avgR, 3)}</td><td class="num">${fmt(x.medianR, 3)}</td><td class="num">${pfText(x.profitFactor)}</td><td class="num">${x.targets} / ${x.stops}</td></tr>`).join("")}</tbody></table>${channelConfidenceHTML(s.channels || [])}${pairedHorizonHTML(s.pairedHorizon || [])}${fixedHorizonHTML(s.fixedHorizon || [])}${counterfactualHTML(s.counterfactual || [])}${failureMatrixHTML(s.failureMatrix || [])}${tailConcentrationHTML(s.tailConcentration || [])}${unfilledFunnelHTML(s.unfilledFunnel || [], s.skippedCount || 0)}${scoreDiagnosticsHTML(s.scoreDiagnostics || [])}<h3 style="margin:20px 0 8px">最近回放明细（最多20笔，可展开路径）</h3><table><thead><tr><th>标的</th><th>通道</th><th>信号 / 入场 / 退出</th><th>退出原因 / 路径</th><th>净R / T+5</th></tr></thead><tbody>${s.trades.slice(-20).reverse().map((t) => `<tr><td>${esc(t.name)}<div class="stock-code">${esc(t.code)}</div></td><td>${esc(C.CHANNELS[t.channel].name)}</td><td class="num small">${esc(t.signalDate)}<br>${esc(t.entryDate)} → ${esc(t.exitDate)}${t.settled === false ? '<br><span class="warn">待结算·不计总绩效</span>' : ""}</td><td>${esc(t.reason)}${tradePathHTML(t)}</td><td class="num ${t.R > 0 ? "up" : "down"}">${fmt(t.R, 3)}<div class="small muted">T+5 ${t.fixedHorizon && t.fixedHorizon[5] && t.fixedHorizon[5].available ? fmt(t.fixedHorizon[5].netR, 3) : "—"}</div></td></tr>`).join("")}</tbody></table>`;
   }
   function intradayEntries() {
     return state.intradayRecords;
@@ -4600,8 +4696,16 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     const j = safeGet(FORWARD_KEY);
     return j && Array.isArray(j.entries) ? j.entries : [];
   }
+  function capForwardEntries(entries, max = 500) {
+    if (entries.length <= max) return entries;
+    const protectedEntries = entries.filter((e) => !e.done || isStrictForward(e)),
+      protectedSet = new Set(protectedEntries),
+      ordinary = entries.filter((e) => !protectedSet.has(e)),
+      keep = new Set([...protectedEntries, ...ordinary.slice(0, Math.max(0, max - protectedEntries.length))]);
+    return entries.filter((e) => keep.has(e));
+  }
   function saveForward(entries) {
-    safeSet(FORWARD_KEY, { version: C.VERSION, entries: entries.slice(0, 500) });
+    safeSet(FORWARD_KEY, { version: C.VERSION, strategyVersion: C.STRATEGY_VERSION, entries: capForwardEntries(entries) });
   }
   function stableHash(value) {
     const text = JSON.stringify(value), x = String(text);
@@ -4615,11 +4719,19 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
   function signalKey(e) {
     return e.signalKey || [e.code, e.channel, e.triggerDate].join("|");
   }
+  function compareForwardArchives(a, b) {
+    const at = String(a.savedAt || ""), bt = String(b.savedAt || "");
+    if (at && bt && at !== bt) return at.localeCompare(bt);
+    if (at !== bt) return at ? -1 : 1;
+    const version = String(a.version || "").localeCompare(String(b.version || ""), undefined, { numeric: true });
+    if (version) return version;
+    return String(a.recordId || a.id || "").localeCompare(String(b.recordId || b.id || ""));
+  }
   function uniqueForward(entries) {
     const chosen = new Map();
     for (const e of entries) {
       const key = signalKey(e), old = chosen.get(key);
-      if (!old || String(e.savedAt || "").localeCompare(String(old.savedAt || "")) < 0) chosen.set(key, e);
+      if (!old || compareForwardArchives(e, old) < 0) chosen.set(key, e);
     }
     return [...chosen.values()];
   }
@@ -4633,11 +4745,14 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
   function modelParamsHash(e) {
     return e.modelParamsHash || stableHash({ config: canonicalModelConfig(e.config) });
   }
+  function strategyCohortVersion(e) {
+    return e.strategyVersion || `legacy:${e.version || "unknown"}`;
+  }
   function cohortKey(e) {
-    return `${e.version || "legacy"}|${modelParamsHash(e)}`;
+    return `${strategyCohortVersion(e)}|${modelParamsHash(e)}`;
   }
   function currentCohortKey() {
-    return `${C.VERSION}|${stableHash({ config: canonicalModelConfig(state.config) })}`;
+    return `${C.STRATEGY_VERSION}|${stableHash({ config: canonicalModelConfig(state.config) })}`;
   }
   function isStrictForward(e) {
     return e.recordOrigin === "PRE_ENTRY" && !!e.savedAt && !!e.dataAsOf && e.dataAsOf === e.triggerDate;
@@ -4782,7 +4897,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     }
     const ids = new Set(entries.map((e) => e.id)),
       identities = new Set(entries.map((e) => [
-        e.version,
+        strategyCohortVersion(e),
         signalKey(e),
         modelParamsHash(e),
         e.entryWindowDays || 1,
@@ -4795,11 +4910,11 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
           entryWindowDays = Math.max(1, C.CHANNELS[p.channel].maxAge - 1),
           key = [r.code, p.channel, p.triggerDate].join("|"),
           fingerprint = stableHash({ config: cfg, entryWindowDays, geometry: p.triggerGeometry }),
-          id = [C.VERSION, key, fingerprint].join("|"),
+          id = [C.STRATEGY_VERSION, key, fingerprint].join("|"),
           modelHash = stableHash({ config: canonicalModelConfig(cfg) }),
           geometryHash = stableHash(p.triggerGeometry),
           isPrimary = !!r.primary && r.primary.channel === p.channel,
-          identity = [C.VERSION, key, modelHash, entryWindowDays, geometryHash].join("|");
+          identity = [C.STRATEGY_VERSION, key, modelHash, entryWindowDays, geometryHash].join("|");
         if (ids.has(id) || identities.has(identity)) continue;
         ids.add(id);
         identities.add(identity);
@@ -4809,7 +4924,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
           recordOrigin = p.entryDate ? "POST_ENTRY" : p.age === 0 ? "PRE_ENTRY" : "WINDOW_BACKFILL",
           entryScore = entryScoreFromRow(r, p, cfg);
         entries.unshift({
-          id, recordId: id, signalKey: key, version: C.VERSION, savedAt: nowIso, done: false,
+          id, recordId: id, signalKey: key, version: C.VERSION, strategyVersion: C.STRATEGY_VERSION, savedAt: nowIso, done: false,
           modelParamsHash: modelHash, geometryHash,
           recordOrigin,
           isPrimary,
@@ -4881,18 +4996,101 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       return result.status === "CLOSED" && !!snap && snap.modelEntryPrice === open &&
         Number.isFinite(snap.E_entry) && snap.S_entry === round1(e.Q * 0.6 + snap.E_entry * 0.4);
     });
+    test("页面升级不重置策略簇但策略升级会隔离", () => {
+      const a = { version: "v12.0", strategyVersion: C.STRATEGY_VERSION, config: { minRR: 1.5 } },
+        b = { ...a, version: "v12.1" }, changed = { ...a, strategyVersion: "OPENING_DAILY_V2" };
+      return cohortKey(a) === cohortKey(b) && cohortKey(a) !== cohortKey(changed) &&
+        strategyCohortVersion({ version: "v11.2" }) === "legacy:v11.2";
+    });
+    test("无保存时间的重复旧档案按数值版本确定性去重", () => {
+      const newer = { code: "a", channel: "breakout", triggerDate: "2026-01-01", version: "v10.10" },
+        older = { ...newer, version: "v10.6" };
+      return uniqueForward([newer, older])[0].version === "v10.6";
+    });
+    test("档案上限保护未结算与严格前向记录", () => {
+      const rows = Array.from({ length: 510 }, (_, i) => ({ id: `old-${i}`, done: true, recordOrigin: "POST_ENTRY" }));
+      rows.push({ id: "pending", done: false }, { id: "strict", done: true, recordOrigin: "PRE_ENTRY", savedAt: "2026-01-01", dataAsOf: "2026-01-01", triggerDate: "2026-01-01" });
+      const capped = capForwardEntries(rows);
+      return capped.length === 500 && capped.some((e) => e.id === "pending") && capped.some((e) => e.id === "strict");
+    });
     return tests;
+  }
+  function forwardIdentity(e) {
+    return [
+      strategyCohortVersion(e), signalKey(e), modelParamsHash(e), e.entryWindowDays || 1,
+      e.geometryHash || (e.signal && e.signal.geometry ? stableHash(e.signal.geometry) : "missing"),
+    ].join("|");
+  }
+  function currentCaptureCandidates() {
+    const cfg = { ...state.config }, out = [], seen = new Set();
+    for (const r of state.rows.values()) {
+      for (const p of r.channels || []) {
+        if (!p || p.stage !== 3 || !p.triggerGeometry || !["NEXT_SESSION_PLAN", "WAIT_ENTRY", "MODEL_ENTERED"].includes(p.status)) continue;
+        const key = [r.code, p.channel, p.triggerDate].join("|"),
+          entryWindowDays = Math.max(1, C.CHANNELS[p.channel].maxAge - 1),
+          modelHash = stableHash({ config: canonicalModelConfig(cfg) }),
+          geometryHash = stableHash(p.triggerGeometry),
+          identity = [C.STRATEGY_VERSION, key, modelHash, entryWindowDays, geometryHash].join("|");
+        if (seen.has(identity)) continue;
+        seen.add(identity);
+        out.push({ key, identity, code: r.code, name: r.name, channel: p.channel, triggerDate: p.triggerDate });
+      }
+    }
+    return out;
+  }
+  function forwardCaptureHTML(all, strictRows) {
+    const candidates = currentCaptureCandidates(),
+      identities = new Map();
+    for (const e of all) {
+      const key = forwardIdentity(e);
+      if (!identities.has(key)) identities.set(key, []);
+      identities.get(key).push(e);
+    }
+    const registered = candidates.filter((c) => identities.has(c.identity)),
+      strict = candidates.filter((c) => (identities.get(c.identity) || []).some(isStrictForward)),
+      post = candidates.filter((c) => {
+        const rows = identities.get(c.identity) || [];
+        return rows.length && !rows.some(isStrictForward) && rows.some((e) => e.recordOrigin === "POST_ENTRY");
+      }),
+      windowBackfill = candidates.filter((c) => {
+        const rows = identities.get(c.identity) || [];
+        return rows.length && !rows.some(isStrictForward) && !rows.some((e) => e.recordOrigin === "POST_ENTRY") && rows.some((e) => e.recordOrigin === "WINDOW_BACKFILL");
+      }),
+      unproven = all.filter((e) => e.recordOrigin === "PRE_ENTRY" && !isStrictForward(e)).length,
+      entered = strictRows.filter((e) => e.modelEntryDate || e.pendingStage === "模型持仓中" || (e.done && e.result && e.result.status === "CLOSED")).length,
+      metric = (label, value) => `<div><span class="small muted">${label}</span><b>${value}</b></div>`;
+    return `<details class="research-detail" open><summary>前向捕获链 · 当前加载队列</summary><div class="result-grid">${metric("可登记经济信号", candidates.length)}${metric("已登记", registered.length)}${metric("严格事前登记", strict.length)}${metric("未登记 / 证据不足", `${candidates.length - registered.length} / ${registered.length - strict.length}`)}</div><p class="small muted">捕获范围仅是当前仍处有效窗口的信号，不是历史全量。当前队列：入场后补录 ${post.length}、窗口中补录 ${windowBackfill.length}、未登记 ${candidates.length - registered.length}；全部档案另有 ${unproven} 条 PRE_ENTRY 证据不足。</p><p class="small muted">当前策略簇严格链：样本 ${strictRows.length} → 模型曾入场 ${entered} → 未成交 ${strictRows.filter((e) => e.done && e.result && e.result.status === "SKIP").length} → 已结算 ${strictRows.filter((e) => e.done && e.result && e.result.status === "CLOSED").length}；待结算 ${strictRows.filter((e) => !e.done).length}。静态页面只有打开并刷新时才能登记。</p></details>`;
+  }
+  function forwardGroups(all) {
+    const map = new Map();
+    for (const e of all) {
+      const key = signalKey(e);
+      if (!map.has(key)) map.set(key, []);
+      map.get(key).push(e);
+    }
+    return [...map.entries()].map(([key, entries]) => {
+      const archives = entries.slice().sort((a, b) => compareForwardArchives(b, a));
+      return { key, archives, representative: uniqueForward(entries)[0] };
+    }).sort((a, b) => String(b.representative.triggerDate || "").localeCompare(String(a.representative.triggerDate || "")) || a.key.localeCompare(b.key));
+  }
+  function forwardArchiveList(entries) {
+    return `<details class="forward-archives"><summary>${entries.length} 份版本档案</summary><ol class="small muted">${entries.map((e) => `<li>${esc(e.version || "legacy")} · ${esc(strategyCohortVersion(e))} · ${esc(originLabel(e))} · Q/E/S ${fmt(e.Q, 1)}/${fmt(e.E, 1)}/${fmt(e.S, 1)}<br>保存 ${esc(e.savedAt || "—")} · 登记日 ${esc(e.dataAsOf || "—")}</li>`).join("")}</ol></details>`;
+  }
+  function forwardObservationRow(group) {
+    const e = group.representative,
+      entryScoreText = (x) => Number.isFinite(x.E_entry) ? `${fmt(x.E_entry, 1)} / ${fmt(x.S_entry, 1)}` : "—";
+    return `<tr><td>${esc(e.name)}<div class="stock-code">${esc(e.code)}</div></td><td>${esc(C.CHANNELS[e.channel].name)}<div class="small muted">${esc(e.triggerDate)} · 代表档案 ${esc(e.version || "legacy")}</div>${forwardArchiveList(group.archives)}</td><td class="num small">${fmt(e.Q, 1)} / ${fmt(e.E, 1)} / ${fmt(e.S, 1)}</td><td class="num">${entryScoreText(e)}</td><td>${esc(originLabel(e))}<div class="small muted">${e.done ? esc(e.result.status === "SKIP" ? "未成交" : "已结算") : esc(e.pendingStage || "待结算")}</div>${!e.done && e.pendingDetail ? `<div class="small muted">${esc(e.pendingDetail)}</div>` : ""}</td><td class="num">${e.done ? (e.result.status === "CLOSED" ? fmt(e.result.R, 3) : "—") : "—"}<div class="small muted">${e.done ? esc(e.result.reason) : ""}</div>${e.done && e.result.status === "CLOSED" ? tradePathHTML(e.result) : ""}</td><td class="small muted">登记 ${esc(e.dataAsOf || "—")}<br>当前 ${esc(e.lastDataAsOf || e.dataAsOf || "—")}<br>${e.done ? `结算 ${esc((e.settledAt || "").slice(0, 10) || "—")}` : `下次 ${esc(e.nextCheckDate || "—")}`}</td></tr>`;
   }
   function renderForward() {
     const all = forwardEntries(),
       observation = summarizeForward(uniqueForward(all)),
       strictAll = all.filter(isStrictForward),
       currentKey = currentCohortKey(),
-      strict = summarizeForward(uniqueForward(strictAll.filter((e) => cohortKey(e) === currentKey))),
+      strictRows = uniqueForward(strictAll.filter((e) => cohortKey(e) === currentKey)),
+      strict = summarizeForward(strictRows),
       cohortMap = new Map(),
-      metric = (label, value) => `<div><span class="small muted">${label}</span><b>${value}</b></div>`,
-      entryScoreText = (e) => Number.isFinite(e.E_entry) ? `${fmt(e.E_entry, 1)} / ${fmt(e.S_entry, 1)}` : "—",
-      unproven = all.filter((e) => e.recordOrigin === "PRE_ENTRY" && !isStrictForward(e)).length;
+      groups = forwardGroups(all),
+      metric = (label, value) => `<div><span class="small muted">${label}</span><b>${value}</b></div>`;
     for (const e of strictAll) {
       const key = cohortKey(e);
       if (!cohortMap.has(key)) cohortMap.set(key, []);
@@ -4900,7 +5098,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     }
     const cohorts = [...cohortMap.entries()].map(([key, rows]) => ({ key, rows, summary: summarizeForward(uniqueForward(rows)) }))
       .sort((a, b) => (a.key === currentKey ? -1 : b.key === currentKey ? 1 : a.key.localeCompare(b.key)));
-    $("forwardOutput").innerHTML = `<h3 style="margin:16px 0 8px">当前内核 · 严格纯前向</h3><div class="result-grid">${metric("严格口径样本", strict.total)}${metric("已结算 / 未成交", `${strict.closed} / ${strict.skipped}`)}${metric("待结算", strict.pending)}${metric("平均净R", strict.avgR === null ? "—" : fmt(strict.avgR, 3))}</div><p class="small muted">当前参数簇 ${esc(currentKey)}。严格口径同时要求 PRE_ENTRY、savedAt 存在且 dataAsOf=triggerDate；缺少登记日证明的旧档案不计入。不同版本／参数簇不混合计算绩效。</p><details class="research-detail" ${cohorts.length > 1 ? "open" : ""}><summary>严格前向 · 分版本与参数簇</summary>${cohorts.length ? `<table><thead><tr><th>模型簇</th><th>去重样本</th><th>结算 / 未成交</th><th>待结算</th><th>平均净R</th></tr></thead><tbody>${cohorts.map((x) => `<tr><td class="small">${esc(x.key)}${x.key === currentKey ? ' <span class="badge current">当前</span>' : ""}</td><td class="num">${x.summary.total}</td><td class="num">${x.summary.closed} / ${x.summary.skipped}</td><td class="num">${x.summary.pending}</td><td class="num">${fmt(x.summary.avgR, 3)}</td></tr>`).join("")}</tbody></table>` : '<div class="empty">暂无符合严格口径的前向样本。</div>'}</details><h3 style="margin:16px 0 8px">全部观察样本 · 仅作核对</h3><div class="result-grid">${metric("经济信号去重", observation.total)}${metric("已结算 / 未成交", `${observation.closed} / ${observation.skipped}`)}${metric("待结算", observation.pending)}${metric("观察平均净R", observation.avgR === null ? "—" : fmt(observation.avgR, 3))}</div><p class="small muted">观察汇总按“标的＋通道＋触发日”取最早档案，可能混合版本，不能用于版本优劣或纯前向结论。窗口中／入场后补录保留可见；另有 ${unproven} 条 PRE_ENTRY 旧档案因缺少dataAsOf证明被排除严格统计。全部版本档案最多保留500条。</p>${all.length ? `<table><thead><tr><th>标的 / 通道</th><th>触发 / 版本 / 角色</th><th>触发时 Q/E/S</th><th>入场时 E/S</th><th>登记 / 状态</th><th>净R / 退出 / 路径</th><th>数据 / 下一检查</th></tr></thead><tbody>${all.slice(0, 30).map((e) => `<tr><td>${esc(e.name)}<div class="stock-code">${esc(e.code)}</div></td><td>${esc(C.CHANNELS[e.channel].name)}<div class="small muted">${esc(e.triggerDate)} · ${esc(e.version)} · ${e.isPrimary === false ? "非主候选" : "主候选／旧档"}</div></td><td class="num small">${fmt(e.Q, 1)} / ${fmt(e.E, 1)} / ${fmt(e.S, 1)}</td><td class="num small">${entryScoreText(e)}</td><td>${esc(originLabel(e))}<div class="small muted">${e.done ? esc(e.result.status === "SKIP" ? "未成交" : "已结算") : esc(e.pendingStage || "待结算")}</div>${!e.done && e.pendingDetail ? `<div class="small muted">${esc(e.pendingDetail)}</div>` : ""}</td><td class="num">${e.done ? (e.result.status === "CLOSED" ? fmt(e.result.R, 3) : "—") : "—"}<div class="small muted">${e.done ? esc(e.result.reason) : ""}</div>${e.done && e.result.status === "CLOSED" ? tradePathHTML(e.result) : ""}</td><td class="small muted">登记 ${esc(e.dataAsOf || "—")}<br>当前 ${esc(e.lastDataAsOf || e.dataAsOf || "—")}<br>${e.done ? `结算 ${esc((e.settledAt || "").slice(0, 10) || "—")}` : `下次 ${esc(e.nextCheckDate || "—")}`}</td></tr>`).join("")}</tbody></table>` : '<div class="empty">暂无前向记录；完成本机研究池刷新后自动建立。</div>'}`;
+    $("forwardOutput").innerHTML = `<h3 style="margin:16px 0 8px">当前策略内核 · 严格纯前向</h3><div class="result-grid">${metric("严格口径样本", strict.total)}${metric("已结算 / 未成交", `${strict.closed} / ${strict.skipped}`)}${metric("待结算", strict.pending)}${metric("平均净R", strict.avgR === null ? "—" : fmt(strict.avgR, 3))}</div>${strict.total === 0 ? '<div class="notice">当前策略簇没有严格前向样本，不能据此判断收益、执行优势或页面版本优劣。</div>' : ""}<p class="small muted">策略 ${esc(C.STRATEGY_VERSION)} · 页面 ${esc(C.VERSION)} · 参数簇 ${esc(currentKey)}。严格口径要求 PRE_ENTRY、savedAt 和 dataAsOf=triggerDate；页面展示升级不重置策略簇，旧档案缺少策略版本时按 legacy:页面版本隔离。</p>${forwardCaptureHTML(all, strictRows)}<details class="research-detail" ${cohorts.length > 1 ? "open" : ""}><summary>严格前向 · 分策略版本与参数簇</summary>${cohorts.length ? `<table><thead><tr><th>模型簇</th><th>去重样本</th><th>结算 / 未成交</th><th>待结算</th><th>平均净R</th></tr></thead><tbody>${cohorts.map((x) => `<tr><td class="small">${esc(x.key)}${x.key === currentKey ? ' <span class="badge current">当前</span>' : ""}</td><td class="num">${x.summary.total}</td><td class="num">${x.summary.closed} / ${x.summary.skipped}</td><td class="num">${x.summary.pending}</td><td class="num">${fmt(x.summary.avgR, 3)}</td></tr>`).join("")}</tbody></table>` : '<div class="empty">暂无符合严格口径的前向样本。</div>'}</details><h3 style="margin:16px 0 8px">全部观察样本 · 按经济信号分组</h3><div class="result-grid">${metric("经济信号去重", observation.total)}${metric("已结算 / 未成交", `${observation.closed} / ${observation.skipped}`)}${metric("待结算", observation.pending)}${metric("观察平均净R", observation.avgR === null ? "—" : fmt(observation.avgR, 3))}</div><p class="small muted">默认每个“标的＋通道＋触发日”一行，共 ${groups.length} 组、${all.length} 份原始档案；代表档案用于去重汇总，展开可审计各版本 Q/E/S 与登记证据，不删除跨版本记录。观察汇总可能混合旧策略，不用于版本优劣或纯前向结论。一般档案上限500条，未结算与严格前向记录不因上限删除。</p>${groups.length ? `<table><thead><tr><th>标的 / 通道</th><th>触发 / 版本档案</th><th>代表档案 Q/E/S</th><th>入场时 E/S</th><th>登记 / 状态</th><th>净R / 退出 / 路径</th><th>数据 / 下一检查</th></tr></thead><tbody>${groups.slice(0, 30).map(forwardObservationRow).join("")}</tbody></table>${groups.length > 30 ? '<p class="small muted">仅显示最近30组；完整原始档案请导出。</p>' : ""}` : '<div class="empty">暂无前向记录；完成本机研究池刷新后自动建立。</div>'}`;
   }
   function renderWatchList() {
     $("watchList").innerHTML = state.list
@@ -5156,7 +5354,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
         const j = JSON.parse(await file.text()),
           items = j.items || j;
         if (!validList(items) || !items.length)
-          throw new Error("文件不是有效的v10/v11研究池");
+          throw new Error("文件不是有效的v10/v11/v12研究池");
         state.list = items.map((x) => [x[0], x[1], x[2] ? 1 : 0]);
         const codes = new Set(state.list.map((x) => x[0]));
         state.pins = new Set((Array.isArray(j.pins) ? j.pins : []).filter((x) => codes.has(x)));
@@ -5211,7 +5409,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       renderIntradayJournal(); renderSignals(); toast("盘中触发档案与确认样本已清空");
     });
     $("exportForwardBtn").addEventListener("click", () => {
-      downloadJSON({ type: "objective-forward-journal", exportedAt: new Date().toISOString(), entries: forwardEntries() }, `quant_${C.VERSION}_开盘模型前向.json`);
+      downloadJSON({ type: "objective-forward-journal", strategyVersion: C.STRATEGY_VERSION, exportedAt: new Date().toISOString(), entries: forwardEntries() }, `quant_${C.VERSION}_开盘模型前向.json`);
     });
     $("clearForwardBtn").addEventListener("click", () => {
       if (!forwardEntries().length) return toast("当前没有前向记录");
@@ -5233,7 +5431,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
   tickClock();
   setInterval(tickClock, 30000);
   log(
-    "Quant v11.2 内核已加载：" +
+    "Quant v12.0 内核已加载：" +
       getSelfTests().filter((x) => x.pass).length +
       "/" +
       getSelfTests().length +
