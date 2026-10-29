@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Quant v12.4 客观信号与盘中执行台：策略版本独立、前向捕获链、分组审计与稳健性诊断。">
+<meta name="description" content="Quant v12.5 客观信号与盘中执行台：策略版本独立、前向捕获链、分组审计与稳健性诊断。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%2312141f'/%3E%3Cpath d='M8 21V11h8a5 5 0 0 1 0 10h-3v4H8zm5-7v4h3a2 2 0 0 0 0-4h-3z' fill='%23f6f6f4'/%3E%3C/svg%3E">
-<title>Quant v12.4 · 客观信号与盘中执行台</title>
+<title>Quant v12.5 · 客观信号与盘中执行台</title>
 <style>
 :root{
   --p-navy:oklch(0.21 0.025 265);--p-navy-2:oklch(0.27 0.035 265);--p-paper:oklch(0.982 0.003 95);--p-panel:oklch(0.996 0.002 95);--p-ink:oklch(0.235 0.022 265);--p-muted:oklch(0.47 0.022 265);--p-line:oklch(0.875 0.012 265);--p-soft:oklch(0.95 0.009 265);--p-teal:oklch(0.48 0.09 185);--p-teal-soft:oklch(0.93 0.035 185);--p-red:oklch(0.51 0.18 28);--p-red-soft:oklch(0.94 0.035 28);--p-green:oklch(0.46 0.11 155);--p-amber:oklch(0.49 0.11 75);--p-amber-soft:oklch(0.95 0.04 90);
@@ -42,7 +42,7 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 <body>
 <header class="mast">
 <div class="mast-main">
-<div class="brand"><div><h1>Quant <span class="num">v12.4</span></h1><p>客观信号与盘中执行台</p></div></div>
+<div class="brand"><div><h1>Quant <span class="num">v12.5</span></h1><p>客观信号与盘中执行台</p></div></div>
 <div class="mast-actions"><button class="secondary" id="manageBtn" type="button">研究池与设置</button><button class="primary" id="refreshBtn" type="button">刷新信号</button></div>
 </div>
 <nav class="tabs" role="tablist" aria-label="研究视图">
@@ -84,8 +84,16 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 <h3>硬门槛</h3><p>数据不足或陈旧、通道未成立、结构失效、几何非法、净赔率不足、流动性不合格、疑似涨停不可成交，均不能被高分抵消。实际开盘与盘中入场另检查止损距离：低于0.5 ATR或高于2.5 ATR均拒绝执行，不移动结构止损。价格离开入场区只改变执行状态，不允许追价；环境状态单列，不乘入 Q/E/S。</p>
 <h3>双执行模型与当日生命周期</h3><p>开盘研究模型继续按实际开盘价检查，突破1次、超跌2次，用于和既有历史回放保持可比。盘中执行模型独立运行：盘前不生成隔夜挂单；连续竞价时，报价不得超过180秒，突破须在有效期内，超跌还须先测试入场区下沿后收复；至少2次连续区内有效报价，间隔45～600秒且未走弱，同时当日量能节奏达到20日全日节奏基准的0.8倍。上述是 Intraday v1 的待验证初始参数，不是已证明最优规则。开盘窗口耗尽不自动否决盘中模型，结构失效则两者都否决。盘中首次五门通过只记录一次，订单口径仅当日有效，收盘未触发自动作废。</p><h3>成交后研究口径</h3><p>T+1／3／5／10 均指入场后的对应交易日。策略实际固定期限在提前退出后锁定实际净R；反事实路径假设不退出，只用于研究止损后收复与目标后继续上涨。MFE／MAE 由日K高低价估计，同日先后不可知；首次触及日均以T+0为入场日。历史末端不足持有期的TIMEOUT属于右删失，不得当作已完成交易。</p><h3>前向证据与版本簇</h3><p>严格纯前向同时要求 recordOrigin=PRE_ENTRY、savedAt 存在、dataAsOf=triggerDate，并在同一策略版本与交易模型参数簇内按经济信号去重。扫描数量不属于交易模型参数；页面展示升级不重置策略簇，旧档案缺少策略版本时按 legacy:页面版本隔离。不同策略版本不混合计算绩效；全量跨版本档案只用于审计和导出。</p><h3>高周期压力</h3><p>只使用触发日前已经完成的周线和月线摆动高点，当前未完成周/月不参与。若最近高周期压力位于原第一目标之前，则将第一目标收缩到该压力并重算净赔率；日线是否触发不由高周期压力反向改写。</p><h3>验证边界</h3><p>页面内回放是当前加载池上的探索性研究，不含完整历史股票池、退市样本、滚动样本外、净化隔离和多重试验校正；也未建立组合级并发持仓、资金占用或权益曲线。停牌缺口与逐笔流动性无法由日K完整还原，一字跌停只是保守成交约束，不等于完整市场冲击模型。样本少于30笔显示“样本不足”；达到30笔也不自动等于稳定规律。回放与 v10.2 起新建前向记录覆盖原信号有效期内的回区开盘；旧前向记录仍按原单次口径结算，不混写。</p>
 <h3>交易日一致性</h3><p>参考基准先并行核验多源完成日K与报价交易日，采用可佐证的最新完成日；多源冲突无法裁决或市场级陈旧时，整市场停止生成信号。个股最近完成日K必须与该基准一致，不一致时继续降级数据源，仍不一致则列为数据异常。缓存同样接受交易日复核，不以旧基准反向锁死新数据。</p><details class="version-history"><summary><span><b>历史版本与变更审计</b><small>v11.1 及以前，保留完整记录</small></span></summary><div class="version-history-body"><h3>v11.1 正式版 · 2026-10-28</h3><ol><li>未入场旧信号在现价越过冻结目标或击穿止损后自动归档，退出默认信号台；模型已入场记录继续执行风险监控，历史与回放数据保留。</li><li>几何非法或净赔率非正值时统一显示“—”；现价破止损改明示“已破止损”，不再丢失方向或显示无意义0.00∶1。</li><li>开盘与盘中实际入场新增止损距离检查：不足0.5 ATR或超过2.5 ATR均拒绝执行；不移动超跌结构止损，不修改三通道锚点。</li><li>新增整个冻结入场区最优净赔率预筛；先天无法达到1.5∶1的信号默认退出主列表，可在“预筛剔除”中单独核查。</li><li>新增“盘中突破观察·明日候选预告”，以当前报价试算既有突破条件，展示收盘价格、全日量能、收盘位置与下一交易日预估几何；不提前生成信号或前向样本。</li><li>趋势回踩仍为影子通道；未新增压力收复通道，未放宽净赔率、入场区、连续确认或追价限制。</li></ol><h3>v11.0 正式版 · 2026-10-28</h3><ol><li>体系级拆分开盘研究模型与盘中执行模型，消除“窗口耗尽仍提示买入”和“盘中回区永不形成买点”的口径冲突；结构失效仍为共同否决项。</li><li>盘前只形成预案，不生成隔夜挂单；盘中按数据、结构、确认、交易几何、可成交五门执行，预案仅当日有效，未触发收盘作废。</li><li>新增真实报价样本链：报价时间未推进不算新样本；至少2次连续区内确认、报价新鲜度、日内量能节奏、冻结净赔率和涨停可成交性共同把关。</li><li>突破检查持续保持在突破区且未走弱；超跌要求日内测试入场区下沿后收复，避免把下跌过程直接当反弹买点。趋势回踩继续只做影子研究。</li><li>首次五门通过自动保存不可变触发快照，包括公开报价、确认证据、触发Q／E、盘中E、冻结几何、参数指纹与版本；同一经济计划不重复建档。</li><li>新增独立 Intraday v1 前向结算与汇总，按首次触发报价模拟入场并计成本；与开盘前向及历史回放完全分离。没有分钟级历史数据时不伪造盘中历史绩效。</li><li>盘中结算不利用入场日完整日K倒推触发后的退出或MFE／MAE，统一从下一完成日K开始；保留右删失、跌停不可退出与样本不足边界。</li><li>主表新增五门状态、逐项证据、触发留痕和仅当日有效提示；默认筛选与排序可优先查看盘中通过项，新增独立导出和清空功能。</li><li>69项内核自测通过，另有前向口径审计；自测只验证程序不变量，不证明盘中策略收益。</li></ol><h3>v10.6 正式版 · 2026-10-28</h3><ol><li>修复参考基准被首个旧数据源锁死：基准同时核验多源完成日K与报价交易日，选择可佐证的最新完成日；无法裁决或市场级陈旧时停止生成信号。页头拆分有效覆盖与日期新鲜，诊断保留各源日期。</li><li>修复触发日盘后误用当天开盘：只有报价交易日严格晚于触发日才可进入开盘窗口，区内不再误入场、区外不再误失效。</li><li>回放与实时规则对齐：杠杆／反向ETF直接排除；超跌与突破同日新触发记为冲突，不再独立双入场；冲突与排除数量进入回放诊断。</li><li>趋势回踩按本次审计结论降为影子通道：保留历史回放与研究展示，不生成开盘或盘中操作候选；这是明确记录的策略范围调整，不是参数放宽。</li><li>修正超跌持续破低仍显示“阶段②准备”的语义，改为结构未修复、等待重新筑底。</li><li>新增独立盘中执行助手：盘中仅轻量刷新报价，按冻结入场区、止损、目标和现价净赔率给出人工评估提示；止损、目标、日期异常和陈旧报价优先。非盘中不伪装实时，无日线预案不因上涨创造信号。</li><li>盘中提示不回写日线Q、通道触发、模型入场或历史回放；盘中入场路径尚未回测，所有提示均为研究参考，不读取账户、不代表实际持仓。</li><li>60项内核自测通过，新增基准日期仲裁、同日盘后、影子通道、回放排除、盘中状态与报价新鲜度回归。</li></ol><h3>v10.5 正式版 · 2026-10-27</h3><ol><li>Q／E 子项改为纯数字表，删除评分柱状条；净赔率统一显示为“数值∶1”，并补充实际价位说明。</li><li>新增主表与详情双层操作结论：明确等待开盘、区外不追、只观察、放弃及模型已入场非新买点，状态不再代替动作。</li><li>止损、目标与压力同时显示价格、距现价百分比和 ATR 距离；目标不足 1 倍 ATR 仅提示空间偏窄，不自动拉远目标或改变硬门槛。</li><li>手机端保留操作结论、净赔率及止损目标，不再隐藏关键交易信息。</li><li>前向记录冻结触发时 Q／E／S、dataAsOf、模型参数与几何指纹；全部可执行通道均建档并标记主／非主候选，不再只记录主候选。扫描数量与交易模型参数分离。</li><li>模型实际入场后另冻结 E_entry／S_entry；待结算状态细分等待首次开盘、等待下次开盘、开盘数据待确认、模型持仓、触发日K缺失与标的移出研究池，并给出下一检查口径。</li><li>严格前向同时校验 PRE_ENTRY、savedAt 与 dataAsOf=triggerDate，并按版本和交易模型参数簇隔离；补录及证据不足档案只进入观察样本。</li><li>新增 T+1／3／5／10 实际净收益与净R、胜率、平均／中位净R、PF、MFE／MAE、首次触及日、每日实际与反事实路径；完整回放导出包含逐笔路径。</li><li>新增固定期限分通道表、失效原因矩阵、未成交主原因漏斗、退出后反事实观察与按标的聚类Bootstrap区间；这些只形成研究假设，不自动调权或改止损。</li><li>修复历史末端不足持有期被提前结算的问题；右删失与一字跌停退出受限不计入已结算绩效，但保留已可观察的固定期限数据。</li><li>44 项自测通过；三通道、Q/E 权重、目标压力公式与净赔率门槛未改。组合级资金占用、滚动样本外验收和单变量影子实验仍未实施。</li></ol><h3>v10.4 正式版 · 2026-10-27</h3><ol><li>状态机接入真实开盘生命周期：按触发日、完成日K和当日可核验开盘价计算已用／剩余窗口，不再仅凭信号年龄或盘中现价分类。</li><li>撤回v10.3与开盘-only模型冲突的“盘中当前候选”：首次未检查为开盘预案，失败后为等待下次开盘，开盘合格为模型待结算，窗口耗尽或结构失效即退出。</li><li>实时状态与历史回放共用同一开盘门槛；开盘是否合格只使用冻结几何和实际开盘价，现价净赔率不再反向改写已入场或已失效状态。</li><li>页头、筛选和详情同步显示首次预案／等待开盘／模型已入场及每次开盘检查结果；缺少当日开盘价时显式报窗口待确认。</li><li>34项内核自测通过；三通道参数、Q/E权重、净赔率门槛、流动性和回放交易口径未改变，Score v0仍未验证。</li></ol><h3>v10.3 正式版 · 2026-10-27</h3><ol><li>修复状态机把非连续竞价时段一刀切为“次日预案”：价格位置与交易时段独立判定，区外信号始终保持“等待入场”，区内信号按盘中、午间、盘前、盘后分别标注。</li><li>午间区内信号改为“当前候选·午后复核”；盘前与盘后预案分别明确“今日开盘”与“下一交易日”，汇总和筛选统一为“开盘预案”。</li><li>详情展示每个信号自身的执行说明，并修复“暂不可成交”状态被旧状态文案覆盖的问题；三通道、Q/E/S、净赔率、流动性和回放口径均未改变。</li><li>31项内核自测通过，新增午间、盘前、盘后及区内／区外组合回归；自测只验证程序不变量，不证明策略收益。</li></ol><h3>v10.2 正式版 · 2026-10-27</h3><ol><li>新增预期交易日双层门禁：数据源与内核均核对个股和基准末日，陈旧源继续降级，旧缓存不得生成信号；同时修复非强制刷新命中缓存时返回结构嵌套的问题。</li><li>历史回放与新建前向记录按原有效期尝试入场：突破1次、超跌／回踩最多2次；等待期收盘破位取消。旧前向快照不改写，仍按原单次口径。</li><li>主表补充拒绝／降级原因，市场宽度增加近5日分布，加载增加预计剩余时间，诊断增加基准日期、缓存年龄与降级记录。</li><li>27项内核自测通过；三通道参数、Q/E权重、净赔率、流动性与入场区门槛均未放宽，Score v0仍未验证。</li></ol><h3>v10.1 正式版 · 2026-10-27</h3><ol><li>吸纳v10.0-rc.1至rc.4的三通道、固定交易几何、高周期压力、条件预案、数据诊断与回放修复；23项内核自测通过。</li><li>明确验证边界：实时条件预案可在信号有效期内等待回区；历史回放与前向观察只对首次触发后的下一交易日开盘尝试一次，不代表后续回区预案的绩效。</li><li>继续显式保留复权口径与公开数据源警告，不以静默降级或隐藏失败换取表面覆盖率；Score v0仍未验证，不构成收益承诺。</li></ol><h3>v10.0-rc.4 候选版本记录 · 2026-10-27</h3><ol><li>修复非交易时段状态分类：通过硬门槛的区外信号进入“次日预案·等回踩／等收回”，不再被误排除出次日预案；盘中区外仍等待。</li><li>状态修复不放宽三通道、净赔率、流动性、结构失效或入场区约束；次日开盘区外仍不成交。</li><li>修复回放只在信号日检查赔率的问题：次日区内开盘也重算成本后净赔率，不足则跳过；新增3项状态与成交门槛自测。</li></ol><h3>v10.0-rc.3 候选版本记录 · 2026-10-27</h3><ol><li>融合复权口径元数据、数据警告、交易所本地时间与Q/E/S分桶诊断；保留后台Worker回放，取消时不输出不完整汇总。</li><li>K线连续性与异常跳变校验前移到各数据源及缓存验收，质量失败继续降级；全A主备列表统一纳入北交所，修复bj研究池持久化。</li><li>新增已完成周线/月线摆动压力：只在触发时约束第一目标并重算成本后净赔率，不改变日线触发条件；回放使用同一口径。</li><li>新增名称搜索、钉住筛选、市场宽度、空闲自动刷新、完整回放导出及本机前向信号快照；均不读取账户或持仓。</li></ol><h3>v10.0-rc.2 版本记录 · 2026-10-27</h3><ol><li>修复回放反复重算历史指标导致的长阻塞：指标序列每只标的只计算一次，回放移至独立工作线程，支持进度显示与取消。</li><li>增加美股参考环境、纳指数据时点与美股市场筛选；A股和美股环境仍只展示、不扣分。</li><li>修复A股16:00后误删当日完成日K；北交所普通股票涨跌幅修正为30%，并允许bj代码加入研究池。</li><li>新增增量特征一致性、A股16点后和北交所规则回归自测；修复不改变三通道参数、Q/E权重与回放交易口径。</li></ol><h3>v10.0-rc.1 版本记录 · 2026-10-26</h3><ol><li>废除通用技术总分，建立超跌、回踩、突破独立状态机与 Q/E 评分。</li><li>修复触发后几何漂移：触发日冻结ATR、锚点、入场区和目标，当前价只更新执行状态。</li><li>修复A股午休误用未完成K线；新增交易时段迁移后自动复核信号。</li><li>超跌评分改用事件日Z值，企稳证据必须在触发日前完成。</li><li>腾讯K线恢复web.ifzq主端点、proxy仅作镜像兜底；美股指数基准适配新浪.IXIC/.INX/.DJI口径；全A列表增加新浪备用源。</li><li>回放纳入流动性、涨停不可成交、Q/E/S和统一持有期；撤除会驻留全部历史特征的缓存，避免浏览器内存崩溃。</li><li>单文件、无后端、无登录、无自动交易；仅研究池与界面设置保存在当前浏览器。</li></ol>
-</div></details><h3>v12.4 展示修复 · 2026-10-28</h3><ol><li>修复“数据已加载但未形成正式信号”与“无数据”都显示为“—”的语义混淆：主表明确显示未触发、未形成评分、未形成赔率及无冻结几何。</li><li>无正式信号的操作结论明确标注“数据已加载”，页头覆盖率改为“成功加载”，章节说明补充“未触发不等于加载失败”。</li><li>删除主表操作结论后重复出现的状态徽章，保留状态原因、操作结论与盘中说明。</li><li>仅修改展示文案与重复元素，不改数据链、策略版本、三通道、Q/E/S、净赔率、止损、五门或前向结算。</li></ol><h3>v12.3 修复 · 2026-10-28</h3><ol><li>修复美股搜索结果被A股代码过滤器丢弃：支持腾讯 us~ticker.OQ/N/AM 与东财105/106/107市场代码，DRAM、科磊、KLAC可检索；新增本地别名兜底。</li><li>东财美股不再固定按纳斯达克查询，报价与日K会依次核验纳斯达克、纽交所和美国证券交易所；纳斯达克综合指数备用代码由NDX纠正为IXIC，避免切换到纳斯达克100。</li><li>修复腾讯美股成交额被额外乘1万的问题；A股仍按万元换算，美股直接保留美元口径，盘中量能节奏不再被放大。</li><li>新浪美股日K统一只保留最近320根，避免长历史个股占用过多内存并导致会话缓存超限；腾讯日K增加OQ/N/AM交易所后缀回退，并优先使用可跨域镜像端点。</li><li>支持usBRK-B一类带连字符代码规范化为内部点号格式；启动日志改用当前页面版本。</li><li>新增6项数据适配自测；策略版本、三通道、Q/E/S、净赔率、止损、五门和前向结算口径均未改变。</li></ol><h3>v12.2 修复 · 2026-10-28</h3><ol><li>修复 v12.1 引入的赔率门槛短句 TDZ 错误：净赔率行不再在初始化前引用 gate，信号台可正常渲染。</li><li>仅修复该呈现函数，不改策略版本、评分、交易几何或记录口径。</li></ol><h3>v12.1 呈现修订 · 2026-10-28</h3><ol><li>仅调整信息架构与文案，不改三通道、Q/E/S、净赔率、五门、止损、前向记录或结算逻辑；策略仍为 OPENING_DAILY_V1。</li><li>主表新增置顶“交易翻译”：结论加粗前置，原始赔率、入场区偏离、止损目标与信号窗口压缩为短句；移除逐股重复的“”提示。</li><li>Q/E/S 只保留小字排序徽章；E 子项与 Q 子项不再默认展开，进度条与说明性文字从个股页撤出，评分口径保留在方法与版本。</li><li>流动性通过时不再展示，仅硬门槛失败时在状态原因中出现；触发新鲜度合并为一行信号窗口。</li><li>装饰性品牌点阵移除；新增结论条、执行短句与排序徽章样式，整体更接近极简文本界面。</li></ol><h3>v12.0 正式版 · 2026-10-28</h3><ol><li>页面版本与策略模型版本拆分：当前开盘策略为 OPENING_DAILY_V1；纯展示升级不重置前向策略簇，旧档案缺少策略版本时按 legacy:页面版本隔离。</li><li>当前经济信号的身份键改用策略版本，避免同一信号因页面升级重复建档；原始跨版本档案继续保留，不合并、不删除。</li><li>全部观察样本默认按“标的＋通道＋触发日”折叠成一组，展开可审计各版本 Q/E/S、保存时间和登记证据；500条一般档案上限不再裁掉未结算或严格前向记录。</li><li>新增当前队列前向捕获链：可登记、已登记、严格事前、补录与未登记分列，并显示严格样本到入场、未成交、结算的状态链。</li><li>回放新增分通道聚类 Bootstrap 区间、T+10−T+5同信号配对差、Top1／Top5盈利贡献及剔除后平均R；不把单调性或点估计当作稳定性证明。</li><li>未成交漏斗默认展开并在标题显示总数；总数与明细不一致时显式报警，不用空白暗示原因。</li><li>趋势回踩仍为影子通道；三通道、Q/E/S、净赔率、进出场参数、盘中五门和结算规则均未修改。</li></ol><h3>v11.2 正式版 · 2026-10-28</h3><ol><li>首屏改为“交易环境 → 盘中状态 → 执行候选”，主信号表前移；明日候选与通道观察合并到次级展开区。</li><li>五个顶层页签合并为三个：信号台、研究与诊断、方法与版本；回放、双模型前向记录和数据诊断分层保留。</li><li>市场状态压缩为四格，摘要合并为四项；日期新鲜度并入数据状态，不再单独重复占格。</li><li>主表把状态与操作结论合并，Q／E 合并，入场区与止损目标合并；展开详情不再重复操作结论，五门证据保留。</li><li>自动刷新并入模型设置，全A深扫并入研究池；历史版本默认折叠，版本审计记录不删除。</li><li>移动端卡片布局只作用于信号与预告列表，回放和前向研究表保留表头与表格结构。</li><li>仅调整信息架构与展示，不修改三通道、Q／E／S、五门、净赔率、止损、前向记录或结算逻辑。</li></ol></section>
-<footer class="footer"><span>Quant v12.4 · Score v0 / Opening Daily v1 / Intraday v1 · 数据与结论均需在决策前复核</span><span>公开行情研究工具，不构成收益承诺</span></footer>
+</div></details><h3>v12.5 修复 · 2026-10-29</h3>
+<ol><li>修复 A股日K成交额单位口径：腾讯/新浪日K成交量实为"股"、东财为"手"，原统一按"手"换算使 K线成交额被放大100倍，导致盘中量能节奏被压至约0.01～0.03×而几乎永远拒绝通过；现腾讯/新浪按股口径计算、东财量归一为股，并新增单位常量守卫自测。</li>
+<li>修复盘中突破预告的量能单位错配：虚拟K线成交量（报价层·手）与20日均量（K线层·股）相差100倍，使量能条件永不满足；现统一为股，展示单位改为万股。</li>
+<li>A股K线源顺序调整为东财→腾讯→新浪：东财K线成交额为源生字段（元），不受单位换算影响；腾讯、新浪仅作兜底。</li>
+<li>盘中量能节奏改按报价时间戳计算已交易时长，报价在180秒新鲜度内与本地时钟一致，边界场景更稳健。</li>
+<li>盘中连续确认未通过时，明确显示失败子项（间隔／区内持有／未走弱／测试下沿），不再只显示静态描述。</li>
+<li>数据诊断新增"成交额口径"行：按K线源显示 成交额÷(收盘×量) 中位比值，≈1为股口径、≈100为手口径，单位漂移不再静默。</li>
+<li>缓存命名空间随版本更新；三通道、Q/E/S、净赔率、五门参数、前向结算口径均未改变。</li></ol>
+<h3>v12.4 展示修复 · 2026-10-28</h3><ol><li>修复“数据已加载但未形成正式信号”与“无数据”都显示为“—”的语义混淆：主表明确显示未触发、未形成评分、未形成赔率及无冻结几何。</li><li>无正式信号的操作结论明确标注“数据已加载”，页头覆盖率改为“成功加载”，章节说明补充“未触发不等于加载失败”。</li><li>删除主表操作结论后重复出现的状态徽章，保留状态原因、操作结论与盘中说明。</li><li>仅修改展示文案与重复元素，不改数据链、策略版本、三通道、Q/E/S、净赔率、止损、五门或前向结算。</li></ol><h3>v12.3 修复 · 2026-10-28</h3><ol><li>修复美股搜索结果被A股代码过滤器丢弃：支持腾讯 us~ticker.OQ/N/AM 与东财105/106/107市场代码，DRAM、科磊、KLAC可检索；新增本地别名兜底。</li><li>东财美股不再固定按纳斯达克查询，报价与日K会依次核验纳斯达克、纽交所和美国证券交易所；纳斯达克综合指数备用代码由NDX纠正为IXIC，避免切换到纳斯达克100。</li><li>修复腾讯美股成交额被额外乘1万的问题；A股仍按万元换算，美股直接保留美元口径，盘中量能节奏不再被放大。</li><li>新浪美股日K统一只保留最近320根，避免长历史个股占用过多内存并导致会话缓存超限；腾讯日K增加OQ/N/AM交易所后缀回退，并优先使用可跨域镜像端点。</li><li>支持usBRK-B一类带连字符代码规范化为内部点号格式；启动日志改用当前页面版本。</li><li>新增6项数据适配自测；策略版本、三通道、Q/E/S、净赔率、止损、五门和前向结算口径均未改变。</li></ol><h3>v12.2 修复 · 2026-10-28</h3><ol><li>修复 v12.1 引入的赔率门槛短句 TDZ 错误：净赔率行不再在初始化前引用 gate，信号台可正常渲染。</li><li>仅修复该呈现函数，不改策略版本、评分、交易几何或记录口径。</li></ol><h3>v12.1 呈现修订 · 2026-10-28</h3><ol><li>仅调整信息架构与文案，不改三通道、Q/E/S、净赔率、五门、止损、前向记录或结算逻辑；策略仍为 OPENING_DAILY_V1。</li><li>主表新增置顶“交易翻译”：结论加粗前置，原始赔率、入场区偏离、止损目标与信号窗口压缩为短句；移除逐股重复的“”提示。</li><li>Q/E/S 只保留小字排序徽章；E 子项与 Q 子项不再默认展开，进度条与说明性文字从个股页撤出，评分口径保留在方法与版本。</li><li>流动性通过时不再展示，仅硬门槛失败时在状态原因中出现；触发新鲜度合并为一行信号窗口。</li><li>装饰性品牌点阵移除；新增结论条、执行短句与排序徽章样式，整体更接近极简文本界面。</li></ol><h3>v12.0 正式版 · 2026-10-28</h3><ol><li>页面版本与策略模型版本拆分：当前开盘策略为 OPENING_DAILY_V1；纯展示升级不重置前向策略簇，旧档案缺少策略版本时按 legacy:页面版本隔离。</li><li>当前经济信号的身份键改用策略版本，避免同一信号因页面升级重复建档；原始跨版本档案继续保留，不合并、不删除。</li><li>全部观察样本默认按“标的＋通道＋触发日”折叠成一组，展开可审计各版本 Q/E/S、保存时间和登记证据；500条一般档案上限不再裁掉未结算或严格前向记录。</li><li>新增当前队列前向捕获链：可登记、已登记、严格事前、补录与未登记分列，并显示严格样本到入场、未成交、结算的状态链。</li><li>回放新增分通道聚类 Bootstrap 区间、T+10−T+5同信号配对差、Top1／Top5盈利贡献及剔除后平均R；不把单调性或点估计当作稳定性证明。</li><li>未成交漏斗默认展开并在标题显示总数；总数与明细不一致时显式报警，不用空白暗示原因。</li><li>趋势回踩仍为影子通道；三通道、Q/E/S、净赔率、进出场参数、盘中五门和结算规则均未修改。</li></ol><h3>v11.2 正式版 · 2026-10-28</h3><ol><li>首屏改为“交易环境 → 盘中状态 → 执行候选”，主信号表前移；明日候选与通道观察合并到次级展开区。</li><li>五个顶层页签合并为三个：信号台、研究与诊断、方法与版本；回放、双模型前向记录和数据诊断分层保留。</li><li>市场状态压缩为四格，摘要合并为四项；日期新鲜度并入数据状态，不再单独重复占格。</li><li>主表把状态与操作结论合并，Q／E 合并，入场区与止损目标合并；展开详情不再重复操作结论，五门证据保留。</li><li>自动刷新并入模型设置，全A深扫并入研究池；历史版本默认折叠，版本审计记录不删除。</li><li>移动端卡片布局只作用于信号与预告列表，回放和前向研究表保留表头与表格结构。</li><li>仅调整信息架构与展示，不修改三通道、Q／E／S、五门、净赔率、止损、前向记录或结算逻辑。</li></ol></section>
+<footer class="footer"><span>Quant v12.5 · Score v0 / Opening Daily v1 / Intraday v1 · 数据与结论均需在决策前复核</span><span>公开行情研究工具，不构成收益承诺</span></footer>
 </main>
 <dialog id="watchDialog" aria-labelledby="watchTitle"><div class="dialog-head"><h2 id="watchTitle">研究池与扫描</h2><button class="ghost" data-close="watchDialog" type="button">关闭</button></div><div class="dialog-body"><div class="pool-scan"><p>全A深扫会替换当前结果集；研究池清单不变。扫描数量上限在模型设置中调整。</p><button class="ghost" id="scanBtn" type="button">全A初筛深扫</button></div><div class="add-grid"><input id="addSymbol" type="search" placeholder="名称 / 代码：茅台、600519、DRAM、科磊、KLAC、usNVDA" aria-label="添加代码"><button class="primary" id="addBtn" type="button">校验并添加</button></div><div id="searchResults" class="search-results"></div><p class="small muted" style="margin:12px 0">研究池仅保存在此浏览器；清除浏览器数据会丢失。默认池用于跨行业参考，与任何账户持仓无关。</p><div id="watchList"></div></div><div class="dialog-actions"><button class="ghost" id="settingsBtn" type="button">模型设置</button><button class="ghost" id="exportBtn" type="button">导出研究池</button><button class="ghost" id="importBtn" type="button">导入</button><input id="importFile" class="hidden" type="file" accept="application/json,.json"><button class="ghost danger" id="resetBtn" type="button">恢复默认</button></div></dialog>
 <dialog id="settingsDialog" aria-labelledby="settingsTitle"><div class="dialog-head"><h2 id="settingsTitle">客观模型设置</h2><button class="ghost" data-close="settingsDialog" type="button">关闭</button></div><div class="dialog-body"><div class="settings-grid"><div class="field"><label for="setMinRR">正常候选最低净赔率</label><input id="setMinRR" type="number" min="1" max="5" step="0.1" value="1.5"></div><div class="field"><label for="setDeepLimit">全A深扫数量上限</label><select id="setDeepLimit"><option>30</option><option selected>60</option><option>120</option></select></div><div class="field"><label for="setMinAmountA">A股20日均成交额门槛（万元）</label><input id="setMinAmountA" type="number" min="0" step="1000" value="5000"></div><div class="field"><label for="setMinAmountUS">美股20日均成交额门槛（万美元）</label><input id="setMinAmountUS" type="number" min="0" step="100" value="500"></div></div><div class="auto-setting"><div class="field"><label for="setAutoMinutes">自动刷新间隔</label><select id="setAutoMinutes"><option value="1">1分钟</option><option value="5" selected>5分钟</option><option value="10">10分钟</option></select></div><button class="ghost" id="autoBtn" type="button" aria-pressed="false">自动：关</button></div><p class="small muted" style="margin-top:14px">设置只改变客观研究口径，不代表任何账户纪律。自动刷新只在页面可见且空闲时运行；回放期间跳过。修改后重新刷新信号。</p></div><div class="dialog-actions"><button class="primary" id="saveSettings" type="button">保存设置</button></div></dialog>
@@ -94,7 +102,7 @@ dialog{border:1px solid var(--line);border-radius:8px;background:var(--panel);co
 /* Quant v12.4 objective signal and intraday execution core. No DOM, storage, network or account rules. */
 const QuantCore = (() => {
   "use strict";
-  const VERSION = "v12.4",
+  const VERSION = "v12.5",
       STRATEGY_VERSION = "OPENING_DAILY_V1";
   const DEFAULTS = Object.freeze({
     minBars: 80,
@@ -1069,7 +1077,8 @@ const QuantCore = (() => {
       nearLimitUp = market === "A" && limitPct && prevClose > 0 &&
         price / prevClose - 1 >= (limitPct - 0.2) / 100 && validPositive(quote.high) && price >= +quote.high,
       tradablePass = !nearLimitUp && (quote.amount === null || quote.amount === undefined || (finite(quote.amount) && +quote.amount > 0)),
-      elapsed = sessionElapsedMinutes(market, z), totalMinutes = market === "A" ? 240 : 390,
+      quoteZ = quote.qtime ? tzInfo(new Date(quote.qtime), zone) : z,
+      elapsed = sessionElapsedMinutes(market, quoteZ), totalMinutes = market === "A" ? 240 : 390,
       averageAmount20 = validPositive(o.averageAmount20) ? +o.averageAmount20 : null,
       volumePace = averageAmount20 && finite(quote.amount) && quote.amount !== null && quote.amount !== undefined && elapsed > 0
         ? (+quote.amount / Math.max(5, elapsed)) / (averageAmount20 / totalMinutes) : null,
@@ -1094,7 +1103,7 @@ const QuantCore = (() => {
       testedLow = p.channel !== "oversold" || (validPositive(quote.low) && +quote.low <= g.zoneLo) ||
         samples.some((x) => (validPositive(x.low) && +x.low <= g.zoneLo) || +x.price < g.zoneLo),
       confirmPass = spaced && heldZone && notWeakening && testedLow,
-      confirmDetail = `${Math.min(tail.length, required)}/${required} 次连续区内报价；间隔 ${cfg.intradayMinSampleGapSec}～${cfg.intradayConfirmWindowSec} 秒${p.channel === "oversold" ? "；且日内已测试入场区下沿后收复" : "；且确认过程未走弱"}`;
+      confirmDetail = `${Math.min(tail.length, required)}/${required} 次连续区内报价｜间隔${spaced ? "✓" : "✗"} ${cfg.intradayMinSampleGapSec}～${cfg.intradayConfirmWindowSec}秒｜区内持有${heldZone ? "✓" : "✗"}｜未走弱${notWeakening ? "✓" : "✗"}${p.channel === "oversold" ? `｜测试下沿后收复${testedLow ? "✓" : "✗"}` : ""}`;
     check("confirmation", "盘中连续确认", confirmPass, confirmDetail);
 
     const common = { netRR: rr, stop: g.stop, target: g.target, zoneLo: g.zoneLo, zoneHi: g.zoneHi,
@@ -3048,6 +3057,8 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
       emSecidCandidates("usIXIC").join(",") === "100.IXIC");
     test("腾讯成交额按市场采用正确单位", () =>
       txAmount("1889055778", "usDRAM") === 1889055778 && txAmount("12.5", "sh600519") === 125000);
+    test("A股K线量单位常量（腾讯股/新浪股/东财手）", () =>
+      TX_A_VOL_UNIT === 1 && SINA_A_VOL_UNIT === 1 && EM_A_VOL_UNIT === 100);
     test("DRAM与科磊本地别名可离线命中", () =>
       searchLocal("dram")[0].code === "usDRAM" && searchLocal("科磊")[0].code === "usKLAC");
     test("美股长历史日K仅保留最近320根", () => {
@@ -3302,6 +3313,11 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     if (!Number.isFinite(value) || value <= 0) return null;
     return isUS(code) ? value : value * 10000;
   }
+  // A股日K成交量单位：腾讯/新浪返回"股"，东财返回"手"；统一归一为股。
+  // 诊断区"成交额口径"行显示 成交额÷(收盘×量) 比值：≈1为股口径，≈100为手口径；若某源漂移，只改这里对应常量。
+  const TX_A_VOL_UNIT = 1,
+    SINA_A_VOL_UNIT = 1,
+    EM_A_VOL_UNIT = 100;
   async function quotesTX(codes) {
     const out = {},
       txt = await fetchGBK(
@@ -3346,7 +3362,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     return result;
   }
   function cacheKey(code) {
-    return "quant_v10_k_" + code;
+    return "quant_v12_k_" + code;
   }
   function readCache(code, expectedDate = null) {
     try {
@@ -3410,7 +3426,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
             const a = s.split(",");
             return {
               date: a[0], open: +a[1], close: +a[2], high: +a[3], low: +a[4],
-              volume: +a[5], amount: Number.isFinite(+a[6]) ? +a[6] : null,
+              volume: +a[5] * (isUS(code) ? 1 : EM_A_VOL_UNIT), amount: Number.isFinite(+a[6]) ? +a[6] : null,
             };
           }),
           norm = C.normalizeBars(bars);
@@ -3446,7 +3462,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
               high: +k[3],
               low: +k[4],
               volume: +k[5],
-              amount: isUS(code) ? +k[2] * +k[5] : +k[2] * +k[5] * 100,
+              amount: +k[2] * +k[5] * (isUS(code) ? 1 : TX_A_VOL_UNIT),
             })),
             norm = C.normalizeBars(bars);
           return acceptKline(norm);
@@ -3507,7 +3523,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
                 low: +x.low,
                 close: +x.close,
                 volume: +x.volume,
-                amount: +x.close * +x.volume * 100,
+                amount: +x.close * +x.volume * SINA_A_VOL_UNIT,
               })),
           bars = C.normalizeBars(raw);
         try {
@@ -3542,8 +3558,8 @@ if (typeof module !== "undefined" && module.exports) module.exports = QuantCore;
     }
     const chain = isUS(code)
       ? [klineSina, klineTX, klineEM]
-      : [klineTX, klineEM, klineSina],
-      names = isUS(code) ? ["新浪", "腾讯", "东财"] : ["腾讯", "东财", "新浪"],
+      : [klineEM, klineTX, klineSina],
+      names = isUS(code) ? ["新浪", "腾讯", "东财"] : ["东财", "腾讯", "新浪"],
       errors = [];
     for (let i = 0; i < chain.length; i++) {
       try {
@@ -3935,7 +3951,7 @@ function signedPct(v, d = 1) {
 
   function previewVolume(v, market) {
     if (!Number.isFinite(v)) return "—";
-    return market === "A" ? `${fmt(v / 10000, 2)}万手` : `${fmt(v / 1e6, 2)}百万股`;
+    return market === "A" ? `${fmt(v / 10000, 2)}万股` : `${fmt(v / 1e6, 2)}百万股`;
   }
   function renderBreakoutPreview() {
     const rows = [];
@@ -3949,7 +3965,7 @@ function signedPct(v, d = 1) {
       if (quoteDay !== today || !completed.length || completed[completed.length - 1].date >= quoteDay) continue;
       if (![q.open, q.high, q.low, q.volume, q.price].every((x) => Number.isFinite(x) && x > 0)) continue;
       const virtualBar = { date: quoteDay, open: +q.open, high: +q.high, low: +q.low,
-          close: +q.price, volume: +q.volume, amount: Number.isFinite(q.amount) ? +q.amount : null },
+          close: +q.price, volume: +q.volume * (r.market === "A" ? 100 : 1), amount: Number.isFinite(q.amount) ? +q.amount : null },
         p = C.breakoutPreview(completed.concat(virtualBar), state.config);
       if (!p || !p.near) continue;
       const ret2 = completed.length >= 2 ? (r.price / completed[completed.length - 2].close - 1) * 100 : null;
@@ -4051,6 +4067,21 @@ function signedPct(v, d = 1) {
     rows.forEach(
       (r) => (kSources[r.kSource || "—"] = (kSources[r.kSource || "—"] || 0) + 1),
     );
+    const unitRatios = {};
+    for (const [code, bars] of state.bars) {
+      if (!Array.isArray(bars) || !bars.length) continue;
+      const b = bars[bars.length - 1];
+      if (!(b.amount > 0) || !(b.close > 0) || !(b.volume > 0)) continue;
+      const src = ((state.rows.get(code) || {}).kSource) || "—";
+      (unitRatios[src] = unitRatios[src] || []).push(b.amount / (b.close * b.volume));
+    }
+    const unitText =
+      Object.entries(unitRatios)
+        .map(([k, arr]) => {
+          const med = C.median(arr);
+          return `${k} ≈${fmt(med, 2)}（${med > 50 ? "手口径·应改UNIT常量" : med >= 0.5 ? "股口径·正常" : "异常"}）`;
+        })
+        .join("；") || "—";
     const passed = rows.filter((r) => r.status !== "DATA_ERROR").length,
       unconfirmedA = rows.filter((r) => r.market === "A" && r.kSource && !r.adjustmentConfirmed).length,
       dataWarnings = rows.flatMap((r) => (r.quality && r.quality.warnings) || []),
@@ -4084,7 +4115,7 @@ function signedPct(v, d = 1) {
         Object.entries(kSources)
           .map(([k, v]) => k + " " + v)
           .join("；") || "—",
-      )}</td></tr><tr><td>基准完成日</td><td>A股 ${esc(expectedA || "缺失")}；美股 ${esc(expectedUS || "缺失")}</td></tr><tr><td>日期新鲜 / 仲裁</td><td>${healthText.map(esc).join("<br>")}</td></tr><tr><td>盘中报价层</td><td>${esc(state.intradayMessage)}；最近 ${state.lastIntradayAt ? esc(new Date(state.lastIntradayAt).toLocaleString("zh-CN", { hour12: false })) : "—"}</td></tr><tr><td>盘中证据</td><td>报价样本组 ${Object.keys(state.intradaySamples).length}；触发档案 ${state.intradayRecords.length}（只含公开行情，本机保存）</td></tr><tr><td>缓存 / 降级</td><td>${esc(cacheText)}；K线降级记录 ${fallbackCount} 条</td></tr><tr><td>复权 / 一致性</td><td class="${unconfirmedA || dataWarnings.length ? "warn" : ""}">${unconfirmedA ? `A股复权未确认 ${unconfirmedA} 只；` : ""}${dataWarnings.length ? `警告 ${dataWarnings.length} 条` : "无警告"}</td></tr><tr><td>深扫覆盖</td><td>${esc(state.scanMeta || "尚未执行全A扫描")}</td></tr><tr><td>账户数据</td><td>未读取、未计算、未上传</td></tr></tbody></table>`;
+      )}</td></tr><tr><td>成交额口径</td><td>${esc(unitText)}</td></tr><tr><td>基准完成日</td><td>A股 ${esc(expectedA || "缺失")}；美股 ${esc(expectedUS || "缺失")}</td></tr><tr><td>日期新鲜 / 仲裁</td><td>${healthText.map(esc).join("<br>")}</td></tr><tr><td>盘中报价层</td><td>${esc(state.intradayMessage)}；最近 ${state.lastIntradayAt ? esc(new Date(state.lastIntradayAt).toLocaleString("zh-CN", { hour12: false })) : "—"}</td></tr><tr><td>盘中证据</td><td>报价样本组 ${Object.keys(state.intradaySamples).length}；触发档案 ${state.intradayRecords.length}（只含公开行情，本机保存）</td></tr><tr><td>缓存 / 降级</td><td>${esc(cacheText)}；K线降级记录 ${fallbackCount} 条</td></tr><tr><td>复权 / 一致性</td><td class="${unconfirmedA || dataWarnings.length ? "warn" : ""}">${unconfirmedA ? `A股复权未确认 ${unconfirmedA} 只；` : ""}${dataWarnings.length ? `警告 ${dataWarnings.length} 条` : "无警告"}</td></tr><tr><td>深扫覆盖</td><td>${esc(state.scanMeta || "尚未执行全A扫描")}</td></tr><tr><td>账户数据</td><td>未读取、未计算、未上传</td></tr></tbody></table>`;
     const tests = getSelfTests();
     $("selfTests").innerHTML =
       tests
